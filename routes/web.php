@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Pic\PicController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -15,7 +16,14 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    // Cek apakah user sudah login
+    if (Auth::check()) {
+        // Jika sudah login, arahkan ke halaman home atau halaman lain
+        return redirect()->route('home');
+    } else {
+        // Jika belum login, arahkan ke halaman login
+        return redirect()->route('login');
+    }
 });
 
 Auth::routes();
@@ -28,3 +36,11 @@ Route::put('/profile', 'ProfileController@update')->name('profile.update');
 Route::get('/about', function () {
     return view('about');
 })->name('about');
+
+Route::get('/pic', function () {
+    return view('pic.pic');
+})->name('pic');
+
+
+Route::post('/pic', [PicController::class, 'store'])->name('pic.store');
+
