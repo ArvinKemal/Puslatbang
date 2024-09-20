@@ -31,10 +31,7 @@
 
         <!-- Sidebar - Brand -->
         <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ url('/home') }}">
-            <div class="sidebar-brand-icon rotate-n-15">
-                <i class="fas fa-laugh-wink"></i>
-            </div>
-            <div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>
+            <div class="sidebar-brand-text mx-3">Administrator <sup></sup></div>
         </a>
 
         <!-- Divider -->
@@ -56,10 +53,10 @@
         </div>
 
         <!-- Nav Item - Profile -->
-        <li class="nav-item {{ Nav::isRoute('profile') }}">
-            <a class="nav-link" href="{{ route('profile') }}">
+        <li class="nav-item {{ Nav::isRoute('pic') }}">
+            <a class="nav-link" href="{{ route('pic') }}">
                 <i class="fas fa-fw fa-user"></i>
-                <span>{{ __('Profile') }}</span>
+                <span>{{ __('PIC') }}</span>
             </a>
         </li>
 

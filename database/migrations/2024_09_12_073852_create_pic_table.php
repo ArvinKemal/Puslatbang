@@ -16,7 +16,7 @@ return new class extends Migration
             $table->id();
             $table->string('nama_pic');
             $table->string('email_pic');
-            $table->integer('no_telepon');
+            $table->string('no_telepon', 15);
             $table->timestamps();
         });
     }
