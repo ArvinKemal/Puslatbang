@@ -29,61 +29,53 @@
 
             <div class="card shadow mb-4">
 
-                <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Account</h6>
-                </div>
-
                 <div class="card-body">
 
-                    <form method="POST" action="{{ route('pic.store') }}" autocomplete="off">
-                        @csrf
-                        <h6 class="heading-small text-muted mb-4">Informasi Pengguna</h6>
+                    <div class="d-flex justify-content-end mb-3">
+                        <a href="{{ route('pic.add') }}" class="btn btn-primary">Tambah PIC</a>
+                    </div>
+                        
+                        <div class="card">
+                            <div class="card-body">
+                                <h6 class="heading-small text-muted mb-4">Daftar PIC</h6>
+                                <div class="table-responsive">
+                                    <table class="table align-items-center table-flush">
+                                        <thead class="thead-light">
+                                            <tr>
+                                                <th>No</th>
+                                                <th>Nama</th>
+                                                <th>Email</th>
+                                                <th>Nomor Telepon</th>
+                                                <th>Aksi</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach($pics as $pic)
+                                                <tr>
+                                                    <td>{{ $loop->iteration }}</td>
+                                                    <td>{{ $pic->nama_pic }}</td>
+                                                    <td>{{ $pic->email_pic }}</td>
+                                                    <td>{{ $pic->no_telepon }}</td>
+                                                    <td>
+                                                        <a href="{{ route('pic.edit', $pic->id) }}" class="btn btn-sm btn-primary">Edit</a>
+                                                        <form action="{{ route('pic.destroy', $pic->id) }}" method="POST" style="display:inline-block;" onsubmit="return confirm('Apakah kamu yakin ingin menghapus data ini?');">
 
-                        <div class="pl-lg-4">
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <div class="form-group focused">
-                                        <label class="form-control-label" for="nama_pic">Nama<span class="small text-danger">*</span></label>
-                                        <input type="text" id="nama_pic" class="form-control" name="nama_pic" placeholder="" value="">
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <div class="form-group">
-                                        <label class="form-control-label" for="email_pic">Email<span class="small text-danger">*</span></label>
-                                        <input type="email" id="email_pic" class="form-control" name="email_pic" placeholder="" value="">
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <div class="form-group">
-                                        <label class="form-control-label" for="no_telepon">Nomor Telepon<span class="small text-danger">*</span></label>
-                                        <input type="text" id="no_telepon" class="form-control" name="no_telepon" placeholder="" value="">
-                                    </div>
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit" class="btn btn-sm btn-danger">Hapus</button>
+                                                        </form>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>
-
-                        <!-- Button -->
-                        <div class="pl-lg-4">
-                            <div class="row">
-                                <div class="col text-center">
-                                    <button type="submit" class="btn btn-success">Tambah</button>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-
-                </div>
 
             </div>
 
         </div>
-
     </div>
 
 @endsection
