@@ -2,7 +2,7 @@
 
 @section('main-content')
     <!-- Page Heading -->
-    <h1 class="h3 mb-4 text-gray-800">{{ __('PIC') }}</h1>
+    <h1 class="h3 mb-4 text-gray-800">{{ __('RUANGAN') }}</h1>
 
     @if (session('success'))
         <div class="alert alert-success border-left-success alert-dismissible fade show" role="alert">
@@ -32,7 +32,7 @@
                 <div class="card-body">
 
                     <div class="d-flex justify-content-end mb-3">
-                        <a href="{{ route('pic.add') }}" class="btn btn-primary">Tambah PIC</a>
+                        <a href="" class="btn btn-primary">Tambah RUANGAN</a>
                     </div>
                         
                         <div class="card">
@@ -42,13 +42,15 @@
                                     <table class="table align-items-center table-flush">
                                         <thead class="thead-light">
                                             <tr>
-                                                <th>No</th>
-                                                <th>Nama</th>
-                                                <th>Nomor Telepon</th>
-                                                <th>Aksi</th>
+                                                
+                                                <th>Nama Ruangan</th>
+                                                <th>Lantai</th>
+                                                <th>Kapasitas Ruangan</th>
+                                                <th>PIC</th>
+                                
                                             </tr>
                                         </thead>
-                                        <tbody>
+                                        {{-- <tbody>
                                             @foreach($pics as $pic)
                                                 <tr>
                                                     <td>{{ $loop->iteration }}</td>
@@ -66,7 +68,7 @@
                                                     </td>
                                                 </tr>
                                             @endforeach
-                                        </tbody>
+                                        </tbody> --}}
                                     </table>
                                 </div>
                             </div>

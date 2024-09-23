@@ -51,4 +51,8 @@ Route::get('/pic/{id}/edit', [PicController::class, 'edit'])->name('pic.edit');
 Route::put('/pic/{id}', [PicController::class, 'update'])->name('pic.update');
 Route::delete('/pic/{id}', [PicController::class, 'destroy'])->name('pic.destroy');
 
+// Route::get('/ruangan', [PicController::class, 'index'])->name('ruangan.index');
 
+Route::get('/ruangan', function () {
+    return view('ruangan.ruangan');
+})->name('ruangan.index');

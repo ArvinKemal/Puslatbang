@@ -59,7 +59,20 @@
                 <span>{{ __('PIC') }}</span>
             </a>
         </li>
-
+         <!-- Nav Item - Profile -->
+         <li class="nav-item {{ Nav::isRoute('ruangan') }}">
+            <a class="nav-link" href="{{ route('ruangan.index') }}">
+                <i class="fas fa-fw fa-user"></i>
+                <span>{{ __('RUANGAN') }}</span>
+            </a>
+        </li>
+  <!-- Nav Item - Profile -->
+         <li class="nav-item">
+            <a class="nav-link">
+                <i class="fas fa-fw fa-user"></i>
+                <span>{{ __('BOOKING ROOM') }}</span>
+            </a>
+        </li>
         <!-- Nav Item - About -->
         <li class="nav-item {{ Nav::isRoute('about') }}">
             <a class="nav-link" href="{{ route('about') }}">
