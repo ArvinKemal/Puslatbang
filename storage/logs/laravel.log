@@ -3095,6 +3095,7 @@
 #61 E:\\Puslatbang-Khan\\booking-room\\server.php(21): require_once('E:\\\\Puslatbang-K...')
 #62 {main}
 "} 
+<<<<<<< Updated upstream
 [2024-09-20 10:16:27] local.ERROR: SQLSTATE[HY000] [2002] No connection could be made because the target machine actively refused it (Connection: mysql, SQL: select * from `users` where `email` = arvin@gmail.com limit 1) {"exception":"[object] (Illuminate\\Database\\QueryException(code: 2002): SQLSTATE[HY000] [2002] No connection could be made because the target machine actively refused it (Connection: mysql, SQL: select * from `users` where `email` = arvin@gmail.com limit 1) at E:\\Puslatbang-Khan\\booking-room\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Connection.php:813)
 [stacktrace]
 #0 E:\\Puslatbang-Khan\\booking-room\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Connection.php(967): Illuminate\\Database\\Connection->runQueryCallback('select * from `...', Array, Object(Closure))
@@ -4655,6 +4656,16 @@
   \"<span class=sf-dump-key>users</span>\" => <span class=sf-dump-num>1</span>
 </samp>]
 </pre><script>Sfdump(\"sf-dump-137954217\", {\"maxDepth\":3,\"maxStringLength\":160})</script>
+=======
+[2024-09-24 02:37:19] local.ERROR: Route [pic] not defined. {"view":{"view":"E:\\Puslatbang-Khan\\booking-room\\resources\\views\\layouts\\admin.blade.php","data":{"errors":"<pre class=sf-dump id=sf-dump-1884843826 data-indent-pad=\"  \"><span class=sf-dump-note>Illuminate\\Support\\ViewErrorBag</span> {<a class=sf-dump-ref>#288</a><samp data-depth=1 class=sf-dump-expanded>
+  #<span class=sf-dump-protected title=\"Protected property\">bags</span>: []
+</samp>}
+</pre><script>Sfdump(\"sf-dump-1884843826\", {\"maxDepth\":3,\"maxStringLength\":160})</script>
+","widget":"<pre class=sf-dump id=sf-dump-553860460 data-indent-pad=\"  \"><span class=sf-dump-note>array:1</span> [<samp data-depth=1 class=sf-dump-expanded>
+  \"<span class=sf-dump-key>users</span>\" => <span class=sf-dump-num>1</span>
+</samp>]
+</pre><script>Sfdump(\"sf-dump-553860460\", {\"maxDepth\":3,\"maxStringLength\":160})</script>
+>>>>>>> Stashed changes
 "}},"userId":1,"exception":"[object] (Spatie\\LaravelIgnition\\Exceptions\\ViewException(code: 0): Route [pic] not defined. at E:\\Puslatbang-Khan\\booking-room\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\UrlGenerator.php:512)
 [stacktrace]
 #0 E:\\Puslatbang-Khan\\booking-room\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\helpers.php(831): Illuminate\\Routing\\UrlGenerator->route('pic', Array, true)
@@ -4791,6 +4802,7 @@
 #63 E:\\Puslatbang-Khan\\booking-room\\server.php(21): require_once('E:\\\\Puslatbang-K...')
 #64 {main}
 "} 
+<<<<<<< Updated upstream
 [2024-09-21 08:48:55] local.ERROR: Route [/pic] not defined. {"view":{"view":"E:\\Puslatbang-Khan\\booking-room\\resources\\views\\layouts\\admin.blade.php","data":{"errors":"<pre class=sf-dump id=sf-dump-1689494598 data-indent-pad=\"  \"><span class=sf-dump-note>Illuminate\\Support\\ViewErrorBag</span> {<a class=sf-dump-ref>#327</a><samp data-depth=1 class=sf-dump-expanded>
   #<span class=sf-dump-protected title=\"Protected property\">bags</span>: []
 </samp>}
@@ -6965,3 +6977,5 @@ into your web browser: <span class="break-all" style="box-sizing: border-box; fo
 #61 D:\\Bahan Semua MK Semester Tujuh (7)\\Kerja Praktek\\bookingroom\\Puslatbang\\server.php(21): require_once('D:\\\\Bahan Semua ...')
 #62 {main}
 "} 
+=======
+>>>>>>> Stashed changes
