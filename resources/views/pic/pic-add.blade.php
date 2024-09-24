@@ -37,7 +37,7 @@
 
                     <form method="POST" action="{{ route('pic.store') }}" autocomplete="off">
                         @csrf
-                        <h6 class="heading-small text-muted mb-4">Informasi Pengguna</h6>
+                        <h6 class="heading-small text-muted mb-4">Informasi PIC</h6>
 
                         <div class="pl-lg-4">
                             <div class="row">
@@ -45,15 +45,6 @@
                                     <div class="form-group focused">
                                         <label class="form-control-label" for="nama_pic">Nama<span class="small text-danger">*</span></label>
                                         <input type="text" id="nama_pic" class="form-control" name="nama_pic" placeholder="" value="">
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <div class="form-group">
-                                        <label class="form-control-label" for="email_pic">Email<span class="small text-danger">*</span></label>
-                                        <input type="email" id="email_pic" class="form-control" name="email_pic" placeholder="" value="">
                                     </div>
                                 </div>
                             </div>

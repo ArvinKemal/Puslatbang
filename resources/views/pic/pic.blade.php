@@ -53,7 +53,6 @@
                                                 <tr>
                                                     <td>{{ $loop->iteration }}</td>
                                                     <td>{{ $pic->nama_pic }}</td>
-                                                    <td>{{ $pic->email_pic }}</td>
                                                     <td>{{ $pic->no_telepon }}</td>
                                                     <td>
                                                         <a href="{{ route('pic.edit', $pic->id) }}" class="btn btn-sm btn-primary">Edit</a>

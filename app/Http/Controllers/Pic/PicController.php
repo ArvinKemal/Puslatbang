@@ -32,16 +32,11 @@ class PicController extends Controller
     {
         $request->validate([
             'nama_pic' => 'required|string|max:255', 
-            'email_pic' => 'required|email|max:255',
             'no_telepon' => 'required|digits_between:10,15'
         ],[
             'nama_pic.required' => 'Nama wajib diisi',
             'nama_pic.string' => 'Nama harus berupa teks',
             'nama_pic.max' => 'Nama tidak boleh lebih dari 255 karakter',
-
-            'email_pic.required' => 'Email wajib diisi',
-            'email_pic.email' => 'Email harus dalam format yang benar',
-            'email_pic.max' => 'Email tidak boleh lebih dari 255 karakter',
 
             'no_telepon.required' => 'Nomor telepon wajib diisi',
             'no_telepon.digits_between' => 'Nomor telepon harus terdiri dari 10 hingga 15 digit angka'
@@ -50,9 +45,10 @@ class PicController extends Controller
          // Simpan data ke database
         $pic = new Pic();
         $pic->nama_pic = $request->nama_pic;
-        $pic->email_pic = $request->email_pic;
         $pic->no_telepon = $request->no_telepon;
-        $pic->save();
+
+        $pic->save(); 
+
 
         return redirect()->route('pic.index')->with('success', 'data berhasil disimpan!');
     }
@@ -81,13 +77,11 @@ class PicController extends Controller
     {
         $request->validate([
             'nama_pic' => 'required|string|max:255',
-            'email_pic' => 'required|email',
             'no_telepon' => 'required|string|max:15',
         ]);
     
         $pic = Pic::findOrFail($id);
         $pic->nama_pic = $request->nama_pic;
-        $pic->email_pic = $request->email_pic;
         $pic->no_telepon = $request->no_telepon;
         $pic->save();
     

@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Pic\PicController;
+use App\Http\Controllers\Ruangan\RuanganController;
+use App\Models\Ruangan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -51,8 +53,9 @@ Route::get('/pic/{id}/edit', [PicController::class, 'edit'])->name('pic.edit');
 Route::put('/pic/{id}', [PicController::class, 'update'])->name('pic.update');
 Route::delete('/pic/{id}', [PicController::class, 'destroy'])->name('pic.destroy');
 
-// Route::get('/ruangan', [PicController::class, 'index'])->name('ruangan.index');
-
-Route::get('/ruangan', function () {
-    return view('ruangan.ruangan');
-})->name('ruangan.index');
+Route::get('/ruangan', [RuanganController::class, 'index'])->name('ruangan.index');
+Route::get('/ruangan-add', [RuanganController::class, 'create'])->name('ruangan.add');
+Route::post('/ruangan-add', [RuanganController::class, 'store'])->name('ruangan.store');
+Route::get('/ruangan/{id}/edit', [RuanganController::class, 'edit'])->name('ruangan.edit');
+Route::put('/ruangan/{id}', [RuanganController::class, 'update'])->name('ruangan.update');
+Route::delete('/ruangan/{id}', [RuanganController::class, 'destroy'])->name('ruangan.destroy');
