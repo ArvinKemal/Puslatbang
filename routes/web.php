@@ -37,10 +37,22 @@ Route::get('/about', function () {
     return view('about');
 })->name('about');
 
-Route::get('/pic', function () {
-    return view('pic.pic');
-})->name('pic');
+Route::get('/pic', [PicController::class, 'index'])->name('pic.index');
 
 
-Route::post('/pic', [PicController::class, 'store'])->name('pic.store');
+Route::get('/pic-add', function () {
+    return view('pic.pic-add');
+})->name('pic.add');
 
+
+
+Route::post('/pic-add', [PicController::class, 'store'])->name('pic.store');
+Route::get('/pic/{id}/edit', [PicController::class, 'edit'])->name('pic.edit');
+Route::put('/pic/{id}', [PicController::class, 'update'])->name('pic.update');
+Route::delete('/pic/{id}', [PicController::class, 'destroy'])->name('pic.destroy');
+
+// Route::get('/ruangan', [PicController::class, 'index'])->name('ruangan.index');
+
+Route::get('/ruangan', function () {
+    return view('ruangan.ruangan');
+})->name('ruangan.index');

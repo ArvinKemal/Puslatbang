@@ -13,7 +13,8 @@ class PicController extends Controller
      */
     public function index()
     {
-        //
+        $pics = Pic::all(); // Mengambil semua data dari tabel pic
+        return view('pic.pic', compact('pics')); // Mengirim data ke view
     }
 
     /**
@@ -53,7 +54,7 @@ class PicController extends Controller
         $pic->no_telepon = $request->no_telepon;
         $pic->save();
 
-        return redirect()->route('pic')->with('success', 'data berhasil disimpan!');
+        return redirect()->route('pic.index')->with('success', 'data berhasil disimpan!');
     }
 
     /**
@@ -69,7 +70,8 @@ class PicController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $pic = Pic::findOrFail($id); // Mengambil data PIC berdasarkan id
+        return view('pic.pic-edit', compact('pic')); // Mengirim data PIC ke view 'pic.edit'
     }
 
     /**
@@ -77,7 +79,19 @@ class PicController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'nama_pic' => 'required|string|max:255',
+            'email_pic' => 'required|email',
+            'no_telepon' => 'required|string|max:15',
+        ]);
+    
+        $pic = Pic::findOrFail($id);
+        $pic->nama_pic = $request->nama_pic;
+        $pic->email_pic = $request->email_pic;
+        $pic->no_telepon = $request->no_telepon;
+        $pic->save();
+    
+        return redirect()->route('pic.index')->with('success', 'Data PIC berhasil diubah!');
     }
 
     /**
@@ -85,6 +99,9 @@ class PicController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $pic = Pic::findOrFail($id);
+        $pic->delete();
+
+        return redirect()->route('pic.index')->with('success', 'Data PIC berhasil dihapus!');
     }
 }

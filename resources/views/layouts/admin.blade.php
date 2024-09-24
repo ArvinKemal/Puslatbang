@@ -54,12 +54,25 @@
 
         <!-- Nav Item - Profile -->
         <li class="nav-item {{ Nav::isRoute('pic') }}">
-            <a class="nav-link" href="{{ route('pic') }}">
+            <a class="nav-link" href="{{ route('pic.index') }}">
                 <i class="fas fa-fw fa-user"></i>
                 <span>{{ __('PIC') }}</span>
             </a>
         </li>
-
+         <!-- Nav Item - Profile -->
+         <li class="nav-item {{ Nav::isRoute('ruangan') }}">
+            <a class="nav-link" href="{{ route('ruangan.index') }}">
+                <i class="fas fa-fw fa-user"></i>
+                <span>{{ __('RUANGAN') }}</span>
+            </a>
+        </li>
+  <!-- Nav Item - Profile -->
+         <li class="nav-item">
+            <a class="nav-link">
+                <i class="fas fa-fw fa-user"></i>
+                <span>{{ __('BOOKING ROOM') }}</span>
+            </a>
+        </li>
         <!-- Nav Item - About -->
         <li class="nav-item {{ Nav::isRoute('about') }}">
             <a class="nav-link" href="{{ route('about') }}">
@@ -283,7 +296,7 @@
         <footer class="sticky-footer bg-white">
             <div class="container my-auto">
                 <div class="copyright text-center my-auto">
-                    <span>Copyright &copy; <a href="https://github.com/aleckrh" target="_blank">Aleckrh</a> {{ now()->year }}</span>
+                    <span>Copyright &copy; <a href="https://www.instagram.com/himatekkom_usk/" target="_blank">Himatekkom USK 2024</a></span>
                 </div>
             </div>
         </footer>
