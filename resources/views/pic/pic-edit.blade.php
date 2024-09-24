@@ -54,15 +54,6 @@
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="form-group">
-                                        <label class="form-control-label" for="email_pic">Email<span class="small text-danger">*</span></label>
-                                        <input type="email" id="email_pic" class="form-control" name="email_pic" placeholder="" value="{{ $pic->email_pic }}">
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <div class="form-group">
                                         <label class="form-control-label" for="no_telepon">Nomor Telepon<span class="small text-danger">*</span></label>
                                         <input type="text" id="no_telepon" class="form-control" name="no_telepon" placeholder="" value="{{ $pic->no_telepon }}">
                                     </div>

@@ -32,12 +32,12 @@
                 <div class="card-body">
 
                     <div class="d-flex justify-content-end mb-3">
-                        <a href="" class="btn btn-primary">Tambah RUANGAN</a>
+                        <a href="{{ route('ruangan.add') }}" class="btn btn-primary">Tambah RUANGAN</a>
                     </div>
                         
                         <div class="card">
                             <div class="card-body">
-                                <h6 class="heading-small text-muted mb-4">Daftar PIC</h6>
+                                <h6 class="heading-small text-muted mb-4">Daftar Ruangan</h6>
                                 <div class="table-responsive">
                                     <table class="table align-items-center table-flush">
                                         <thead class="thead-light">
@@ -47,19 +47,33 @@
                                                 <th>Lantai</th>
                                                 <th>Kapasitas Ruangan</th>
                                                 <th>PIC</th>
+                                                <th>Aksi</th>
+                                                
                                 
                                             </tr>
                                         </thead>
-                                        {{-- <tbody>
-                                            @foreach($pics as $pic)
+                                        <tbody>
+                                            @foreach($ruangans as $ruangan)
                                                 <tr>
-                                                    <td>{{ $loop->iteration }}</td>
-                                                    <td>{{ $pic->nama_pic }}</td>
-                                                    <td>{{ $pic->email_pic }}</td>
-                                                    <td>{{ $pic->no_telepon }}</td>
+                                                    <td>{{ $ruangan->nama_ruangan }}</td>
+                                                    <td>{{ $ruangan->lantai }}</td>
+                                                    <td>{{ $ruangan->kapasitas_ruangan }} Orang</td>
                                                     <td>
-                                                        <a href="{{ route('pic.edit', $pic->id) }}" class="btn btn-sm btn-primary">Edit</a>
-                                                        <form action="{{ route('pic.destroy', $pic->id) }}" method="POST" style="display:inline-block;" onsubmit="return confirm('Apakah kamu yakin ingin menghapus data ini?');">
+                                                        @php
+                                                            // Mencari nama PIC berdasarkan ID
+                                                            $picName = '';
+                                                            foreach ($pics as $pic) {
+                                                                if ($pic->id === $ruangan->pic) {
+                                                                    $picName = $pic->nama_pic;
+                                                                    break;
+                                                                }
+                                                            }
+                                                        @endphp
+                                                        {{ $picName ?: 'Tidak ada PIC' }} <!-- Menampilkan nama PIC atau teks jika tidak ada -->
+                                                    </td>
+                                                    <td>
+                                                        <a href="{{ route('ruangan.edit', $ruangan->id) }}" class="btn btn-sm btn-primary">Edit</a>
+                                                        <form action="{{ route('ruangan.destroy', $pic->id) }}" method="POST" style="display:inline-block;" onsubmit="return confirm('Apakah kamu yakin ingin menghapus data ini?');">
 
                                                             @csrf
                                                             @method('DELETE')
@@ -68,7 +82,7 @@
                                                     </td>
                                                 </tr>
                                             @endforeach
-                                        </tbody> --}}
+                                        </tbody>
                                     </table>
                                 </div>
                             </div>

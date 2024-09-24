@@ -62,14 +62,14 @@
          <!-- Nav Item - Profile -->
          <li class="nav-item {{ Nav::isRoute('ruangan') }}">
             <a class="nav-link" href="{{ route('ruangan.index') }}">
-                <i class="fas fa-fw fa-user"></i>
+                <i class="fa-solid fa-house"></i>
                 <span>{{ __('RUANGAN') }}</span>
             </a>
         </li>
   <!-- Nav Item - Profile -->
          <li class="nav-item">
             <a class="nav-link">
-                <i class="fas fa-fw fa-user"></i>
+                <i class="fa-solid fa-door-open"></i>
                 <span>{{ __('BOOKING ROOM') }}</span>
             </a>
         </li>
