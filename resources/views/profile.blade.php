@@ -111,8 +111,8 @@
 
                             <div class="row">
                                 <div class="col-lg-4">
-                                    <div class="form-group focused">
-                                        <label class="form-control-label" for="current_password">Current password</label>
+                                    <div class="form-group focused display-flex">
+                                        <label class="form-control-label " for="current_password">Current password</label>
                                         <input type="password" id="current_password" class="form-control" name="current_password" placeholder="Current password">
                                     </div>
                                 </div>

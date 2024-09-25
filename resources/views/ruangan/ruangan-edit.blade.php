@@ -31,8 +31,10 @@
 
                 <div class="card-body">
 
-                    <form method="POST" action="{{ route('ruangan.store') }}" autocomplete="off">
+                    <form method="POST" action="{{ route('ruangan.update', $ruangan->id) }}" autocomplete="off">
                         @csrf
+                        @method('PUT')
+                        
                         <h6 class="heading-small text-muted mb-4">Informasi RUANGAN</h6>
 
                         <div class="pl-lg-4">
@@ -49,7 +51,7 @@
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <label class="form-control-label" for="lantai">Lantai<span class="small text-danger">*</span></label>
-                                        <input type="text" id="lantai" class="form-control" name="lantai" placeholder="" value="">
+                                        <input type="text" id="lantai" class="form-control" name="lantai" placeholder="" value="{{ $ruangan->lantai }}">
                                     </div>
                                 </div>
                             </div>
@@ -58,7 +60,7 @@
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <label class="form-control-label" for="kapasitas_ruangan">Kapasitas Ruangan<span class="small text-danger">*</span></label>
-                                        <input type="text" id="kapasitas_ruangan" class="form-control" name="kapasitas_ruangan" placeholder="" value="">
+                                        <input type="text" id="kapasitas_ruangan" class="form-control" name="kapasitas_ruangan" placeholder="" value="{{ $ruangan->kapasitas_ruangan }}">
                                     </div>
                                 </div>
                             </div>
