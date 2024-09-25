@@ -58,10 +58,11 @@ Route::get('/ruangan/{id}/edit', [RuanganController::class, 'edit'])->name('ruan
 Route::put('/ruangan/{id}', [RuanganController::class, 'update'])->name('ruangan.update');
 Route::delete('/ruangan/{id}', [RuanganController::class, 'destroy'])->name('ruangan.destroy');
 
-
-
-Route::get('/booking', function () {
-    return(view('booking.booking'));
-})->name('booking.index');
+Route::get('/check-booking', [BookingController::class, 'checkBooking']);
+Route::get('booking', [BookingController::class, 'index'])->name('booking.index');
+Route::post('/booking/response/{id}', [BookingController::class, 'response'])->name('booking.response');
 Route::get('/booking-add', [BookingController::class, 'create'])->name('booking.add');
 Route::post('/booking-add', [BookingController::class, 'store'])->name('booking.store');
+Route::get('/booking/{id}/edit', [BookingController::class, 'edit'])->name('booking.edit');
+Route::put('/booking/{id}', [BookingController::class, 'update'])->name('booking.update');
+Route::delete('/booking/{id}', [BookingController::class, 'destroy'])->name('booking.destroy');

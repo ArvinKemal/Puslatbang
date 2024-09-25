@@ -55,19 +55,7 @@
                                                     <td>{{ $ruangan->nama_ruangan }}</td>
                                                     <td>{{ $ruangan->lantai }}</td>
                                                     <td>{{ $ruangan->kapasitas_ruangan }} Orang</td>
-                                                    <td>
-                                                        @php
-                                                            // Mencari nama PIC berdasarkan ID
-                                                            $picName = '';
-                                                            foreach ($pics as $pic) {
-                                                                if ($pic->id === $ruangan->pic) {
-                                                                    $picName = $pic->nama_pic;
-                                                                    break;
-                                                                }
-                                                            }
-                                                        @endphp
-                                                        {{ $picName ?: 'Tidak ada PIC' }} <!-- Menampilkan nama PIC atau teks jika tidak ada -->
-                                                    </td>
+                                                    <td>{{ $ruangan->pic ? $ruangan->pic->nama_pic : 'Tidak ada PIC' }}</td>
                                                     <td>
                                                         <a href="{{ route('ruangan.edit', $ruangan->id) }}" class="btn btn-sm btn-primary">Edit</a>
                                                         <form action="{{ route('ruangan.destroy', $ruangan->id) }}" method="POST" style="display:inline-block;" onsubmit="return confirm('Apakah kamu yakin ingin menghapus data ini?');">

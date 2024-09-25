@@ -43,7 +43,7 @@ class RuanganController extends Controller
             'nama_ruangan' => 'required|string|max:255', 
             'lantai' => 'required|integer',
             'kapasitas_ruangan' => 'required',
-            'pic' => 'required'
+            'pic_id' => 'required'
         ],[
             'nama_ruangan.required' => 'Nama wajib diisi',
             'nama_ruangan.string' => 'Nama harus berupa teks',
@@ -54,13 +54,13 @@ class RuanganController extends Controller
 
             'kapasitas_ruangan.required' => 'kapasitas ruangan wajib diisi',
             
-            'pic.required' => 'pic wajib diisi',
+            'pic_id.required' => 'pic wajib diisi',
         ]);
 
          // Simpan data ke database
 
         $ruangan = new Ruangan();
-        $ruangan->pic = $request->pic;
+        $ruangan->pic_id = $request->pic_id;
         $ruangan->lantai = $request->lantai;
         $ruangan->nama_ruangan = $request->nama_ruangan;
         $ruangan->kapasitas_ruangan = $request->kapasitas_ruangan;
