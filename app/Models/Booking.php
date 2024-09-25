@@ -10,6 +10,11 @@ class Booking extends Model
     protected $table = 'booking'; 
 
     protected $fillable = [
-        'ruangan_id', 'nama_pengunjung', 'kontak_pengunjung', 'waktu_pemakaian_awal', 'waktu_pemakaian_akhir'
+        'ruangan_id', 'nama_pengunjung', 'kontak_pengunjung', 'waktu_pemakaian_awal', 'waktu_pemakaian_akhir', 'tanggal'
     ];
+
+    public function ruangan()
+    {
+        return $this->belongsTo(Ruangan::class);
+    }
 }

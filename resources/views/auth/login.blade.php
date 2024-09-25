@@ -47,7 +47,7 @@
                                             {{ __('Login') }}
                                         </button>
                                     </div>
-
+                                </form>
                                     <hr>
 
                                 @if (Route::has('register'))

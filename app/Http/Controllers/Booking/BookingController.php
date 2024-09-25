@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Booking;
 use App\Http\Controllers\Controller;
 use App\Models\Booking;
 use App\Models\Ruangan;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class BookingController extends Controller
@@ -19,7 +20,10 @@ class BookingController extends Controller
      */
     public function index()
     {
-        //
+        $bookings = Booking::orderBy('tanggal', 'asc')->get();
+        $ruangans = Ruangan::all();
+
+        return view('booking.booking', compact('bookings', 'ruangans'));
     }
 
     /**
@@ -27,7 +31,8 @@ class BookingController extends Controller
      */
     public function create()
     {
-        $ruangans = Ruangan::orderBy('lantai', 'asc')->get();
+        $ruangans = Ruangan::all();
+        // Anda bisa menginisialisasi $bookings di sini jika perlu
         return view('booking.booking-add', compact('ruangans'));
     }
 
@@ -36,33 +41,32 @@ class BookingController extends Controller
      */
     public function store(Request $request)
     {
-         // Validasi input
-    $request->validate([
-        'waktu_pemakaian' => 'required',
-        
-    ]);
+        $request->validate([
+            'tanggal' => 'required|date',
+            'ruangan_id' => 'required|exists:ruangan,id',
+            'waktu_pemakaian' => 'required',
+            'nama_pengunjung' => 'required|string|max:255',
+            'kontak_pengunjung' => 'required|string|max:255',
+        ]);
 
-    // Pisahkan waktu awal dan akhir
-    $waktuPemakaian = explode('-', $request->input('waktu_pemakaian'));
-    $waktuPemakaianAwal = $waktuPemakaian[0];
-    $waktuPemakaianAkhir = $waktuPemakaian[1];
+        // Pisahkan waktu awal dan akhir
+        $waktuPemakaian = explode('-', $request->input('waktu_pemakaian'));
+        $waktuPemakaianAwal = $waktuPemakaian[0];
+        $waktuPemakaianAkhir = $waktuPemakaian[1];
 
-    // Simpan data ke dalam database
-    $booking = new Booking();
-    $booking->date = $request->input('date');
-    $booking->lantai = $request->input('lantai');
-    $booking->nama_ruangan = $request->input('nama_ruangan');
-    $booking->pengguna = $request->input('pengguna');
-    $booking->kontak_pengguna = $request->input('kontak_pengguna');
-    
-    // Simpan waktu pemakaian
-    $booking->waktu_pemakaian_awal = $waktuPemakaianAwal;
-    $booking->waktu_pemakaian_akhir = $waktuPemakaianAkhir;
+        // Simpan data ke dalam database
+        $booking = new Booking();
+        $booking->ruangan_id = $request->input('ruangan_id');
+        $booking->nama_pengunjung = $request->input('nama_pengunjung');
+        $booking->kontak_pengunjung = $request->input('kontak_pengunjung');
+        // Simpan waktu pemakaian
+        $booking->waktu_pemakaian_awal = $waktuPemakaianAwal;
+        $booking->waktu_pemakaian_akhir = $waktuPemakaianAkhir;
+        $booking->tanggal = $request->input('tanggal');
+        // Simpan ke database
+        $booking->save();
 
-    // Simpan ke database
-    $booking->save();
-
-    return redirect()->route('booking.index')->with('success', 'Reservasi berhasil ditambahkan');
+        return redirect()->route('booking.index')->with('success', 'Reservasi berhasil ditambahkan');
     }
 
     /**
@@ -77,8 +81,10 @@ class BookingController extends Controller
      * Show the form for editing the specified resource.
      */
     public function edit(string $id)
-    {
-        //
+    {   
+        $booking = Booking::findOrFail($id); 
+        $ruangans = Ruangan::all();
+        return view('booking.booking-edit', compact('booking', 'ruangans')); 
     }
 
     /**
@@ -92,8 +98,39 @@ class BookingController extends Controller
     /**
      * Remove the specified resource from storage.
      */
+
+    public function response(Request $request, $id)
+    {
+        $booking = Booking::findOrFail($id);
+        $booking->status = $request->input('status');
+        $booking->save();
+
+        return redirect()->route('booking.index')->with('success', 'Tanggapan berhasil diperbarui!');
+    }
+
+    public function checkBooking(Request $request)
+    {
+        $ruanganId = $request->input('ruangan_id');
+        $tanggal = $request->input('tanggal');
+
+        $existingBookings = Booking::where('ruangan_id', $ruanganId)
+            ->where('tanggal', $tanggal)
+            ->get();
+
+        $usedTimes = [];
+        foreach ($existingBookings as $booking) {
+            $usedTimes[] = $booking->waktu_pemakaian_awal . '-' . $booking->waktu_pemakaian_akhir;
+        }
+
+        return response()->json(['usedTimes' => $usedTimes]);
+    }
+
+
     public function destroy(string $id)
     {
-        //
+        $booking = Booking::findOrFail($id);
+        $booking->delete();
+
+        return redirect()->route('booking.index')->with('success', 'Data Booking berhasil dihapus!');
     }
 }
