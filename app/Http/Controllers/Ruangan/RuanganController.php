@@ -9,12 +9,17 @@ use Illuminate\Http\Request;
 
 class RuanganController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $ruangans = Ruangan::all(); 
+        $ruangans = Ruangan::orderBy('lantai', 'asc')->get();
         $pics = Pic::all();
 
         return view('ruangan.ruangan', compact('ruangans', 'pics'));
@@ -25,8 +30,8 @@ class RuanganController extends Controller
      */
     public function create()
     {
-        $pics = Pic::all(); // Mengambil semua data PIC dari tabel Pic
-        return view('ruangan.ruangan-add', compact('pics')); // Mengirimkan data PIC ke view
+        $pics = Pic::all(); 
+        return view('ruangan.ruangan-add', compact('pics')); 
     }
     
     /**
@@ -37,7 +42,7 @@ class RuanganController extends Controller
         $request->validate([
             'nama_ruangan' => 'required|string|max:255', 
             'lantai' => 'required|integer',
-            'kapasitas_ruangan' => 'required|integer',
+            'kapasitas_ruangan' => 'required',
             'pic' => 'required'
         ],[
             'nama_ruangan.required' => 'Nama wajib diisi',
@@ -48,7 +53,6 @@ class RuanganController extends Controller
             'lantai.integer' => 'lantai harus berupa angka',
 
             'kapasitas_ruangan.required' => 'kapasitas ruangan wajib diisi',
-            'kapasitas_ruangan.integer' => 'kapasitas ruangan harus berupa angka',
             
             'pic.required' => 'pic wajib diisi',
         ]);

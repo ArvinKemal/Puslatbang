@@ -24,11 +24,8 @@
     @endif
 
     <div class="row">   
-
         <div class="col-lg order-lg-1">
-
             <div class="card shadow mb-4">
-
                 <div class="card-body">
 
                     <div class="d-flex justify-content-end mb-3">
@@ -73,7 +70,7 @@
                                                     </td>
                                                     <td>
                                                         <a href="{{ route('ruangan.edit', $ruangan->id) }}" class="btn btn-sm btn-primary">Edit</a>
-                                                        <form action="{{ route('ruangan.destroy', $pic->id) }}" method="POST" style="display:inline-block;" onsubmit="return confirm('Apakah kamu yakin ingin menghapus data ini?');">
+                                                        <form action="{{ route('ruangan.destroy', $ruangan->id) }}" method="POST" style="display:inline-block;" onsubmit="return confirm('Apakah kamu yakin ingin menghapus data ini?');">
 
                                                             @csrf
                                                             @method('DELETE')
@@ -87,9 +84,8 @@
                                 </div>
                             </div>
                         </div>
-
+                </div>
             </div>
-
         </div>
     </div>
 
