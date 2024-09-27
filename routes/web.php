@@ -74,3 +74,8 @@ Route::delete('/booking/{id}', [BookingController::class, 'destroy'])->name('boo
 
 // routing booking user
 Route::get('/booking-user', [BookingUserController::class, 'create'])->name('booking-user.add');
+
+// routing Tv Screen
+Route::get('/tv', function () {
+    return view('tvscreen');
+})->name('tv');
