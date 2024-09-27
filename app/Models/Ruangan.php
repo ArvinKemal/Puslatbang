@@ -12,4 +12,9 @@ class Ruangan extends Model
     protected $fillable = [
         'pic', 'lantai', 'nama_ruangan', 'kapasitas_ruangan'
     ];
+
+    public function pic()
+    {
+        return $this->belongsTo(Pic::class);
+    }
 }

@@ -1,17 +1,16 @@
 @extends('layouts.admin')
 
 @section('main-content')
-
     <!-- Page Heading -->
     <h1 class="h3 mb-4 text-gray-800">{{ __('Dashboard') }}</h1>
 
     @if (session('success'))
-    <div class="alert alert-success border-left-success alert-dismissible fade show" role="alert">
-        {{ session('success') }}
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
+        <div class="alert alert-success border-left-success alert-dismissible fade show" role="alert">
+            {{ session('success') }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
     @endif
 
     @if (session('status'))
@@ -30,59 +29,38 @@
                 <div class="card-header py-3">
                     <h6 class="m-0 font-weight-bold text-primary">Daftar Booking</h6>
                 </div>
-                <div class="row">   
+                <div class="row">
                     <div class="col-lg order-lg-1">
                         <div class="card shadow mb-4">
-                            <div class="card-body"> 
-                                    
-                                    <div class="card">
-                                            <div class="table-responsive">
-                                                <table class="table align-items-center table-flush">
-                                                    <thead class="thead-light">
-                                                        <tr>
-                                                            
-                                                            <th>Tanggal</th>
-                                                            <th>Nama Ruangan</th>
-                                                            <th>Lantai</th>
-                                                            <th>Nama Pengunjung</th>
-                                                            <th>Waktu Pemakaian</th>
-                                                            
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        {{-- @foreach($ruangans as $ruangan)
-                                                            <tr>
-                                                                <td>{{ $ruangan->nama_ruangan }}</td>
-                                                                <td>{{ $ruangan->lantai }}</td>
-                                                                <td>{{ $ruangan->kapasitas_ruangan }} Orang</td>
-                                                                <td>
-                                                                    @php
-                                                                        // Mencari nama PIC berdasarkan ID
-                                                                        $picName = '';
-                                                                        foreach ($pics as $pic) {
-                                                                            if ($pic->id === $ruangan->pic) {
-                                                                                $picName = $pic->nama_pic;
-                                                                                break;
-                                                                            }
-                                                                        }
-                                                                    @endphp
-                                                                    {{ $picName ?: 'Tidak ada PIC' }} <!-- Menampilkan nama PIC atau teks jika tidak ada -->
-                                                                </td>
-                                                                <td>
-                                                                    <a href="{{ route('ruangan.edit', $ruangan->id) }}" class="btn btn-sm btn-primary">Edit</a>
-                                                                    <form action="{{ route('ruangan.destroy', $pic->id) }}" method="POST" style="display:inline-block;" onsubmit="return confirm('Apakah kamu yakin ingin menghapus data ini?');"> --}}
-            
-                                                                        {{-- @csrf
-                                                                        @method('DELETE')
-                                                                        <button type="submit" class="btn btn-sm btn-danger">Hapus</button>
-                                                                    </form>
-                                                                </td>
-                                                            </tr>
-                                                        @endforeach --}}
-                                                    </tbody>
-                                                </table>
-                                            </div>
+                            <div class="card-body">
+
+                                <div class="card">
+                                    <div class="table-responsive">
+                                        <table class="table align-items-center table-flush">
+                                            <thead class="thead-light">
+                                                <tr>
+
+                                                    <th>Tanggal</th>
+                                                    <th>Nama Ruangan</th>
+                                                    <th>Nama Pengunjung</th>
+                                                    <th>Waktu Pemakaian</th>
+                                                    <th>Status</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($bookings as $booking)
+                                                    <tr>
+                                                        <td>{{ $booking->tanggal }}</td>
+                                                        <td>{{ $booking->ruangan ? $booking->ruangan->nama_ruangan : 'Tidak ada ruangan' }}</td>
+                                                        <td>{{ $booking->nama_pengunjung }}</td>
+                                                        <td>{{ $booking->waktu_pemakaian_awal }}-{{ $booking->waktu_pemakaian_akhir }}</td>
+                                                        <td>{{ $booking->status }}</td>
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
                                     </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -152,9 +130,12 @@
                 </div>
                 <div class="card-body">
                     <div class="text-center">
-                        <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;" src="{{ asset('img/svg/undraw_editable_dywm.svg') }}" alt="">
+                        <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;"
+                            src="{{ asset('img/svg/undraw_editable_dywm.svg') }}" alt="">
                     </div>
-                    <p>Add some quality, svg illustrations to your project courtesy of <a target="_blank" rel="nofollow" href="https://undraw.co/">unDraw</a>, a constantly updated collection of beautiful svg images that you can use completely free and without attribution!</p>
+                    <p>Add some quality, svg illustrations to your project courtesy of <a target="_blank" rel="nofollow"
+                            href="https://undraw.co/">unDraw</a>, a constantly updated collection of beautiful svg images
+                        that you can use completely free and without attribution!</p>
                     <a target="_blank" rel="nofollow" href="https://undraw.co/">Browse Illustrations on unDraw →</a>
                 </div>
             </div>
@@ -165,8 +146,11 @@
                     <h6 class="m-0 font-weight-bold text-primary">Development Approach</h6>
                 </div>
                 <div class="card-body">
-                    <p>SB Admin 2 makes extensive use of Bootstrap 4 utility classes in order to reduce CSS bloat and poor page performance. Custom CSS classes are used to create custom components and custom utility classes.</p>
-                    <p class="mb-0">Before working with this theme, you should become familiar with the Bootstrap framework, especially the utility classes.</p>
+                    <p>SB Admin 2 makes extensive use of Bootstrap 4 utility classes in order to reduce CSS bloat and poor
+                        page performance. Custom CSS classes are used to create custom components and custom utility
+                        classes.</p>
+                    <p class="mb-0">Before working with this theme, you should become familiar with the Bootstrap
+                        framework, especially the utility classes.</p>
                 </div>
             </div>
 

@@ -18,8 +18,8 @@ class PicController extends Controller
      */
     public function index()
     {
-        $pics = Pic::all(); // Mengambil semua data dari tabel pic
-        return view('pic.pic', compact('pics')); // Mengirim data ke view
+        $pics = Pic::all();
+        return view('pic.pic', compact('pics'));
     }
 
     /**
