@@ -53,61 +53,42 @@
                                         @foreach ($bookings as $booking)
                                             <tr>
                                                 <td>{{ $booking->tanggal }}</td>
-                                                <td>{{ $booking->ruangan ? $booking->ruangan->nama_ruangan : 'Tidak ada ruangan' }}</td>
-                                                <td>{{ $booking->ruangan ? $booking->ruangan->lantai : 'Tidak ada lantai' }}</td>
+                                                <td>{{ $booking->ruangan ? $booking->ruangan->nama_ruangan : 'Tidak ada ruangan' }}
+                                                </td>
+                                                <td>{{ $booking->ruangan ? $booking->ruangan->lantai : 'Tidak ada lantai' }}
+                                                </td>
                                                 <td>{{ $booking->nama_pengunjung }}</td>
                                                 <td>{{ $booking->kontak_pengunjung }}</td>
                                                 <td>{{ $booking->waktu_pemakaian_awal }}-{{ $booking->waktu_pemakaian_akhir }}
                                                 </td>
-                                                <td>{{ $booking->status }}</td>
+                                                @php
+                                                    $class = '';
+                                                    if ($booking->status == 'pending') {
+                                                        $class = 'badge bg-warning';
+                                                    } elseif ($booking->status == 'booked') {
+                                                        $class = 'badge bg-success';
+                                                    } elseif ($booking->status == 'canceled') {
+                                                        $class = 'badge bg-danger';
+                                                    }
+                                                @endphp
+
+                                                <td>
+                                                    <span class="{{ $class }}" style="color: white;">
+                                                        {{ ucfirst($booking->status) }}
+                                                    </span>
+                                                </td>
                                                 <td>
                                                     @if ($booking->status === 'pending')
-                                                        <button type="button" class="btn btn-sm btn-warning"
-                                                            data-toggle="modal"
-                                                            data-target="#responseModal{{ $booking->id }}">
-                                                            Response
-                                                        </button>
+                                                    <a href="{{ route('booking.edit', $booking->id) }}"
+                                                        class="btn btn-sm btn-primary">Edit</a>
                                                     @endif
-                                                    <a href="{{ route('booking.edit', $booking->id) }}" class="btn btn-sm btn-primary">Edit</a>
-                                                    <form action="{{ route('booking.destroy', $booking->id) }}" method="POST" style="display:inline-block;"
+                                                    <form action="{{ route('booking.destroy', $booking->id) }}"
+                                                        method="POST" style="display:inline-block;"
                                                         onsubmit="return confirm('Apakah kamu yakin ingin menghapus data ini?');">
                                                         @csrf
                                                         @method('DELETE')
                                                         <button type="submit" class="btn btn-sm btn-danger">Hapus</button>
                                                     </form>
-
-                                                    <!-- Modal -->
-                                                    <div class="modal fade" id="responseModal{{ $booking->id }}"
-                                                        tabindex="-1" role="dialog" aria-labelledby="responseModalLabel"
-                                                        aria-hidden="true">
-                                                        <div class="modal-dialog" role="document">
-                                                            <div class="modal-content">
-                                                                <div class="modal-header">
-                                                                    <h5 class="modal-title" id="responseModalLabel">
-                                                                        Tanggapan Booking</h5>
-                                                                    <button type="button" class="close"
-                                                                        data-dismiss="modal" aria-label="Close">
-                                                                        <span aria-hidden="true">&times;</span>
-                                                                    </button>
-                                                                </div>
-                                                                <div class="modal-body">
-                                                                    Apakah Anda ingin menerima atau menolak booking ini?
-                                                                </div>
-                                                                <div class="modal-footer">
-                                                                    <form
-                                                                        action="{{ route('booking.response', $booking->id) }}"
-                                                                        method="POST">
-                                                                        @csrf
-                                                                        <button type="submit" name="status" value="booked"
-                                                                            class="btn btn-success">Terima</button>
-                                                                        <button type="submit" name="status"
-                                                                            value="canceled"
-                                                                            class="btn btn-danger">Tolak</button>
-                                                                    </form>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
                                                 </td>
 
                                             </tr>
