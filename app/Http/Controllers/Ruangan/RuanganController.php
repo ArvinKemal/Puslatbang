@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Ruangan;
 use App\Http\Controllers\Controller;
 use App\Models\Pic;
 use App\Models\Ruangan;
+use Faker\Core\File;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class RuanganController extends Controller
 {
@@ -43,7 +45,8 @@ class RuanganController extends Controller
             'nama_ruangan' => 'required|string|max:255', 
             'lantai' => 'required|integer',
             'kapasitas_ruangan' => 'required',
-            'pic_id' => 'required'
+            'pic_id' => 'required',
+            'image' => 'required|image|max:1000'
         ],[
             'nama_ruangan.required' => 'Nama wajib diisi',
             'nama_ruangan.string' => 'Nama harus berupa teks',
@@ -55,6 +58,11 @@ class RuanganController extends Controller
             'kapasitas_ruangan.required' => 'kapasitas ruangan wajib diisi',
             
             'pic_id.required' => 'pic wajib diisi',
+
+            'image.required' => 'image harus diisi',
+            'image.image' => 'image harus berupa jpg/jpeg/png',
+            'image.max:1000' => 'ukuran image maksimal 1000kb'
+
         ]);
 
          // Simpan data ke database
@@ -64,6 +72,11 @@ class RuanganController extends Controller
         $ruangan->lantai = $request->lantai;
         $ruangan->nama_ruangan = $request->nama_ruangan;
         $ruangan->kapasitas_ruangan = $request->kapasitas_ruangan;
+        $file = $request->file('image');
+
+        // Storage::putFileAs('photos', new File('public/ruangan'), $file->getClientOriginalName());
+        $path = Storage::putFile('public/ruangan', $file);
+        $ruangan->image = basename($path);
 
         $ruangan->save();
 
