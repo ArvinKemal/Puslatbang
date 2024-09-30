@@ -4,13 +4,13 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="Laravel SB Admin 2">
-    <meta name="author" content="Alejandro RH">
+    <meta name="description" content="">
+    <meta name="author" content="">
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'LAN RI') }}</title>
 
     <!-- Fonts -->
     <link href="{{ asset('vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet">
@@ -20,7 +20,7 @@
     <link href="{{ asset('css/sb-admin-2.min.css') }}" rel="stylesheet">
 
     <!-- Favicon -->
-    <link href="{{ asset('img/favicon.png') }}" rel="icon" type="image/png">
+    <link href="{{ asset('img/lanriicon.png') }}" rel="icon" type="image/png">
 </head>
 <body id="page-top">
 
@@ -52,32 +52,25 @@
             {{ __('Settings') }}
         </div>
 
-        <!-- Nav Item - Profile -->
+        <!-- Nav Item - PIC  -->
         <li class="nav-item {{ Nav::isRoute('pic') }}">
             <a class="nav-link" href="{{ route('pic.index') }}">
                 <i class="fas fa-fw fa-user"></i>
                 <span>{{ __('PIC') }}</span>
             </a>
         </li>
-         <!-- Nav Item - Profile -->
+         <!-- Nav Item - Ruangan -->
          <li class="nav-item {{ Nav::isRoute('ruangan') }}">
             <a class="nav-link" href="{{ route('ruangan.index') }}">
                 <i class="fa-solid fa-house"></i>
                 <span>{{ __('RUANGAN') }}</span>
             </a>
         </li>
-  <!-- Nav Item - Profile -->
+  <!-- Nav Item - Booking -->
          <li class="nav-item" {{ Nav::isRoute('booking') }}>
             <a class="nav-link" href="{{ route('booking.index') }}">
                 <i class="fa-solid fa-door-open"></i>
                 <span>{{ __('BOOKING') }}</span>
-            </a>
-        </li>
-        <!-- Nav Item - About -->
-        <li class="nav-item {{ Nav::isRoute('about') }}">
-            <a class="nav-link" href="{{ route('about') }}">
-                <i class="fas fa-fw fa-hands-helping"></i>
-                <span>{{ __('About') }}</span>
             </a>
         </li>
 
@@ -145,7 +138,7 @@
         <footer class="sticky-footer bg-white">
             <div class="container my-auto">
                 <div class="copyright text-center my-auto">
-                    <span>Copyright &copy; <a href="https://www.instagram.com/himatekkom_usk/" target="_blank">Himatekkom USK 2024</a></span>
+                    <span>&copy; <a href="https://www.instagram.com/himatekkom_usk/" target="_blank">Himatekkom USK 2024</a></span>
                 </div>
             </div>
         </footer>
