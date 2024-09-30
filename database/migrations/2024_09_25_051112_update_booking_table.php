@@ -11,13 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('pic', function (Blueprint $table) {
-            $table->engine = 'InnoDB'; 
-            $table->id();
-            $table->string('nama_pic');
-            $table->string('no_telepon', 15);
-            $table->timestamps();
-        });
+        //
     }
 
     /**
@@ -25,6 +19,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('pic');
+        Schema::table('booking', function (Blueprint $table) {
+            //
+        });
     }
 };
