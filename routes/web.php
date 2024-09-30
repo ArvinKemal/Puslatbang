@@ -7,7 +7,7 @@ use App\Http\Controllers\Ruangan\RuanganController;
 use App\Models\Ruangan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\TvScreenController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -30,6 +30,13 @@ use Illuminate\Support\Facades\Route;
 //         return redirect()->route('login');
 //     }
 // });
+
+// routing booking user
+Route::get('/booking-user', [BookingUserController::class, 'create'])->name('booking-user.add');
+Route::post('/booking-user', [BookingUserController::class, 'store'])->name('booking-user.store');
+Route::get('/booking-user-success', function () {
+    return view('booking-user-kuitansi');
+})->name('kuitansi');
 
 Auth::routes();
 
@@ -72,12 +79,11 @@ Route::delete('/booking/{id}', [BookingController::class, 'destroy'])->name('boo
 
 
 
-// routing booking user
-Route::get('/booking-user', [BookingUserController::class, 'create'])->name('booking-user.add');
+
 
 
 
 // routing Tv Screen
-use App\Http\Controllers\TvScreenController;
+
 
 
