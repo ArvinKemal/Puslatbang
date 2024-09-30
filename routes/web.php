@@ -70,13 +70,12 @@ Route::post('/booking-add', [BookingController::class, 'store'])->name('booking.
 Route::get('/booking/{id}/edit', [BookingController::class, 'edit'])->name('booking.edit');
 Route::put('/booking/{id}', [BookingController::class, 'update'])->name('booking.update');
 Route::delete('/booking/{id}', [BookingController::class, 'destroy'])->name('booking.destroy');
-
-
-
-
-
 // routing booking user
 Route::get('/booking-user', [BookingUserController::class, 'create'])->name('booking-user.add');
 
 // routing Tv Screen
 Route::get('/tv', [TvController::class, 'index'])->name('tv');
+
+use App\Http\Controllers\LandingPageController;
+Route::get('/', [LandingPageController::class, 'index']);
+

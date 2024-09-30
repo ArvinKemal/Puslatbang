@@ -11,9 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('booking', function (Blueprint $table) {
-            $table->date('tanggal');
-        });
+        //
     }
 
     /**
