@@ -16,9 +16,10 @@ return new class extends Migration
             $table->foreignId('ruangan_id')->constrained('ruangan');
             $table->string('nama_pengunjung');
             $table->string('kontak_pengunjung');
-            $table->dateTime('waktu_pemakaian_awal');
-            $table->dateTime('waktu_pemakaian_akhir');
-            $table->dateTime('waktu_booking');
+            $table->date('tanggal');
+            $table->time('waktu_pemakaian_awal');
+            $table->time('waktu_pemakaian_akhir');
+            $table->enum('status', ['pending', 'booked', 'canceled'])->default('pending');
             $table->timestamps();
         });
     }

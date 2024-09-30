@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('ruangan', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->id();
-            $table->foreignId('pic')->constrained('pic'); 
+            $table->foreignId('pic_id')->constrained('pic'); 
             $table->integer('lantai');
             $table->string('nama_ruangan');
             $table->integer('kapasitas_ruangan');
