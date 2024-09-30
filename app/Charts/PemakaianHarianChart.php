@@ -45,8 +45,8 @@ class PemakaianHarianChart
             $dataTotalPemakaianPerRuangan = [];
 
             // Loop untuk menghitung pemakaian per hari (7 hari)
-            for ($hari = 0; $hari < 7; $hari++) {
-                $tanggal = date('Y-m-d', strtotime("-$hari days")); // Tanggal untuk hari tersebut
+            for ($hari = 6; $hari >= 0; $hari--) {
+                $tanggal = date('Y-m-d', strtotime("-$hari days"));
 
                 // Hitung total pemakaian untuk ruangan tertentu pada tanggal tersebut
                 $totalPemakaian = Booking::where('ruangan_id', $booking->ruangan_id)
@@ -66,8 +66,7 @@ class PemakaianHarianChart
 
         // Membuat grafik dengan banyak garis (multiple lines)
         $chart = $this->chart->lineChart()
-            ->setTitle('Pemakaian Ruangan Mingguan')
-            ->setSubtitle("Jumlah Pemakaian dari $tanggalMulai hingga $tanggalAkhir")
+            ->setTitle("$tanggalMulai hingga $tanggalAkhir")
             ->setHeight(320)
             ->setXAxis($dataHarian); // Label X-axis (hari)
 

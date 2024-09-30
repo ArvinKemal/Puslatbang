@@ -65,8 +65,7 @@ class PemakaianBulananChart
 
         // Membuat grafik dengan banyak garis (multiple lines)
         $chart = $this->chart->lineChart()
-            ->setTitle('Pemakaian Ruangan Bulanan')
-            ->setSubtitle('Jumlah Pemakaian Bulan ' . $namaBulan . ' ' . $tahun) // Subtitle dengan nama bulan
+            ->setTitle('' . $namaBulan . ' ' . $tahun)
             ->setHeight(320)
             ->setXAxis($dataMingguan); // Label X-axis (minggu 1-4)
 

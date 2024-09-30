@@ -16776,6 +16776,7 @@ into your web browser: <span class="break-all" style="box-sizing: border-box; fo
 "} 
 =======
 >>>>>>> origin/main
+<<<<<<< HEAD
 [2024-09-30 09:30:07] local.ERROR: Unclosed '(' does not match '}' {"view":{"view":"D:\\KULIAH\\Puslatbang\\Puslatbang\\resources\\views\\landingpage\\landing.blade.php","data":{"errors":"<pre class=sf-dump id=sf-dump-386728535 data-indent-pad=\"  \"><span class=sf-dump-note>Illuminate\\Support\\ViewErrorBag</span> {<a class=sf-dump-ref>#356</a><samp data-depth=1 class=sf-dump-expanded>
   #<span class=sf-dump-protected title=\"Protected property\">bags</span>: []
 </samp>}
@@ -17322,3 +17323,7 @@ into your web browser: <span class="break-all" style="box-sizing: border-box; fo
 #72 D:\\KULIAH\\Puslatbang\\Puslatbang\\server.php(21): require_once('D:\\\\KULIAH\\\\Pusla...')
 #73 {main}
 "} 
+=======
+>>>>>>> origin/main
+[2024-09-26 08:29:54] local.ERROR: Command "make:chart" is not defined.
+>>>>>>> f308bf0a8aef9e1a3bc71fb4659725a6558aa8a9

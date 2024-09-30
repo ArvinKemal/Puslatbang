@@ -31,7 +31,7 @@
 
                 <div class="card-body">
 
-                    <form method="POST" action="{{ route('ruangan.store') }}" autocomplete="off">
+                    <form method="POST" action="{{ route('ruangan.store') }}" autocomplete="off" enctype="multipart/form-data">
                         @csrf
                         <h6 class="heading-small text-muted mb-4">Informasi RUANGAN</h6>
 
@@ -66,13 +66,22 @@
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="form-group">
-                                        <label class="form-control-label" for="pic">PIC<span class="small text-danger">*</span></label>
-                                        <select id="pic" class="form-control" name="pic">
+                                        <label class="form-control-label" for="pic_id">pic_id<span class="small text-danger">*</span></label>
+                                        <select id="pic_id" class="form-control" name="pic_id">
                                             <option value="">Pilih PIC  </option>
                                             @foreach($pics as $pic)
                                                 <option value="{{ $pic->id }}">{{ $pic->nama_pic }}</option>
                                             @endforeach
                                         </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="image">image<span class="small text-danger">*</span></label>
+                                        <input type="file" id="image" name="image" >
                                     </div>
                                 </div>
                             </div>
