@@ -66,3 +66,9 @@ Route::post('/booking-add', [BookingController::class, 'store'])->name('booking.
 Route::get('/booking/{id}/edit', [BookingController::class, 'edit'])->name('booking.edit');
 Route::put('/booking/{id}', [BookingController::class, 'update'])->name('booking.update');
 Route::delete('/booking/{id}', [BookingController::class, 'destroy'])->name('booking.destroy');
+
+
+
+Route::get('ruangan-user', function () {
+    return view('ruangan-user.ruangan-user');
+})->name('ruangan-user');
