@@ -128,7 +128,7 @@
                     @foreach($services as $index => $service)
                         <div class="col-md-6 mb-4"> <!-- 2 items per row with mb-4 for spacing -->
                             <div class="card text-center h-100"> <!-- h-100 to ensure equal height -->
-                                <img src="{{ asset($service->image) }}" class="card-img-top" alt="{{ $service->title }}"> <!-- Menampilkan gambar -->
+                                <img src="{{}}" class="card-img-top" alt="{{ $service->title }}"> <!-- Menampilkan gambar -->
                                 <div class="card-body">
                                     <h5 class="card-title">{{ $service->title }}</h5>
                                     <p class="card-text">{{ $service->description }}</p>
