@@ -92,21 +92,36 @@ class BookingController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
-    }
+        $request->validate([
+            'tanggal' => 'required|date',
+            'ruangan_id' => 'required|exists:ruangan,id',
+            'waktu_pemakaian' => 'required',
+            'nama_pengunjung' => 'required|string|max:255',
+            'kontak_pengunjung' => 'required|string|max:255',
+            'status' => 'required'
+        ]);
 
-    /**
-     * Remove the specified resource from storage.
-     */
+        // Pisahkan waktu awal dan akhir
+        $waktuPemakaian = explode('-', $request->input('waktu_pemakaian'));
+        $waktuPemakaianAwal = $waktuPemakaian[0];
+        $waktuPemakaianAkhir = $waktuPemakaian[1];
 
-    public function response(Request $request, $id)
-    {
+        // Simpan data ke dalam database
         $booking = Booking::findOrFail($id);
+        $booking->ruangan_id = $request->input('ruangan_id');
+        $booking->nama_pengunjung = $request->input('nama_pengunjung');
+        $booking->kontak_pengunjung = $request->input('kontak_pengunjung');
+        // Simpan waktu pemakaian
+        $booking->waktu_pemakaian_awal = $waktuPemakaianAwal;
+        $booking->waktu_pemakaian_akhir = $waktuPemakaianAkhir;
         $booking->status = $request->input('status');
+        $booking->tanggal = $request->input('tanggal');
+        // Simpan ke database
         $booking->save();
 
-        return redirect()->route('booking.index')->with('success', 'Tanggapan berhasil diperbarui!');
+        return redirect()->route('booking.index')->with('success', 'Reservasi berhasil diedit');
     }
+
 
     public function checkBooking(Request $request)
     {

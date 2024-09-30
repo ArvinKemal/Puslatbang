@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Booking\BookingController;
+use App\Http\Controllers\BookingUser\BookingUserController;
 use App\Http\Controllers\Pic\PicController;
 use App\Http\Controllers\Ruangan\RuanganController;
 use App\Models\Ruangan;
@@ -32,7 +33,7 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 
-Route::get('/', 'WelcomeController@index')->name('welcome');
+// Route::get('/', 'WelcomeController@index')->name('welcome');
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/profile', 'ProfileController@index')->name('profile');
@@ -67,8 +68,9 @@ Route::get('/booking/{id}/edit', [BookingController::class, 'edit'])->name('book
 Route::put('/booking/{id}', [BookingController::class, 'update'])->name('booking.update');
 Route::delete('/booking/{id}', [BookingController::class, 'destroy'])->name('booking.destroy');
 
+
+
 use App\Http\Controllers\LandingPageController;
-
+use App\Http\Controllers\TvScreenController;
+Route::get('/booking-user', [BookingUserController::class, 'create'])->name('booking-user.add');
 Route::get('/', [LandingPageController::class, 'index']);
-
-
