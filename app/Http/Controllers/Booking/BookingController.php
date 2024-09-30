@@ -81,10 +81,10 @@ class BookingController extends Controller
      * Show the form for editing the specified resource.
      */
     public function edit(string $id)
-    {   
-        $booking = Booking::findOrFail($id); 
+    {
+        $booking = Booking::findOrFail($id);
         $ruangans = Ruangan::all();
-        return view('booking.booking-edit', compact('booking', 'ruangans')); 
+        return view('booking.booking-edit', compact('booking', 'ruangans'));
     }
 
     /**
@@ -139,7 +139,6 @@ class BookingController extends Controller
 
         return response()->json(['usedTimes' => $usedTimes]);
     }
-
 
     public function destroy(string $id)
     {

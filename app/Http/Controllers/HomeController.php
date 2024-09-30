@@ -3,10 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Charts\PemakaianBulananChart;
-use App\Charts\PemakaianHarianChart; // Import chart harian
+use App\Charts\PemakaianHarianChart;
 use App\Models\Booking;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class HomeController extends Controller
 {
@@ -28,5 +29,13 @@ class HomeController extends Controller
         ];
 
         return view('home', compact('widget', 'bookings', 'bulananChart', 'harianChart'));
+    }
+
+    public function pdf()
+    {
+        $bookings = Booking::orderBy('tanggal', 'asc')->get();
+        $pdf = Pdf::loadView('pdf.bookings', ['bookings' => $bookings]);
+        
+        return $pdf->stream('Data Booking.pdf');
     }
 }
