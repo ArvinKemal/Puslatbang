@@ -31,8 +31,9 @@
             <div class="row">
                 <div class="card-body">
 
-                    <form method="POST" action="" autocomplete="off">
+                    <form method="POST" action="{{ route('booking.update', $booking->id) }}" autocomplete="off">
                         @csrf
+                        @method('PUT')
                         <h6 class="heading-small text-muted mb-4">Informasi BOOKING</h6>
 
                         <div class="col-lg order-lg-1">
@@ -126,8 +127,6 @@
                                         </select>
                                     </div>
                                 </div>
-
-
                                 <div class="col-lg-6">
                                     <div class="form-group focused ">
                                         <label class="form-control-label" for="nama_pengunjung"
@@ -146,7 +145,30 @@
                                             value="{{ $booking->kontak_pengunjung }}">
                                     </div>
                                 </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group focused">
+                                        <label class="form-control-label" for="status"
+                                        style="font-size: 24px; font-weight:400;">Status</label>
+                                        <div class="custom-control custom-radio">
+                                            <input type="radio" id="statusBooked" name="status"
+                                            class="custom-control-input" value="booked"
+                                            {{ $booking->status == 'booked' ? 'checked' : '' }}>
+                                            <label class="custom-control-label" for="statusBooked">
+                                                Booked <i class="fas fa-check-circle" style="color: green;"></i> 
+                                            </label>
+                                        </div>
+                                        <div class="custom-control custom-radio">
+                                            <input type="radio" id="statusCanceled" name="status"
+                                            class="custom-control-input" value="canceled"
+                                            {{ $booking->status == 'canceled' ? 'checked' : '' }}>
+                                            <label class="custom-control-label" for="statusCanceled">
+                                                Canceled <i class="fas fa-times-circle" style="color: red;"></i> 
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
+                                
 
 
                             <!-- Button -->
@@ -163,7 +185,6 @@
                             var selectedLantai = this.value;
                             var ruanganOptions = document.getElementById('nama_ruangan').options;
 
-                            // Loop through ruangan options and display only those that match the selected lantai
                             for (var i = 0; i < ruanganOptions.length; i++) {
                                 var option = ruanganOptions[i];
                                 var ruanganLantai = option.getAttribute('data-lantai');
