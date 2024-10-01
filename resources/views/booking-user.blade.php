@@ -20,7 +20,7 @@
     <link href="{{ asset('css/sb-admin-2.min.css') }}" rel="stylesheet">
 
     <!-- Favicon -->
-    <link href="{{ asset('img/favicon.png') }}" rel="icon" type="image/png">
+    <link href="{{ asset('img/lanriicon.png') }}" rel="icon" type="image/png">
 
     <!-- Custom Styles -->
     <style>
@@ -32,12 +32,13 @@
         }
 
         .logo {
-            max-width: 100px;
+            max-width: 110px;
         }
 
-        .logo-center {
-            max-width: 160px;
+        .logo-right {
+            max-width: 70px;
         }
+
 
         .bg-white-transparent {
             background-color: rgba(255, 255, 255, 0.5);
@@ -58,6 +59,7 @@
             color: #000;
             text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.7);
             font-weight: bold;
+            font-size: 25px;
         }
 
         .form-label {
@@ -117,7 +119,7 @@
                             <div class="row"></div>
                             <div class="form-group focused ">
                                 <label class="form-control-label" for="tanggal"
-                                    style="font-size: 24px; font-weight:400;">Tanggal</label>
+                                    style="font-size: 16px; font-weight:700;">Tanggal</label>
                                 <input type="date" id="tanggal" class="form-control" name="tanggal"
                                     style="height: 50px;" placeholder="Select tanggal">
                             </div>
@@ -125,7 +127,7 @@
                         <div class="col-lg-6">
                             <div class="form-group focused ">
                                 <label class="form-control-label" for="lantai"
-                                    style="font-size: 24px; font-weight:400;">Lantai</label>
+                                    style="font-size: 16px; font-weight:700;">Lantai</label>
                                 <select id="lantai" class="form-control" name="lantai"
                                     style="height: 50px;">
                                     <option value="">Pilih lantai</option>
@@ -139,7 +141,7 @@
                         <div class="col-lg-6">
                             <div class="form-group focused ">
                                 <label class="form-control-label" for="ruangan_id"
-                                    style="font-size: 24px; font-weight:400;">Ruangan</label>
+                                    style="font-size: 16px; font-weight:700;">Ruangan</label>
                                 <select id="nama_ruangan" class="form-control" name="ruangan_id"
                                     style="height: 50px;">
                                     <option value="">Pilih Ruangan</option>
@@ -155,7 +157,7 @@
                         <div class="col-lg-6">
                             <div class="form-group focused">
                                 <label class="form-control-label" for="waktu_pemakaian"
-                                    style="font-size: 24px; font-weight:400;">Waktu</label>
+                                    style="font-size: 16px; font-weight:700;">Waktu</label>
                                 <select id="waktu_pemakaian" class="form-control" name="waktu_pemakaian"
                                     style="height: 50px;">
                                     <option value="">Pilih waktu</option>
@@ -192,7 +194,7 @@
                         <div class="col-lg-6">
                             <div class="form-group focused ">
                                 <label class="form-control-label" for="nama_pengunjung"
-                                    style="font-size: 24px; font-weight:400;">Nama Pengunjung</label>
+                                    style="font-size: 16px; font-weight:700;">Nama Pengunjung</label>
                                 <input type="text" id="nama_pengunjung" class="form-control"
                                     name="nama_pengunjung" style="height: 50px;"
                                     placeholder="Masukkan pengunjung">
@@ -201,7 +203,7 @@
                         <div class="col-lg-6">
                             <div class="form-group focused ">
                                 <label class="form-control-label" for="kontak_pengunjung"
-                                    style="font-size: 24px; font-weight:400;">Kontak Pengunjung</label>
+                                    style="font-size: 16px; font-weight:700;">Kontak Pengunjung</label>
                                 <input type="text" id="kontak_pengunjung" class="form-control"
                                     name="kontak_pengunjung" style="height: 50px;"
                                     placeholder="Masukkan Kontak">

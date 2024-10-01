@@ -21,9 +21,7 @@ return new class extends Migration
     {
         Schema::table('booking', function (Blueprint $table) {
             // Menghapus kolom 'tanggal' jika diperlukan
-            if (Schema::hasColumn('booking', 'tanggal')) {
-                $table->dropColumn('tanggal');
-            }
+            
         });
     }
 };

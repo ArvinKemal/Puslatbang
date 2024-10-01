@@ -33,7 +33,7 @@
             <div class="card w-100" style="max-width: 1500px; background-color: rgba(255, 255, 255, 0.85);">
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center mb-3">
-                        <h1 class="h4">{{ \Carbon\Carbon::now()->format('l d F Y') }}</h1> <!-- Menampilkan tanggal sekarang -->
+                        <h1 class="h4">{{ \Carbon\Carbon::now()->locale('id')->isoFormat('dddd, D MMMM YYYY') }}</h1>
                         <div class="d-flex gap-2">
                             <img src="img/picture1.png" alt="USK Logo" class="img-fluid" style="width: 80px;">
                             <img src="img/lanrinobg.png" alt="LAN RI Logo" class="img-fluid" style="width: 150px; height: 80px;">
@@ -47,7 +47,7 @@
                                 <th>Lokasi</th>
                                 <th>Nama Ruangan</th>
                                 <th>Waktu Penggunaan</th>
-                                <th>Pengguna/PIC</th>
+                                <th>Pengguna</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -63,7 +63,7 @@
                     </table>
     
                     <div class="d-flex justify-content-between small text-muted">
-                        <span>&copy; Tekkom USK 21</span>
+                        <span>&copy; Teknik Komputer USK 21</span>
                     </div>
                 </div>
             </div>

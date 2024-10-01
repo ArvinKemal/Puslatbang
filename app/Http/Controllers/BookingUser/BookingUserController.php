@@ -56,7 +56,7 @@ class BookingUserController extends Controller
         $booking->waktu_pemakaian_akhir = $waktuPemakaianAkhir;
         $booking->tanggal = $request->input('tanggal');
         // Simpan ke database
-        // $booking->save();
+        $booking->save();
 
         $pic = $booking->ruangan->pic; 
         $picName = $pic->nama_pic; // Ambil nama PIC
