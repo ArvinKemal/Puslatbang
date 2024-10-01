@@ -23,7 +23,7 @@
         </div>
     @endif
 
-    <div class="row">   
+    <div class="row">
 
         <div class="col-lg order-lg-1">
 
@@ -34,15 +34,17 @@
                     <form method="POST" action="{{ route('ruangan.update', $ruangan->id) }}" autocomplete="off">
                         @csrf
                         @method('PUT')
-                        
+
                         <h6 class="heading-small text-muted mb-4">Informasi RUANGAN</h6>
 
                         <div class="pl-lg-4">
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="form-group focused">
-                                        <label class="form-control-label" for="nama_ruangan">Nama Ruangan<span class="small text-danger">*</span></label>
-                                        <input type="text" id="nama_ruangan" class="form-control" name="nama_ruangan" placeholder="" value="{{ $ruangan->nama_ruangan }}">
+                                        <label class="form-control-label" for="nama_ruangan">Nama Ruangan<span
+                                                class="small text-danger">*</span></label>
+                                        <input type="text" id="nama_ruangan" class="form-control" name="nama_ruangan"
+                                            placeholder="" value="{{ $ruangan->nama_ruangan }}">
                                     </div>
                                 </div>
                             </div>
@@ -50,8 +52,10 @@
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="form-group">
-                                        <label class="form-control-label" for="lantai">Lantai<span class="small text-danger">*</span></label>
-                                        <input type="text" id="lantai" class="form-control" name="lantai" placeholder="" value="{{ $ruangan->lantai }}">
+                                        <label class="form-control-label" for="lantai">Lantai<span
+                                                class="small text-danger">*</span></label>
+                                        <input type="text" id="lantai" class="form-control" name="lantai"
+                                            placeholder="" value="{{ $ruangan->lantai }}">
                                     </div>
                                 </div>
                             </div>
@@ -59,8 +63,11 @@
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="form-group">
-                                        <label class="form-control-label" for="kapasitas_ruangan">Kapasitas Ruangan<span class="small text-danger">*</span></label>
-                                        <input type="text" id="kapasitas_ruangan" class="form-control" name="kapasitas_ruangan" placeholder="" value="{{ $ruangan->kapasitas_ruangan }}">
+                                        <label class="form-control-label" for="kapasitas_ruangan">Kapasitas Ruangan<span
+                                                class="small text-danger">*</span></label>
+                                        <input type="text" id="kapasitas_ruangan" class="form-control"
+                                            name="kapasitas_ruangan" placeholder=""
+                                            value="{{ $ruangan->kapasitas_ruangan }}">
                                     </div>
                                 </div>
                             </div>
@@ -68,10 +75,11 @@
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="form-group">
-                                        <label class="form-control-label" for="pic">PIC<span class="small text-danger">*</span></label>
+                                        <label class="form-control-label" for="pic">PIC<span
+                                                class="small text-danger">*</span></label>
                                         <select id="pic" class="form-control" name="pic">
-                                            <option value="">Pilih PIC  </option>
-                                            @foreach($pics as $pic)
+                                            <option value="">Pilih PIC </option>
+                                            @foreach ($pics as $pic)
                                                 <option value="{{ $pic->id }}">{{ $pic->nama_pic }}</option>
                                             @endforeach
                                         </select>
@@ -79,6 +87,15 @@
                                 </div>
                             </div>
 
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="image">image<span
+                                                class="small text-danger">*</span></label>
+                                        <input type="file" id="image" name="image">
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
                         <!-- Button -->

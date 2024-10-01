@@ -23,14 +23,17 @@
 
     <div class="row">
 
-        <!-- Content Column -->
         <div class="col-lg-8 mb-4">
 
             <!-- Project Card Example -->
             <div class="card shadow mb-4">
                 <div class="card-header py-3 d-flex justify-content-between align-items-center">
-                    <h6 class="m-0 font-weight-bold text-primary">Daftar Booking</h6>   
-                    <a href="{{ route('home.pdf') }}" class="btn btn-sm btn-danger"> <i class="fa-solid fa-file-pdf"></i></a>
+                    <h6 class="m-0 font-weight-bold text-primary">Daftar Booking</h6>
+                    <div>
+                        <a href="{{ route('home.preview') }}" class="btn btn-sm btn-danger">Preview Pdf</a>
+                        <a href="{{ route('home.download') }}" class="btn btn-sm btn-danger"> <i
+                                class="fa-solid fa-file-pdf"></i></a>
+                    </div>
                 </div>
                 <div class="row">
                     <div class="col-lg order-lg-1">
@@ -100,8 +103,8 @@
                     {!! $bulananChart->container() !!}
                 </div>
             </div>
-            
-            
+
+
             <!-- Chart Harian -->
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
@@ -109,8 +112,9 @@
                 </div>
                 <div class="card-body">
                     {!! $harianChart->container() !!}
-            </div>
+                </div>
 
+            </div>
         </div>
     </div>
 

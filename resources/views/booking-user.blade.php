@@ -20,75 +20,59 @@
     <link href="{{ asset('css/sb-admin-2.min.css') }}" rel="stylesheet">
 
     <!-- Favicon -->
-    <link href="{{ asset('img/favicon.png') }}" rel="icon" type="image/png">
+    <link href="{{ asset('img/lanriicon.png') }}" rel="icon" type="image/png">
+
+    <!-- Custom Styles -->
     <style>
-        /* Kontainer untuk logo kiri, tengah, dan kanan di dalam kotak putih */
         .logo-container {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 20px;
         }
-    
-        /* Ukuran maksimal logo */
+
         .logo {
-            max-width: 100px; /* Perbesar logo */
+            max-width: 110px;
         }
-    
-        /* Khusus untuk logo tengah */
-        .logo-center {
-            max-width: 160px; /* Perbesar logo tengah */
+
+        .logo-right {
+            max-width: 70px;
         }
-    
-        /* Tambahkan jarak antar elemen */
-        .form-group {
-            margin-bottom: 15px;
-        }
-    
-        /* Transparansi untuk latar belakang putih dan ukuran lebih kecil */
+
+
         .bg-white-transparent {
-            background-color: rgba(255, 255, 255, 0.5); /* Ubah menjadi 0.5 untuk transparansi lebih tinggi */
+            background-color: rgba(255, 255, 255, 0.5);
             padding: 30px;
             max-width: 900px;
-            backdrop-filter: blur(3px); /* Kurangi efek blur */
+            backdrop-filter: blur(2px);
         }
-    
-        /* Desain lebih halus */
+
         .rounded-custom {
             border-radius: 12px;
         }
-    
-        /* Hapus shadow untuk tampilan lebih simpel */
+
         .no-shadow {
             box-shadow: none;
         }
-    
-        /* Warna dan bayangan untuk teks agar lebih jelas */
+
         .text-center h1 {
-            color: #000; /* Ubah menjadi hitam agar lebih jelas */
-            text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.7); /* Tambahkan bayangan putih pada teks untuk kontras */
-            font-weight: bold; /* Tambahkan ketebalan font */
+            color: #000;
+            text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.7);
+            font-weight: bold;
+            font-size: 25px;
         }
-    
-        /* Warna dan bayangan untuk logo agar lebih jelas */
-        .logo {
-            filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3)); /* Bayangan untuk logo */
-        }
-    
-        /* Ukuran font untuk label diperbesar */
+
         .form-label {
             font-size: 1.1rem;
-            color: #000; /* Ubah menjadi hitam agar lebih jelas */
+            color: #000;
         }
-    
-        /* Styling tombol submit */
+
         .btn-primary {
             padding: 12px 24px;
             font-size: 1.1rem;
             border-radius: 8px;
         }
-    
-        /* Responsif di layar kecil */
+
         @media (max-width: 768px) {
             .bg-white-transparent {
                 max-width: 100%;
@@ -103,105 +87,235 @@
         <div class="w-100 bg-white-transparent rounded-custom no-shadow">
             <!-- Wrapper untuk logo kiri, tengah, dan kanan -->
             <div class="logo-container">
-                <!-- Logo di pojok kiri atas -->
                 <img src="/img/Picture1.png" class="logo logo-left">
-                <!-- Logo di tengah atas -->
                 <img src="/img/lanrinobg.png" class="logo logo-center">
-                <!-- Logo di pojok kanan atas -->
                 <img src="/img/HIMATEKKOM 2.png" class="logo logo-right">
             </div>
 
+            @if (session('success'))
+        <div class="alert alert-success border-left-success alert-dismissible fade show" role="alert">
+            {{ session('success') }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    @endif
+
+    @if (session('status'))
+        <div class="alert alert-success border-left-success" role="alert">
+            {{ session('status') }}
+        </div>
+    @endif
             <div class="text-center mb-3">
                 <h1 class="h4 font-weight-bold">Reservasi Ruangan Gedung - B</h1>
             </div>
 
-            <div class="row g-2 mb-4">
-                <div class="form-group col-md-4">
-                    <label for="tanggal" class="form-label">Tanggal</label>
-                    <input type="date" class="form-control" id="tanggal" name="tanggal">
-                </div>
-                <div class="form-group col-md-4">
-                    <label for="lantai" class="form-label">Lantai</label>
-                    <select class="form-control" id="lantai" name="lantai">
-                        <option value="1">Lt. 1</option>
-                        <option value="2">Lt. 2</option>
-                        <option value="3">Lt. 3</option>
-                        <option value="4">Lt. 4</option>
-                    </select>
-                </div>
-                <div class="form-group col-md-4">
-                    <label for="ruangan" class="form-label">Ruangan</label>
-                    <select class="form-control" id="ruangan" name="ruangan">
-                        <!-- Opsi ruangan akan diperbarui berdasarkan pilihan lantai -->
-                    </select>
-                </div>
-            </div>
+            <!-- Mulai form reservasi -->
+            <form action="{{ route('booking-user.store') }}" method="POST">
+                @csrf
+                <div class="col-lg order-lg-1">
+                    <div class="row" style="margin-bottom: 50px;">
+                        <div class="col-lg-6">
+                            <div class="row"></div>
+                            <div class="form-group focused ">
+                                <label class="form-control-label" for="tanggal"
+                                    style="font-size: 16px; font-weight:700;">Tanggal</label>
+                                <input type="date" id="tanggal" class="form-control" name="tanggal"
+                                    style="height: 50px;" placeholder="Select tanggal">
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group focused ">
+                                <label class="form-control-label" for="lantai"
+                                    style="font-size: 16px; font-weight:700;">Lantai</label>
+                                <select id="lantai" class="form-control" name="lantai"
+                                    style="height: 50px;">
+                                    <option value="">Pilih lantai</option>
+                                    <option value="1">Lantai 1</option>
+                                    <option value="2">Lantai 2</option>
+                                    <option value="3">Lantai 3</option>
+                                    <option value="4">Lantai 4</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group focused ">
+                                <label class="form-control-label" for="ruangan_id"
+                                    style="font-size: 16px; font-weight:700;">Ruangan</label>
+                                <select id="nama_ruangan" class="form-control" name="ruangan_id"
+                                    style="height: 50px;">
+                                    <option value="">Pilih Ruangan</option>
+                                    @foreach ($ruangans as $ruangan)
+                                        <option value="{{ $ruangan->id }}"
+                                            data-lantai="{{ $ruangan->lantai }}">
+                                            {{ $ruangan->nama_ruangan }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group focused">
+                                <label class="form-control-label" for="waktu_pemakaian"
+                                    style="font-size: 16px; font-weight:700;">Waktu</label>
+                                <select id="waktu_pemakaian" class="form-control" name="waktu_pemakaian"
+                                    style="height: 50px;">
+                                    <option value="">Pilih waktu</option>
+                                    @php
+                                        use App\Models\Booking; // Impor namespace lengkap model Booking
 
-            <script>
-                const ruanganPerLantai = {
-                    1: [
-                        { value: "Klinik_Kesehatan", text: "Klinik Kesehatan" },
-                        { value: "Ruang_Laktasi", text: "Ruang Laktasi" },
-                        { value: "Restoran_Keumamah+VIP", text: "Restoran Keumamah+VIP" },
-                        { value: "Ruang_Fitnes", text: "Ruang Fitnes" },
-                    ],
-                    2: [
-                        { value: "Cut_Meutia_1", text: "Cut Meutia 1" },
-                        { value: "Cut_Meutia_2", text: "Cut Meutia 2" },
-                        { value: "Cut_Meutia_3", text: "Cut Meutia 3" },
-                        { value: "Perpustakaan", text: "Perpustakaan" },
-                    ],
-                    3: [
-                        { value: "Cut_Nyak_Dhien", text: "Cut Nyak Dhien" },
-                        { value: "Teuku_Umar_1", text: "Teuku Umar 1" },
-                        { value: "Teuku_Umar_2", text: "Teuku Umar 2" },
-                        { value: "Teuku_Umar_3", text: "Teuku Umar 3" },
-                        { value: "Teuku_Umar_4", text: "Teuku Umar 4" },
-                    ],
-                    4: [
-                        { value: "Ruang_Studio", text: "Ruang Studio" },
-                    ]
-                };
+                                        $ruanganId = old('ruangan_id'); // Ambil ID ruangan yang dipilih jika ada
+                                        $tanggal = old('tanggal'); // Ambil tanggal jika ada
+                                        // Ambil data booking untuk ruangan dan tanggal yang sama
+                                        $existingBookings = Booking::where('ruangan_id', $ruanganId)
+                                            ->where('tanggal', $tanggal)
+                                            ->get();
+                                        $usedTimes = [];
 
-                document.getElementById('lantai').addEventListener('change', function () {
-                    const lantaiTerpilih = this.value;
-                    const ruanganSelect = document.getElementById('ruangan');
-                    ruanganSelect.innerHTML = '';
-                    if (ruanganPerLantai[lantaiTerpilih]) {
-                        ruanganPerLantai[lantaiTerpilih].forEach(function (ruangan) {
-                            const option = document.createElement('option');
-                            option.value = ruangan.value;
-                            option.text = ruangan.text;
-                            ruanganSelect.appendChild(option);
-                        });
+                                        foreach ($existingBookings as $booking) {
+                                            $usedTimes[] =
+                                                $booking->waktu_pemakaian_awal .
+                                                '-' .
+                                                $booking->waktu_pemakaian_akhir;
+                                        }
+                                    @endphp
+                                    <option value="09:00-12:00"
+                                        {{ in_array('09:00-12:00', $usedTimes) ? 'disabled style=color:red;' : '' }}>
+                                        09:00-12:00</option>
+                                    <option value="14:00-16:00"
+                                        {{ in_array('14:00-16:00', $usedTimes) ? 'disabled style=color:red;' : '' }}>
+                                        14:00-16:00</option>
+                                    <option value="09:00-16:00"
+                                        {{ in_array('09:00-16:00', $usedTimes) ? 'disabled style=color:red;' : '' }}>
+                                        Full Day</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group focused ">
+                                <label class="form-control-label" for="nama_pengunjung"
+                                    style="font-size: 16px; font-weight:700;">Nama Pengunjung</label>
+                                <input type="text" id="nama_pengunjung" class="form-control"
+                                    name="nama_pengunjung" style="height: 50px;"
+                                    placeholder="Masukkan pengunjung">
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group focused ">
+                                <label class="form-control-label" for="kontak_pengunjung"
+                                    style="font-size: 16px; font-weight:700;">Kontak Pengunjung</label>
+                                <input type="text" id="kontak_pengunjung" class="form-control"
+                                    name="kontak_pengunjung" style="height: 50px;"
+                                    placeholder="Masukkan Kontak">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <script>
+                    document.getElementById('lantai').addEventListener('change', function() {
+                        var selectedLantai = this.value;
+                        var ruanganOptions = document.getElementById('nama_ruangan').options;
+
+                        // Loop through ruangan options and display only those that match the selected lantai
+                        for (var i = 0; i < ruanganOptions.length; i++) {
+                            var option = ruanganOptions[i];
+                            var ruanganLantai = option.getAttribute('data-lantai');
+
+                            if (ruanganLantai === selectedLantai || selectedLantai === "") {
+                                option.style.display = ''; // Show option
+                            } else {
+                                option.style.display = 'none'; // Hide option
+                            }
+                        }
+                    });
+
+
+                    document.getElementById('tanggal').addEventListener('change', updateWaktuPemakaian);
+                    document.getElementById('nama_ruangan').addEventListener('change', updateWaktuPemakaian);
+
+                    function updateWaktuPemakaian() {
+                        var tanggal = document.getElementById('tanggal').value;
+                        var ruanganId = document.getElementById('nama_ruangan').value;
+
+
+                        // Only fetch if both tanggal and ruangan are selected
+                        if (tanggal && ruanganId) {
+                            fetch(`/check-booking?ruangan_id=${ruanganId}&tanggal=${tanggal}`)
+                                .then(response => response.json())
+                                .then(data => {
+                                    console.log(data, 'ini dia')
+                                    var waktuPemakaianSelect = document.getElementById('waktu_pemakaian');
+                                    waktuPemakaianSelect.innerHTML = ''; // Kosongkan pilihan
+                                    console.log('Waktu yang sudah digunakan:', data.usedTimes);
+
+                                    var timeSlots = ['09:00:00-12:00:00', '14:00:00-16:00:00', '09:00:00-16:00:00'];
+                                    let allDisabled = true; // Variabel untuk mengecek apakah semua opsi dinonaktifkan
+
+                                    timeSlots.forEach(function(slot) {
+                                        var option = document.createElement('option');
+                                        option.value = slot;
+                                        option.text = slot;
+
+                                        // Disable jika slot sudah digunakan
+                                        if (data.usedTimes.includes(slot)) {
+                                            option.disabled = true;
+                                            option.style.color = 'red';
+                                            console.log(`Menonaktifkan slot: ${slot}`);
+                                        }
+
+                                        // Tambahkan logika untuk menonaktifkan slot yang tumpang tindih
+                                        if (data.usedTimes.includes('09:00:00-12:00:00')) {
+                                            if (slot === '09:00:00-12:00:00' || slot === '09:00:00-16:00:00') {
+                                                option.disabled = true;
+                                                option.style.color = 'red';
+                                                console.log(`Menonaktifkan slot karena slot 1 sudah dipilih: ${slot}`);
+                                            }
+                                        }
+
+                                        if (data.usedTimes.includes('14:00:00-16:00:00')) {
+                                            if (slot === '14:00:00-16:00:00' || slot === '09:00:00-16:00:00') {
+                                                option.disabled = true;
+                                                option.style.color = 'red';
+                                                console.log(`Menonaktifkan slot karena slot 2 sudah dipilih: ${slot}`);
+                                            }
+                                        }
+
+                                        if (data.usedTimes.includes('09:00:00-16:00:00')) {
+                                            option.disabled = true;
+                                            option.style.color = 'red';
+                                            console.log(`Menonaktifkan semua slot karena slot 3 sudah dipilih: ${slot}`);
+                                        }
+
+                                        // Tambahkan opsi ke select
+                                        waktuPemakaianSelect.appendChild(option);
+
+                                        // Cek apakah opsi dinonaktifkan
+                                        if (!option.disabled) {
+                                            allDisabled = false; // Set ke false jika ada opsi yang tidak dinonaktifkan
+                                        }
+                                    });
+
+                                    // Menampilkan pesan jika semua pilihan dinonaktifkan
+                                    if (allDisabled) {
+                                        var messageOption = document.createElement('option');
+                                        messageOption.text = 'Hari ini sudah di booking full';
+                                        messageOption.disabled = true; // Disable option message
+                                        messageOption.style.color = 'black'; // Set color
+                                        waktuPemakaianSelect.appendChild(messageOption);
+                                    }
+
+                                })
+                                .catch(error => console.error('Error fetching booking data:', error));
+                        }
                     }
-                });
+                </script>
 
-                document.getElementById('lantai').dispatchEvent(new Event('change'));
-            </script>
-
-            <div class="row g-2 mb-3">
-                <div class="form-group col-md-4">
-                    <label for="pukul" class="form-label">Pukul</label>
-                    <select class="form-control" id="pukul" name="pukul">
-                        <option value="09.00-12.00">09.00-12.00</option>
-                        <option value="14.00-16.00">14.00-16.00</option>
-                        <option value="full_day">Full Day</option>
-                    </select>
+                
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary">Submit</button>
                 </div>
-                <div class="form-group col-md-4">
-                    <label for="pengunjung" class="form-label">Pengunjung</label>
-                    <input type="text" class="form-control" id="pengunjung" name="pengunjung" placeholder="Jumlah Pengunjung">
-                </div>
-                <div class="form-group col-md-4">
-                    <label for="kontak_pengunjung" class="form-label">Kontak Pengunjung</label>
-                    <input type="text" class="form-control" id="kontak_pengunjung" name="kontak_pengunjung" placeholder="Nomor Kontak">
-                </div>
-            </div>
-
-            <div class="text-center">
-                <button type="submit" class="btn btn-primary">Submit</button>
-            </div>
+            </form>
         </div>
     </div>
 
@@ -212,4 +326,4 @@
     <script src="{{ asset('js/sb-admin-2.min.js') }}"></script>
 </body>
 
-</html>
+</html

@@ -5,11 +5,11 @@ use App\Http\Controllers\BookingUser\BookingUserController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Pic\PicController;
 use App\Http\Controllers\Ruangan\RuanganController;
+use App\Http\Controllers\RuanganUser\RuanganUserController;
 use App\Http\Controllers\Tv\TvController;
-use App\Models\Ruangan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\TvScreenController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -22,22 +22,36 @@ use Illuminate\Support\Facades\Route;
 */
 
 // Route::get('/', function () {
-//     // Cek apakah user sudah login
-//     if (Auth::check()) {
-//         // Jika sudah login, arahkan ke halaman home atau halaman lain
-//         return redirect()->route('home');
-//     } else {
-//         // Jika belum login, arahkan ke halaman login
-//         // return redirect()->route('login');
-//         return redirect()->route('login');
-//     }
-// });
+    //     // Cek apakah user sudah login
+    //     if (Auth::check()) {
+        //         // Jika sudah login, arahkan ke halaman home atau halaman lain
+        //         return redirect()->route('home');
+        //     } else {
+            //         // Jika belum login, arahkan ke halaman login
+            //         // return redirect()->route('login');
+            //         return redirect()->route('login');
+            //     }
+            // });
+            
+            
+
+
+Route::get('/ruangan-user', [RuanganUserController::class, 'index'])->name('ruangan-user.index');
+
+
+
+// routing booking user
+Route::post('/booking-user', [BookingUserController::class, 'store'])->name('booking-user.store');
+Route::get('/booking-user-success', function () {
+    return view('booking-user-kuitansi');
+})->name('kuitansi');
 
 Auth::routes();
 
 // Route::get('/', 'WelcomeController@index')->name('welcome');
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/home/pdf', [HomeController::class, 'pdf'])->name('home.pdf');
+Route::get('/home/preview-pdf', [HomeController::class, 'preview_pdf'])->name('home.preview');
+Route::get('/home/download-pdf', [HomeController::class, 'download_pdf'])->name('home.download');
 
 Route::get('/profile', 'ProfileController@index')->name('profile');
 Route::put('/profile', 'ProfileController@update')->name('profile.update');
@@ -77,7 +91,6 @@ use App\Http\Controllers\TvScreenController;
 Route::get('/booking-user', [BookingUserController::class, 'create'])->name('booking-user.add');
 // routing booking user
 Route::get('/booking-user', [BookingUserController::class, 'create'])->name('booking-user.add');
-
 // routing Tv Screen
 Route::get('/tv', [TvController::class, 'index'])->name('tv');
 
