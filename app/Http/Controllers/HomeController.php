@@ -33,7 +33,7 @@ class HomeController extends Controller
         return view('home', compact('widget', 'bookings', 'bulananChart', 'harianChart'));
     }
 
-    public function pdf()
+    public function preview_pdf()
     {
         $bookings = Booking::where('tanggal', '>=', now()->toDateString())
             ->orderBy('tanggal', 'asc')
@@ -41,5 +41,15 @@ class HomeController extends Controller
         $pdf = Pdf::loadView('pdf.bookings', ['bookings' => $bookings]);
 
         return $pdf->stream('Data Booking.pdf');
+    }
+
+    public function download_pdf()
+    {
+        $bookings = Booking::where('tanggal', '>=', now()->toDateString())
+            ->orderBy('tanggal', 'asc')
+            ->get();
+        $pdf = Pdf::loadView('pdf.bookings', ['bookings' => $bookings]);
+
+        return $pdf->download('Data Booking.pdf');
     }
 }

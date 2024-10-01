@@ -41,7 +41,6 @@ Route::get('/ruangan-user', [RuanganUserController::class, 'index'])->name('ruan
 
 
 // routing booking user
-Route::get('/booking-user', [BookingUserController::class, 'create'])->name('booking-user.add');
 Route::post('/booking-user', [BookingUserController::class, 'store'])->name('booking-user.store');
 Route::get('/booking-user-success', function () {
     return view('booking-user-kuitansi');
@@ -51,7 +50,8 @@ Auth::routes();
 
 // Route::get('/', 'WelcomeController@index')->name('welcome');
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/home/pdf', [HomeController::class, 'pdf'])->name('home.pdf');
+Route::get('/home/preview-pdf', [HomeController::class, 'preview_pdf'])->name('home.preview');
+Route::get('/home/download-pdf', [HomeController::class, 'download_pdf'])->name('home.download');
 
 Route::get('/profile', 'ProfileController@index')->name('profile');
 Route::put('/profile', 'ProfileController@update')->name('profile.update');

@@ -90,13 +90,24 @@
             background-color: #0056b3;
             /* Warna tombol saat hover */
         }
+
+        h1 {
+            color: #000;
+            text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.7);
+            font-weight: bold;
+            font-size: 30px;
+        }
+
+        h2 {
+            font-size: 20px
+        }
     </style>
 </head>
 
 <body class="bg-light text-dark py-5"
     style="background-image: url('/img/assets/lan2.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat; background-attachment: fixed;">
     <div class="container">
-        <h1 class="mb-4 display-4 text-center">Daftar Ruangan</h1>
+        <h1 class="mb-4 text-center">Daftar Ruangan</h1>
 
         @php
             $currentFloor = null;
@@ -122,7 +133,7 @@
                     <div class="room-body">
                         <h5 class="card-title">{{ $ruangan->nama_ruangan }}</h5>
                         <p class="card-text text-muted">Kapasitas: {{ $ruangan->kapasitas_ruangan }} orang</p>
-                        <a href="{{ route('booking-user.add', ['id' => $ruangan->id]) }}"
+                        <a href="{{ route('booking-user.store') }}"
                             class="btn btn-primary">Booking</a>
                     </div>
                 </div>

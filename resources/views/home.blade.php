@@ -1,91 +1,126 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layouts.admin')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ruangan</title>
-    <link href="{{ asset('img/lanriicon.png') }}" rel="icon" type="image/png">
-    <link href="{{ asset('css/sb-admin-2.min.css') }}" rel="stylesheet">
-    <style>
-        .card {
-            margin-bottom: 1rem;
-            transition: transform 0.3s ease;
-            height: 100%;
-            /* Memastikan semua kartu memiliki tinggi yang sama */
-        }
+@section('main-content')
+    <!-- Page Heading -->
+    <h1 class="h3 mb-4 text-gray-800">{{ __('Dashboard') }}</h1>
 
-        .card:hover {
-            transform: scale(1.05);
-        }
+    {{-- @dd($bulananChart, $harianChart); --}}
 
-        .room-image {
-            width: 100%;
-            height: 150px;
-            /* Menentukan tinggi gambar agar seragam */
-            object-fit: cover;
-        }
+    @if (session('success'))
+        <div class="alert alert-success border-left-success alert-dismissible fade show" role="alert">
+            {{ session('success') }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    @endif
 
-        .room-body {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            height: 100%;
-            /* Memastikan isi kartu merentang ke penuh */
-        }
+    @if (session('status'))
+        <div class="alert alert-success border-left-success" role="alert">
+            {{ session('status') }}
+        </div>
+    @endif
 
-        body {
-            background-color: #f8f9fa;
-        }
+    <div class="row">
 
-        .container {
-            max-width: 1200px;
-        }
-    </style>
-</head>
+        <div class="col-lg-8 mb-4">
 
-<body class="bg-light text-dark py-5">
-    <div class="container">
-        <h1 class="mb-4 display-4 text-center">Daftar Ruangan</h1>
-
-        @php
-            $currentFloor = null;
-        @endphp
-
-        @foreach ($ruangans as $ruangan)
-            @if ($currentFloor !== $ruangan->lantai)
-                @php
-                    $currentFloor = $ruangan->lantai;
-                @endphp
-                <!-- Header Lantai -->
-                <div class="floor-header">
-                    <h2 class="bg-dark text-white p-2 rounded">Lantai {{ $ruangan->lantai }}</h2>
+            <!-- Project Card Example -->
+            <div class="card shadow mb-4">
+                <div class="card-header py-3 d-flex justify-content-between align-items-center">
+                    <h6 class="m-0 font-weight-bold text-primary">Daftar Booking</h6>
+                    <div>
+                        <a href="{{ route('home.preview') }}" class="btn btn-sm btn-danger">Preview Pdf</a>
+                        <a href="{{ route('home.download') }}" class="btn btn-sm btn-danger"> <i
+                                class="fa-solid fa-file-pdf"></i></a>
+                    </div>
                 </div>
                 <div class="row">
-            @endif
+                    <div class="col-lg order-lg-1">
+                        <div class="card shadow mb-4">
+                            <div class="card-body">
+                                <div class="card">
+                                    <div class="table-responsive">
+                                        <table class="table align-items-center table-flush">
+                                            <thead class="thead-light">
+                                                <tr>
 
-            <!-- Daftar ruangan dalam grid per lantai -->
-            <div class="col-lg-4 col-md-6 col-sm-12">
-                <div class="card shadow-sm">
-                    <img src="{{ asset('storage/ruangan/' . $ruangan->image) }}" class="room-image"
-                        alt="{{ $ruangan->nama_ruangan }}">
-                    <div class="room-body">
-                        <h5 class="card-title">{{ $ruangan->nama_ruangan }}</h5>
-                        <p class="card-text text-muted">Kapasitas: {{ $ruangan->kapasitas_ruangan }} orang</p>
-                        <a href="" class="btn btn-primary">Go to Booking</a>
+                                                    <th>Tanggal</th>
+                                                    <th>Nama Ruangan</th>
+                                                    <th>Nama Pengunjung</th>
+                                                    <th>Waktu Pemakaian</th>
+                                                    <th>Status</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($bookings as $booking)
+                                                    <tr>
+                                                        <td>{{ $booking->tanggal }}</td>
+                                                        <td>{{ $booking->ruangan ? $booking->ruangan->nama_ruangan : 'Tidak ada ruangan' }}
+                                                        </td>
+                                                        <td>{{ $booking->nama_pengunjung }}</td>
+                                                        <td>{{ $booking->waktu_pemakaian_awal }} -
+                                                            {{ $booking->waktu_pemakaian_akhir }}</td>
+
+                                                        @php
+                                                            $class = '';
+                                                            if ($booking->status == 'pending') {
+                                                                $class = 'badge bg-warning';
+                                                            } elseif ($booking->status == 'booked') {
+                                                                $class = 'badge bg-success';
+                                                            } elseif ($booking->status == 'canceled') {
+                                                                $class = 'badge bg-danger';
+                                                            }
+                                                        @endphp
+
+                                                        <td>
+                                                            <span class="{{ $class }}" style="color: white;">
+                                                                {{ ucfirst($booking->status) }}
+                                                            </span>
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
+        </div>
 
-            @if ($loop->last || $ruangans[$loop->index + 1]->lantai !== $ruangan->lantai)
-    </div> <!-- Akhiri .row jika lantai berbeda atau terakhir -->
-    @endif
-    @endforeach
+        <div class="col-lg-4 mb-4">
+
+            <!-- Chart Bulanan -->
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Pemakaian Ruangan Bulanan</h6>
+                </div>
+                <div class="card-body">
+                    {!! $bulananChart->container() !!}
+                </div>
+            </div>
+
+
+            <!-- Chart Harian -->
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Pemakaian Ruangan Mingguan</h6>
+                </div>
+                <div class="card-body">
+                    {!! $harianChart->container() !!}
+                </div>
+
+            </div>
+        </div>
     </div>
 
-    <!-- JS Files -->
-    <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
-    <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-</body>
+    <script src="{{ $bulananChart->cdn() }}"></script>
+    <script src="{{ $harianChart->cdn() }}"></script>
 
-</html>
+    {{ $bulananChart->script() }}
+    {{ $harianChart->script() }}
+@endsection
