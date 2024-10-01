@@ -2,20 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Ruangan;
 use Illuminate\Http\Request;
 
 class LandingPageController extends Controller
 {
     public function index()
     {
-        // Data layanan yang bisa kita ambil dari database
-        $services = [
-            ['title' => 'Gedung B', 'description' => 'Lantai 1'],
-            ['title' => 'Gedung B', 'description' => 'Lantai 2'],
-            ['title' => 'Gedung B', 'description' => 'Lantai 3'],
-            ['title' => 'Gedung B', 'description' => 'Lantai 4'],            
-        ];
+        $ruangans = Ruangan::orderBy('lantai', 'asc')->get();
 
-        return view('landingpage.landing', compact('services'));
+        return view('landingpage.landing', compact('ruangans'));
     }
 }
