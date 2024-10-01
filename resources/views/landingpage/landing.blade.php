@@ -17,7 +17,7 @@
     <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
 
     <!-- Favicon -->
-    <link href="{{ asset('img/favicon.png') }}" rel="icon" type="image/png">
+    <link href="{{ asset('img/lanriicon.png') }}" rel="icon" type="image/png">
 
     <style>
         body {
@@ -132,7 +132,7 @@
                 <div class="navbar-center">
                     <ul class="navbar-nav">
                         <li class="nav-item active">
-                            <a class="nav-link" href="#">Ruangan</a>
+                            <a class="nav-link" href="ruangan-user">Ruangan</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="booking-user">Booking</a>
@@ -195,7 +195,7 @@
         <div class="row">
             <!-- Card for Room Features -->
             <div class="col-md-6 mb-4">
-                <a href="{{ route('ruangan') }}" class="card text-center h-100 text-decoration-none">
+                <a href="{{ route('ruangan-user.index') }}" class="card text-center h-100 text-decoration-none">
                     <div class="card-body">
                         <i class="fas fa-door-open fa-3x mb-3" style="color: #060606;"></i> <!-- Ikon Ruangan -->
                         <h2>Ruangan</h2>
@@ -206,7 +206,7 @@
 
             <!-- Card for Booking Features -->
             <div class="col-md-6 mb-4">
-                <a href="{{ route('booking') }}" class="card text-center h-100 text-decoration-none">
+                <a href="{{ route('booking-user.store') }}" class="card text-center h-100 text-decoration-none">
                     <div class="card-body">
                         <i class="fas fa-calendar-check fa-3x mb-3" style="color: #060606;"></i> <!-- Ikon Booking -->
                         <h2>Booking</h2>
@@ -218,33 +218,26 @@
     </div>
 </section>
 
-    <!-- Footer -->
-    <footer class="footer py-1">
-        <div class="container">
-            <div class="row d-flex justify-content-center text-center">
-                <div class="col-md-8">
-                    <div class="d-flex justify-content-center small text-muted">
-                        <span>&copy; Tekkom USK 21</span>
-                </div>
+   <!-- Footer -->
+<footer class="footer py-1">
+    <div class="container">
+        <div class="row d-flex align-items-center justify-content-between text-center">
+            <div class="col-auto">
+                <img src="{{ asset('img/Picture1.png') }}" alt="Logo 1" class="img-fluid" style="max-height: 50px; margin-right: 15px;">
+            </div>
+
+            <div class="col text-muted">
+                <span>&copy; Teknik Komputer USK 21</span>
+            </div>
+
+            <div class="col-auto">
+                <img src="{{ asset('img/HIMATEKKOM 2.png') }}" alt="Logo 3" class="img-fluid" style="max-height: 50px; margin-left: 15px;">
             </div>
         </div>
+    </div>
+</footer>
 
-        <!-- Horizontal Line -->
-        <hr class="my-2" style="border-top: 4px solid #000000;">
 
-        <!-- Small Logos Section -->
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-auto">
-                    <img src="{{ asset('img/Picture1.png') }}" alt="Logo 1" class="img-fluid" style="max-height: 50px; margin-right: 15px;">
-                </div>
-
-                <div class="col-auto">
-                    <img src="{{ asset('img/HIMATEKKOM 2.png') }}" alt="Logo 3" class="img-fluid" style="max-height: 50px; margin-right: 15px;">
-                </div>
-            </div>
-        </div>
-    </footer>
 
     <!-- Scripts -->
     <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>

@@ -87,7 +87,7 @@ Route::delete('/booking/{id}', [BookingController::class, 'destroy'])->name('boo
 
 
 
-use App\Http\Controllers\TvScreenController;
+
 Route::get('/booking-user', [BookingUserController::class, 'create'])->name('booking-user.add');
 // routing booking user
 Route::get('/booking-user', [BookingUserController::class, 'create'])->name('booking-user.add');
@@ -97,8 +97,3 @@ Route::get('/tv', [TvController::class, 'index'])->name('tv');
 use App\Http\Controllers\LandingPageController;
 Route::get('/', [LandingPageController::class, 'index']);
 
-// Route untuk halaman Ruangan
-Route::get('/ruangan', [RuanganController::class, 'index'])->name('ruangan');
-
-// Route untuk halaman Booking
-Route::get('/booking', [BookingController::class, 'index'])->name('booking');
