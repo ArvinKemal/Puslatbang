@@ -20,7 +20,8 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('booking', function (Blueprint $table) {
-            //
+            // Menghapus kolom 'tanggal' jika diperlukan
+            
         });
     }
 };

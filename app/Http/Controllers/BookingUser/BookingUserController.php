@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\BookingUser;
 
 use App\Http\Controllers\Controller;
+use App\Models\Booking;
+use App\Models\Pic;
+use App\Models\Ruangan;
 use Illuminate\Http\Request;
 
 class BookingUserController extends Controller
@@ -20,7 +23,9 @@ class BookingUserController extends Controller
      */
     public function create()
     {
-        return view("booking-user");
+        $ruangans = Ruangan::all();
+
+        return view("booking-user", compact('ruangans'));
     }
 
     /**
@@ -28,8 +33,44 @@ class BookingUserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'tanggal' => 'required|date',
+            'ruangan_id' => 'required|exists:ruangan,id',
+            'waktu_pemakaian' => 'required',
+            'nama_pengunjung' => 'required|string|max:255',
+            'kontak_pengunjung' => 'required|string|max:255',
+        ]);
+
+        // Pisahkan waktu awal dan akhir
+        $waktuPemakaian = explode('-', $request->input('waktu_pemakaian'));
+        $waktuPemakaianAwal = $waktuPemakaian[0];
+        $waktuPemakaianAkhir = $waktuPemakaian[1];
+
+        // Simpan data ke dalam database
+        $booking = new Booking();
+        $booking->ruangan_id = $request->input('ruangan_id');
+        $booking->nama_pengunjung = $request->input('nama_pengunjung');
+        $booking->kontak_pengunjung = $request->input('kontak_pengunjung');
+        // Simpan waktu pemakaian
+        $booking->waktu_pemakaian_awal = $waktuPemakaianAwal;
+        $booking->waktu_pemakaian_akhir = $waktuPemakaianAkhir;
+        $booking->tanggal = $request->input('tanggal');
+        // Simpan ke database
+        $booking->save();
+
+        $pic = $booking->ruangan->pic; 
+        $picName = $pic->nama_pic; // Ambil nama PIC
+        $picContact = $pic->no_telepon;
+    
+
+        return view('booking-user-kuitansi', [
+            'booking' => $booking,
+            'picName' => $picName,
+            'picContact' => $picContact,
+        ]);
+
     }
+        
 
     /**
      * Display the specified resource.

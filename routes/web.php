@@ -9,7 +9,7 @@ use App\Http\Controllers\RuanganUser\RuanganUserController;
 use App\Http\Controllers\Tv\TvController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\TvScreenController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -39,6 +39,13 @@ use Illuminate\Support\Facades\Route;
 Route::get('/ruangan-user', [RuanganUserController::class, 'index'])->name('ruangan-user.index');
 
 
+
+// routing booking user
+Route::get('/booking-user', [BookingUserController::class, 'create'])->name('booking-user.add');
+Route::post('/booking-user', [BookingUserController::class, 'store'])->name('booking-user.store');
+Route::get('/booking-user-success', function () {
+    return view('booking-user-kuitansi');
+})->name('kuitansi');
 
 Auth::routes();
 
@@ -85,4 +92,13 @@ Route::get('/tv', [TvController::class, 'index'])->name('tv');
 
 use App\Http\Controllers\LandingPageController;
 Route::get('/', [LandingPageController::class, 'index']);
+
+
+
+
+
+
+
+
+
 
