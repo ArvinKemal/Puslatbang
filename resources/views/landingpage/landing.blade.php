@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
-    <!-- Required meta tags -->
+    <!-- Meta Tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -10,172 +10,256 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <!-- Fonts -->
+    <!-- Fonts and Styles -->
     <link href="{{ asset('vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
-
-    <!-- Styles -->
     <link href="{{ asset('css/sb-admin-2.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/custom.css') }}" rel="stylesheet"> <!-- Custom CSS -->
+    <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
 
     <!-- Favicon -->
     <link href="{{ asset('img/favicon.png') }}" rel="icon" type="image/png">
 
     <style>
-    /* Atur seluruh halaman agar menggunakan flexbox */
-    html, body {
-        height: 100%;
-        margin: 0;
-        display: flex;
-        flex-direction: column;
-    }
+        body {
+            background-color: white; /* Background dasar warna putih */
+        }
 
-    /* Membuat .wrapper agar mengambil seluruh tinggi yang tersedia */
-    .wrapper {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-    }
+        .navbar-custom {
+            background-color: transparent; /* Transparan di atas slideshow */
+            position: fixed; /* Navbar tetap di posisi atas saat scroll */
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            transition: background-color 0.5s ease;
+        }
 
-    /* Konten utama harus memenuhi seluruh ruang kosong */
-    .content {
-        flex: 1;
-    }
+        .navbar-custom.navbar-scrolled {
+            background-color: #525c65; /* Warna navbar setelah scroll */
+        }
 
-    /* Background settings untuk mengisi seluruh halaman kecuali navbar & footer */
-    body::before {
-        content: '';
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-image: url('{{ asset('img/assets/lan3.jpg') }}'); /* Gambar background */
-        background-size: cover;
-        background-position: center;
-        filter: blur(5px); /* Menambahkan blur */
-        z-index: -1; /* Pastikan background berada di belakang konten */
-    }
+        .navbar-logo img {
+            height: 50px;
+        }
 
-    /* Container services di depan background */
-    .services {
-        position: relative;
-        z-index: 1;
-        padding-top: 100px;
-    }
+        .navbar-nav .nav-link {
+            color: #060606;
+            font-weight: bold;
+            font-size: 18px;
+        }
 
-    /* Additional adjustments for positioning */
-    .services .container {
-        background-color: rgba(255, 255, 255, 0.85); /* Latar belakang semi transparan */
-        padding: 20px;
-        border-radius: 10px;
-    }
+        .navbar-nav .nav-link:hover {
+            color: #ffffff;
+        }
 
-    .services .card {
-        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    }
-    
-    .services .card-title {
-        font-size: 1.5rem;
-        margin-bottom: 1rem;
-    }
-    
-    .services .card-text {
-        font-size: 1rem;
-    }
+        .wrapper {
+            margin-top: 0px; /* Sesuaikan sesuai tinggi navbar */
+        }
 
-    .footer {
-        background-color: #343a40;
-        color: #ffffff;
-        padding: 1px 10px; /* Mengurangi padding atas dan bawah */
-    }
+        .footer {
+            background-color: #343a40;
+            color: #ffffff;
+            padding: 1px 10px;
+        }
 
-    .footer .container {
-        margin-bottom: 10px; /* Menghilangkan margin di bagian bawah container */
-    }
+        .footer .container {
+            margin-bottom: 10px;
+        }
+
+        .carousel-item img {
+            width: 100%;
+            height: 100vh; /* Layar penuh */
+            object-fit: cover; /* Sesuaikan gambar */
+        }
+
+        .card {
+            position: relative; /* Agar elemen anak bisa diposisikan relatif */
+            overflow: hidden; /* Mencegah overflow dari latar belakang */
+        }
+
+        .card::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 300%; /* Lebar gradien */
+            height: 300%; /* Tinggi gradien */
+            background-color: #525c65; /* Warna background saat hover */
+            border-radius: 50%; /* Membuat gradien menjadi bulat */
+            transform: translate(-50%, -50%) scale(0); /* Memusatkan dan menyembunyikan gradien */
+            transition: transform 0.9s ease; /* Animasi saat hover */
+            z-index: 0; /* Menempatkan gradien di belakang konten */
+        }
+
+        .card:hover::after {
+            transform: translate(-50%, -50%) scale(1); /* Memperbesar gradien saat hover */
+        }
+
+        .card-body {
+            position: relative; /* Agar konten tetap di atas gradien */
+            z-index: 1; /* Menempatkan konten di atas gradien */
+            transition: color 0.3s ease; /* Animasi perubahan warna teks */
+        }
+
+        .card:hover .card-body {
+            color: #ffffff; /* Ubah warna teks menjadi putih saat hover */
+        }
+
+        .card:hover i {
+            color: #ffffff; /* Ubah warna ikon menjadi putih saat hover */
+        }
     </style>
 </head>
 <body>
 
     <!-- Wrapper untuk seluruh halaman -->
     <div class="wrapper">
-        
+
         <!-- Navbar -->
-        <header class="bg-primary">
+        <nav class="navbar navbar-expand-lg navbar-custom">
             <div class="container">
-                <div class="d-flex justify-content-between align-items-center py-3">
-                    <div class="logo">
-                        <img src="{{ url('img/lanrinobg.png') }}" alt="Lan Logo" class="img-fluid" style="height: 50px;">
+                <!-- Logo -->
+                <a class="navbar-logo" href="#">
+                    <img src="{{ url('img/lanrinobg.png') }}" alt="Lan Logo">
+                </a>
+
+                <!-- Button Toggler (untuk mobile view) -->
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Center Navbar Links -->
+                <div class="navbar-center">
+                    <ul class="navbar-nav">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="#">Ruangan</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="booking-user">Booking</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Tombol Login/Logout -->
+                @guest
+                    <a href="{{ route('login') }}" class="btn btn-primary ml-3">Login</a>
+                @endguest
+
+                @auth
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        @csrf
+                    </form>
+                    <a href="{{ route('logout') }}" class="btn btn-primary ml-3" 
+                       onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                        Logout
+                    </a>
+                @endauth
+            </div>
+        </nav>
+
+        <!-- Slideshow -->
+        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="{{ asset('img/assets/lan3.jpg') }}" class="d-block" alt="Slide 1">
+                </div>
+                <div class="carousel-item">
+                    <img src="{{ asset('img/assets/lan2.jpg') }}" class="d-block" alt="Slide 2">
+                </div>
+                <div class="carousel-item">
+                    <img src="{{ asset('img/assets/lan1.jpg') }}" class="d-block" alt="Slide 3">
+                </div>
+            </div>
+            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+
+        <!-- Teks Tambahan di Bawah Slideshow -->
+        <div class="container text-center my-5">
+            <h2 style="border-bottom: 2px solid #000; display: inline-block;">Selamat Datang di Puslatbang Khan LAN RI</h2>
+            <p>Kami berkomitmen untuk memberikan pelayanan terbaik bagi Anda</p>
+        </div>
+
+       <!-- Section for 2 Booking Now Columns -->
+<section class="services py-5">
+    <div class="container text-center">
+        <h2 style="border-bottom: 2px solid #000; display: inline-block;">PUSLATBANG KHAN LAN RI</h2>
+        <h2 class="text-center small text-muted mb-5">BANGGA MELAYANI BANGSA</h2>
+        
+        <div class="row">
+            <!-- Card for Room Features -->
+            <div class="col-md-6 mb-4">
+                <a href="{{ route('ruangan') }}" class="card text-center h-100 text-decoration-none">
+                    <div class="card-body">
+                        <i class="fas fa-door-open fa-3x mb-3" style="color: #060606;"></i> <!-- Ikon Ruangan -->
+                        <h2>Ruangan</h2>
+                        <p>Menyediakan Berbagai Macam Ruangan Untuk Kepentingan Anda</p>
                     </div>
-                    <nav>
-                        <ul class="nav">
-                            <li class="nav-item"><a href="#" class="nav-link text-white">Ruangan</a></li>
-                            <li class="nav-item"><a href="#" class="nav-link text-white">Booking</a></li>
-                        </ul>
-                    </nav>
-                </div>
+                </a>
             </div>
-        </header>
 
-        <!-- Section for 4 Booking Now Columns -->
-        <section class="services py-5">
-            <div class="container">
-                <h2 class="text-center mb-1">PUSLATBANG KHAN LAN RI</h2>
-                <h2 class="text-center mb-5">BANGGA MELAYANI BANGSA</h2>
-                
-                <div class="row">
-                    <!-- Loop through each service and display in columns -->
-                    @foreach($services as $index => $service)
-                        <div class="col-md-6 mb-4"> <!-- 2 items per row with mb-4 for spacing -->
-                            <div class="card text-center h-100"> <!-- h-100 to ensure equal height -->
-                                <img src="{{}}" class="card-img-top" alt="{{ $service->title }}"> <!-- Menampilkan gambar -->
-                                <div class="card-body">
-                                    <h5 class="card-title">{{ $service->title }}</h5>
-                                    <p class="card-text">{{ $service->description }}</p>
-                                    <a href="{{ url('/booking') }}" class="btn btn-primary">Book Now</a>
-                                </div>
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
+            <!-- Card for Booking Features -->
+            <div class="col-md-6 mb-4">
+                <a href="{{ route('booking') }}" class="card text-center h-100 text-decoration-none">
+                    <div class="card-body">
+                        <i class="fas fa-calendar-check fa-3x mb-3" style="color: #060606;"></i> <!-- Ikon Booking -->
+                        <h2>Booking</h2>
+                        <p>Sewa Ruangan Sesuai dengan Kebutuhan Anda</p>
+                    </div>
+                </a>
             </div>
-        </section>
-
+        </div>
     </div>
+</section>
 
     <!-- Footer -->
     <footer class="footer py-1">
         <div class="container">
             <div class="row d-flex justify-content-center text-center">
                 <div class="col-md-8">
-                    <h4 class="text-white">LAN RI</h4>
-                    <p class="text-muted">Berorientasi Pelayanan Akuntabel Kompoten Harmonis Loyal Adaptif Kolaboratif</p>
+                    <div class="d-flex justify-content-center small text-muted">
+                        <span>&copy; Tekkom USK 21</span>
                 </div>
             </div>
         </div>
 
         <!-- Horizontal Line -->
-        <hr class="my-2" style="border-top: 4px solid #000000;"> <!-- Mengurangi margin pada garis -->
+        <hr class="my-2" style="border-top: 4px solid #000000;">
 
         <!-- Small Logos Section -->
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-auto">
-                    <img src="{{ asset('img/logo1.png') }}" alt="Logo 1" class="img-fluid" style="height: 50px;">
+                    <img src="{{ asset('img/Picture1.png') }}" alt="Logo 1" class="img-fluid" style="max-height: 50px; margin-right: 15px;">
                 </div>
+
                 <div class="col-auto">
-                    <img src="{{ asset('img/logo2.png') }}" alt="Logo 2" class="img-fluid" style="height: 50px;">
-                </div>
-                <div class="col-auto">
-                    <img src="{{ asset('img/logo3.png') }}" alt="Logo 3" class="img-fluid" style="height: 50px;">
+                    <img src="{{ asset('img/HIMATEKKOM 2.png') }}" alt="Logo 3" class="img-fluid" style="max-height: 50px; margin-right: 15px;">
                 </div>
             </div>
         </div>
     </footer>
 
-    <!-- Bootstrap JS and dependencies -->
+    <!-- Scripts -->
     <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-    <script src="{{ asset('js/sb-admin-2.min.js') }}"></script>
+
+    <!-- Script untuk mengubah warna navbar setelah scroll -->
+    <script>
+        $(window).scroll(function() {
+            if ($(this).scrollTop() > 100) { 
+                $('.navbar-custom').addClass('navbar-scrolled');
+            } else {
+                $('.navbar-custom').removeClass('navbar-scrolled');
+            }
+        });
+    </script>
+
 </body>
 </html>
