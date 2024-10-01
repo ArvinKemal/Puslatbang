@@ -15,7 +15,7 @@ class RuanganController extends Controller
     {
         $this->middleware('auth');
     }
-    
+
     /**
      * Display a listing of the resource.
      */
@@ -32,22 +32,22 @@ class RuanganController extends Controller
      */
     public function create()
     {
-        $pics = Pic::all(); 
-        return view('ruangan.ruangan-add', compact('pics')); 
+        $pics = Pic::all();
+        return view('ruangan.ruangan-add', compact('pics'));
     }
-    
+
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
         $request->validate([
-            'nama_ruangan' => 'required|string|max:255', 
+            'nama_ruangan' => 'required|string|max:255',
             'lantai' => 'required|integer',
             'kapasitas_ruangan' => 'required',
             'pic_id' => 'required',
             'image' => 'required|image|max:1000'
-        ],[
+        ], [
             'nama_ruangan.required' => 'Nama wajib diisi',
             'nama_ruangan.string' => 'Nama harus berupa teks',
             'nama_ruangan.max' => 'Nama tidak boleh lebih dari 255 karakter',
@@ -56,7 +56,7 @@ class RuanganController extends Controller
             'lantai.integer' => 'lantai harus berupa angka',
 
             'kapasitas_ruangan.required' => 'kapasitas ruangan wajib diisi',
-            
+
             'pic_id.required' => 'pic wajib diisi',
 
             'image.required' => 'image harus diisi',
@@ -65,7 +65,7 @@ class RuanganController extends Controller
 
         ]);
 
-         // Simpan data ke database
+        // Simpan data ke database
 
         $ruangan = new Ruangan();
         $ruangan->pic_id = $request->pic_id;
@@ -78,9 +78,23 @@ class RuanganController extends Controller
         $path = Storage::putFile('public/ruangan', $file);
         $ruangan->image = basename($path);
 
+        if ($this->checkRuangan($request->nama_ruangan)) {
+            return redirect()->back()->withErrors(['nama_ruangan' => 'Nama ruangan sudah ada.'])->withInput();
+        }
+
         $ruangan->save();
 
         return redirect()->route('ruangan.index')->with('success', 'data berhasil disimpan!');
+    }
+
+    public function checkRuangan($nama_ruangan)
+    {
+
+        $nama_ruangan_upper = strtoupper($nama_ruangan);
+
+        $ruanganExist = Ruangan::whereRaw('UPPER(nama_ruangan) = ?', [$nama_ruangan_upper])->exists();
+
+        return $ruanganExist;
     }
 
     /**
@@ -97,7 +111,7 @@ class RuanganController extends Controller
     public function edit(string $id)
     {
         $ruangan = Ruangan::findOrFail($id);
-        $pics = Pic::all(); 
+        $pics = Pic::all();
         return view('ruangan.ruangan-edit', compact('ruangan', 'pics')); // Mengirim data ruangan ke view 'ruangan.edit'
     }
 
@@ -107,11 +121,11 @@ class RuanganController extends Controller
     public function update(Request $request, string $id)
     {
         $request->validate([
-            'nama_ruangan' => 'required|string|max:255', 
+            'nama_ruangan' => 'required|string|max:255',
             'lantai' => 'required|integer',
             'kapasitas_ruangan' => 'required',
             'pic' => 'required'
-        ],[
+        ], [
             'nama_ruangan.required' => 'Nama wajib diisi',
             'nama_ruangan.string' => 'Nama harus berupa teks',
             'nama_ruangan.max' => 'Nama tidak boleh lebih dari 255 karakter',
@@ -124,7 +138,7 @@ class RuanganController extends Controller
             'pic.required' => 'pic wajib diisi',
         ]);
 
-         // Simpan data ke database
+        // Simpan data ke database
 
         $ruangan = Ruangan::findOrFail($id);
         $ruangan->pic = $request->pic;

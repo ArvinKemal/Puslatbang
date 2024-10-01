@@ -5,8 +5,8 @@ use App\Http\Controllers\BookingUser\BookingUserController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Pic\PicController;
 use App\Http\Controllers\Ruangan\RuanganController;
+use App\Http\Controllers\RuanganUser\RuanganUserController;
 use App\Http\Controllers\Tv\TvController;
-use App\Models\Ruangan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -22,16 +22,23 @@ use Illuminate\Support\Facades\Route;
 */
 
 // Route::get('/', function () {
-//     // Cek apakah user sudah login
-//     if (Auth::check()) {
-//         // Jika sudah login, arahkan ke halaman home atau halaman lain
-//         return redirect()->route('home');
-//     } else {
-//         // Jika belum login, arahkan ke halaman login
-//         // return redirect()->route('login');
-//         return redirect()->route('login');
-//     }
-// });
+    //     // Cek apakah user sudah login
+    //     if (Auth::check()) {
+        //         // Jika sudah login, arahkan ke halaman home atau halaman lain
+        //         return redirect()->route('home');
+        //     } else {
+            //         // Jika belum login, arahkan ke halaman login
+            //         // return redirect()->route('login');
+            //         return redirect()->route('login');
+            //     }
+            // });
+            
+            
+
+
+Route::get('/ruangan-user', [RuanganUserController::class, 'index'])->name('ruangan-user.index');
+
+
 
 Auth::routes();
 

@@ -21,7 +21,9 @@ class HomeController extends Controller
         $bulananChart = $bulananChart->build();
         $harianChart = $harianChart->build(); // Mengambil data dari chart harian
         $users = User::count();
-        $bookings = Booking::orderBy('tanggal', 'asc')->get();
+        $bookings = Booking::where('tanggal', '>=', now()->toDateString())
+            ->orderBy('tanggal', 'asc')
+            ->get();
 
         $widget = [
             'users' => $users,
@@ -33,9 +35,11 @@ class HomeController extends Controller
 
     public function pdf()
     {
-        $bookings = Booking::orderBy('tanggal', 'asc')->get();
+        $bookings = Booking::where('tanggal', '>=', now()->toDateString())
+            ->orderBy('tanggal', 'asc')
+            ->get();
         $pdf = Pdf::loadView('pdf.bookings', ['bookings' => $bookings]);
-        
+
         return $pdf->stream('Data Booking.pdf');
     }
 }
