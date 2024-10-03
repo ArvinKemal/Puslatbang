@@ -73,11 +73,13 @@ class RuanganController extends Controller
         $ruangan->nama_ruangan = $request->nama_ruangan;
         $ruangan->kapasitas_ruangan = $request->kapasitas_ruangan;
         $file = $request->file('image');
-
+        
+        dd($request->hasFile('image'));
         // Storage::putFileAs('photos', new File('public/ruangan'), $file->getClientOriginalName());
         $path = Storage::putFile('public/ruangan', $file);
         $ruangan->image = basename($path);
-
+        
+        
         if ($this->checkRuangan($request->nama_ruangan)) {
             return redirect()->back()->withErrors(['nama_ruangan' => 'Nama ruangan sudah ada.'])->withInput();
         }
@@ -143,16 +145,22 @@ class RuanganController extends Controller
             'image.max:1000' => 'ukuran image maksimal 1000kb'
         ]);
 
-        // Simpan data ke database
 
+        // Simpan data ke database
         $ruangan = Ruangan::findOrFail($id);
         $ruangan->pic_id = $request->pic_id;
         $ruangan->lantai = $request->lantai;
         $ruangan->nama_ruangan = $request->nama_ruangan;
         $ruangan->kapasitas_ruangan = $request->kapasitas_ruangan;
         $file = $request->file('image');
+        
+        if ($ruangan->image) {
+            Storage::delete('public/ruangan/' . $ruangan->image);
+        }
+        
         $path = Storage::putFile('public/ruangan', $file);
         $ruangan->image = basename($path);
+
 
         $ruangan->save();
 

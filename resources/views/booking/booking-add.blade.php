@@ -135,14 +135,14 @@
                             </div>
 
 
-                                <!-- Button -->
-                                <div class="pl-lg-4" style="margin-top: 30px">
-                                    <div class="row">
-                                        <div class="col text-center">
-                                            <button type="submit" class="btn btn-success">Tambah</button>
-                                        </div>
+                            <!-- Button -->
+                            <div class="pl-lg-4" style="margin-top: 30px">
+                                <div class="row">
+                                    <div class="col text-center">
+                                        <button type="submit" class="btn btn-success">Tambah</button>
                                     </div>
                                 </div>
+                            </div>
                         </form>
                         <script>
                             document.getElementById('lantai').addEventListener('change', function() {
@@ -245,6 +245,5 @@
                     </div>
                 </div>
             </div>
-        </div>
         </div>
     @endsection
