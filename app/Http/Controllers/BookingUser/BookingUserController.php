@@ -9,6 +9,7 @@ use App\Models\Ruangan;
 use Illuminate\Http\Request;
 
 class BookingUserController extends Controller
+
 {
     /**
      * Display a listing of the resource.
@@ -24,7 +25,6 @@ class BookingUserController extends Controller
     public function create()
     {
         $ruangans = Ruangan::all();
-
         return view("booking-user", compact('ruangans'));
     }
 
@@ -39,6 +39,7 @@ class BookingUserController extends Controller
             'waktu_pemakaian' => 'required',
             'nama_pengunjung' => 'required|string|max:255',
             'kontak_pengunjung' => 'required|string|max:255',
+            'nama_ruangan' => 'required|string|max:255', // Validasi nama ruangan
         ]);
 
         // Pisahkan waktu awal dan akhir
@@ -55,6 +56,7 @@ class BookingUserController extends Controller
         $booking->waktu_pemakaian_awal = $waktuPemakaianAwal;
         $booking->waktu_pemakaian_akhir = $waktuPemakaianAkhir;
         $booking->tanggal = $request->input('tanggal');
+        $booking->nama_ruangan = $request->input('nama_ruangan'); // Simpan nama ruangan
         // Simpan ke database
         $booking->save();
 
