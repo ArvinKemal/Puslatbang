@@ -179,13 +179,7 @@
                                     @endphp
                                     <option value="09:00-12:00"
                                         {{ in_array('09:00-12:00', $usedTimes) ? 'disabled style=color:red;' : '' }}>
-                                        09:00-12:00</option>
-                                    <option value="14:00-16:00"
-                                        {{ in_array('14:00-16:00', $usedTimes) ? 'disabled style=color:red;' : '' }}>
-                                        14:00-16:00</option>
-                                    <option value="09:00-16:00"
-                                        {{ in_array('09:00-16:00', $usedTimes) ? 'disabled style=color:red;' : '' }}>
-                                        Full Day</option>
+                                        09:00:00-12:00:00</option>
                                 </select>
                             </div>
                         </div>
@@ -242,55 +236,26 @@
                                     var waktuPemakaianSelect = document.getElementById('waktu_pemakaian');
                                     waktuPemakaianSelect.innerHTML = ''; // Kosongkan pilihan yang ada
 
-                                    // Cek jika ruangan VIP atau Standar
-                                    var isVipOrStandard = data.isFullyBooked;
-
-                                    // Jika ruangan adalah Kamar VIP atau Kamar Standar
-                                    if (isVipOrStandard) {
-                                        // Cek apakah semua waktu sudah terbooking
-                                        if (data.usedTimes.length > 0) {
-                                            // Tampilkan semua opsi waktu
-                                            var availableTimes = ['09:00-16:00'];
-                                            availableTimes.forEach(function(timeSlot) {
-                                                var option = document.createElement('option');
-                                                option.value = timeSlot;
-                                                option.text = timeSlot;
-                                                // Disable jika waktu sudah dipakai
-                                                if (data.usedTimes.includes(timeSlot)) {
-                                                    option.disabled = true;
-                                                    option.style.color = 'red'; // Menandakan sudah terpakai
-                                                }
-                                                waktuPemakaianSelect.appendChild(option);
-                                            });
-
-                                            // Jika sudah terbooking semua, tampilkan pesan
-                                            if (data.usedTimes.length >= 3) { // Misal 3 slot waktu total
-                                                var messageOption = document.createElement('option');
-                                                messageOption.text = 'Hari ini sudah dibooking';
-                                                messageOption.disabled = true; // Tidak bisa dipilih
-                                                messageOption.style.color = 'red'; // Beri warna merah pada teks
-                                                waktuPemakaianSelect.appendChild(messageOption);
-                                            }
-
-                                        } else {
-                                            // Jika tidak ada waktu yang terpakai, tampilkan semua opsi
-                                            var availableTimes = ['09:00-16:00'];
-                                            availableTimes.forEach(function(timeSlot) {
-                                                var option = document.createElement('option');
-                                                option.value = timeSlot;
-                                                option.text = timeSlot;
-                                                waktuPemakaianSelect.appendChild(option);
-                                            });
-                                        }
-                                    } else {
-                                        // Jika bukan Kamar VIP atau Kamar Standar, tampilkan semua waktu
+                                    // Cek apakah jumlah ruangan tersedia lebih besar dari booking hari ini
+                                    if (data.jumlahTersedia > data.jumlahBookingHariIni) {
+                    
+                                        // Tampilkan semua opsi waktu
                                         var availableTimes = ['09:00-16:00'];
                                         availableTimes.forEach(function(timeSlot) {
                                             var option = document.createElement('option');
                                             option.value = timeSlot;
                                             option.text = timeSlot;
+                                            // Disable jika waktu sudah dipakai
                                             waktuPemakaianSelect.appendChild(option);
+
                                         });
+                                    } else {
+                                        // Jika ruangan sudah penuh, tampilkan pesan
+                                        var messageOption = document.createElement('option');
+                                        messageOption.text = 'Hari ini sudah dibooking penuh';
+                                        messageOption.disabled = true; // Tidak bisa dipilih
+                                        messageOption.style.color = 'red'; // Beri warna merah pada teks
+                                        waktuPemakaianSelect.appendChild(messageOption);
                                     }
                                 })
                                 .catch(error => console.error('Error fetching booking data:', error));

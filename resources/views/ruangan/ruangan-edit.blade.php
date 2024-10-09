@@ -92,6 +92,16 @@
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="form-group">
+                                        <label class="form-control-label" for="jumlah">Jumlah<span
+                                                class="small text-danger">*</span></label>
+                                        <input type="number" id="jumlah" name="jumlah" class="form-control" value={{ $ruangan->jumlah }}>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
                                         <label class="form-control-label" for="image">image<span
                                                 class="small text-danger">*</span></label>
                                         <input type="file" id="image" name="image">

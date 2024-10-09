@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('nama_ruangan');
             $table->integer('kapasitas_ruangan');
             $table->timestamps();
+            $table->text('image')->nullable();
         });
     }
 
