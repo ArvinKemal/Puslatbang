@@ -8,6 +8,8 @@
     <link href="{{ asset('img/lanriicon.png') }}" rel="icon" type="image/png">
     <link href="{{ asset('css/sb-admin-2.min.css') }}" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Tambahkan Font Awesome CDN untuk ikon -->
+    <link href="{{ asset('vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet">
     <style>
         body {
             background-color: #f0f2f5;
@@ -82,7 +84,7 @@
         }
 
         h2 {
-            font-size: 20px
+            font-size: 20px;
         }
 
         @media (max-width: 767px) {
@@ -95,51 +97,83 @@
             }
 
             h5 {
-                font-size: 16px
+                font-size: 16px;
             }
+        }
+
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            text-decoration: none;
+            font-size: 22px;
+        }
+
+        .back-btn:hover {
+            background-color: rgba(0, 4, 255, 0.8);
+        }
+
+        .back-btn i {
+            color: white;
         }
     </style>
 </head>
 
-<body class="bg-light text-dark py-5" style="background-image: url('/img/assets/lan2.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat; background-attachment: fixed;">
+<body class="bg-light text-dark py-5"
+    style="background-image: url('/img/assets/lan2.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat; background-attachment: fixed;">
+
+    <!-- Tombol Kembali -->
+    <a href="javascript:history.back()" class="back-btn" title="Kembali">
+        <i class="fa-solid fa-arrow-left"></i>
+    </a>
+
     <div class="container">
         <h1 class="mb-4 text-center">DAFTAR RUANGAN</h1>
 
         @php
-            $currentFloor = null;
+        $currentFloor = null;
         @endphp
 
         @foreach ($ruangans as $ruangan)
-            @if ($currentFloor !== $ruangan->lantai)
-                @php
-                    $currentFloor = $ruangan->lantai;
-                @endphp
-                <!-- Header Lantai -->
-                <div class="floor-header rounded">
-                    <h2 class="mb-0">Lantai {{ $ruangan->lantai }}</h2>
-                </div>
-                <div class="row">
+        @if ($currentFloor !== $ruangan->lantai)
+        @php
+        $currentFloor = $ruangan->lantai;
+        @endphp
+        <!-- Header Lantai -->
+        <div class="floor-header rounded">
+            <h2 class="mb-0">Lantai {{ $ruangan->lantai }}</h2>
+        </div>
+        <div class="row">
             @endif
 
             <!-- Daftar ruangan dalam grid per lantai -->
             <div class="col-lg-4 col-md-6 col-sm-12 margin">
                 <div class="card shadow-sm">
-                    <img src="{{ asset('storage/ruangan/' . $ruangan->image) }}" class="room-image" alt="{{ $ruangan->nama_ruangan }}">
+                    <img src="{{ asset('storage/ruangan/' . $ruangan->image) }}" class="room-image"
+                        alt="{{ $ruangan->nama_ruangan }}">
                     <div class="room-body">
                         <h5 class="card-title">{{ $ruangan->nama_ruangan }}</h5>
                         <p class="card-text text-muted">Kapasitas: {{ $ruangan->kapasitas_ruangan }} orang</p>
-<<<<<<< HEAD
-                        <a href="{{ route('booking-user.store', ['ruangan_id' => $ruangan->id, 'nama_ruangan' => $ruangan->nama_ruangan, 'kapasitas' => $ruangan->kapasitas_ruangan]) }}" class="btn btn-primary">Booking</a>
-=======
                         <a href="{{ route('booking-user.store') }}" class="btn btn-primary">Booking</a>
->>>>>>> 955b200dadd18bf5b030c414e633ecdcb78a17a6
                     </div>
                 </div>
             </div>
 
             @if ($loop->last || $ruangans[$loop->index + 1]->lantai !== $ruangan->lantai)
-                </div> <!-- Akhiri .row jika lantai berbeda atau terakhir -->
-            @endif
+        </div> <!-- Akhiri .row jika lantai berbeda atau terakhir -->
+        @endif
         @endforeach
     </div>
 
