@@ -42,6 +42,9 @@
             max-width: 70px;
         }
 
+        .logo-left {
+            max-width: 90px;
+        }
 
         .bg-white-transparent {
             background-color: rgba(255, 255, 255, 0.5);
@@ -90,9 +93,13 @@
         <div class="w-100 bg-white-transparent rounded-custom no-shadow">
             <!-- Wrapper untuk logo kiri, tengah, dan kanan -->
             <div class="logo-container">
-                <img src="/img/Picture1.png" class="logo logo-left">
-                <img src="/img/lanrinobg.png" class="logo logo-center">
-                <img src="/img/HIMATEKKOM 2.png" class="logo logo-right">
+                <div class="left">
+                    <img src="/img/lanrinobg.png" class="logo logo-center">
+                </div>
+                <div class="right">
+                    <img src="/img/Picture1.png" class="logo logo-left">
+                    <img src="/img/HIMATEKKOM 2.png" class="logo logo-right">
+                </div>
             </div>
 
             @if (session('success'))
