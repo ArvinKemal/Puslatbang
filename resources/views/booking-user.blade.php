@@ -230,7 +230,7 @@
 
                         // Hanya fetch data jika tanggal dan ruangan dipilih
                         if (tanggal && ruanganId) {
-                            fetch(`/check-booking?ruangan_id=${ruanganId}&tanggal=${tanggal}`)
+                            fetch(/check-booking?ruangan_id=${ruanganId}&tanggal=${tanggal})
                                 .then(response => response.json())
                                 .then(data => {
                                     var waktuPemakaianSelect = document.getElementById('waktu_pemakaian');
