@@ -46,6 +46,7 @@ class RuanganController extends Controller
             'lantai' => 'required|integer',
             'kapasitas_ruangan' => 'required',
             'pic_id' => 'required',
+            'jumlah' => 'required',
             'image' => 'required|image|max:1000'
         ], [
             'nama_ruangan.required' => 'Nama wajib diisi',
@@ -58,6 +59,8 @@ class RuanganController extends Controller
             'kapasitas_ruangan.required' => 'kapasitas ruangan wajib diisi',
 
             'pic_id.required' => 'pic wajib diisi',
+
+            'jumlah.required' => 'Jumlah wajib diisi',
 
             'image.required' => 'image harus diisi',
             'image.image' => 'image harus berupa jpg/jpeg/png',
@@ -72,6 +75,7 @@ class RuanganController extends Controller
         $ruangan->lantai = $request->lantai;
         $ruangan->nama_ruangan = $request->nama_ruangan;
         $ruangan->kapasitas_ruangan = $request->kapasitas_ruangan;
+        $ruangan->jumlah = $request->jumlah;
         $file = $request->file('image');
         
     
@@ -127,6 +131,7 @@ class RuanganController extends Controller
             'lantai' => 'required|integer',
             'kapasitas_ruangan' => 'required',
             'pic_id' => 'required',
+            'jumlah' => 'required',
             'image' => 'required|image|max:1000'
         ], [
             'nama_ruangan.required' => 'Nama wajib diisi',
@@ -140,6 +145,8 @@ class RuanganController extends Controller
 
             'pic_id.required' => 'pic wajib diisi',
 
+            'jumlah.required' => 'Jumlah wajib diisi',
+
             'image.required' => 'image harus diisi',
             'image.image' => 'image harus berupa jpg/jpeg/png',
             'image.max:1000' => 'ukuran image maksimal 1000kb'
@@ -152,6 +159,7 @@ class RuanganController extends Controller
         $ruangan->lantai = $request->lantai;
         $ruangan->nama_ruangan = $request->nama_ruangan;
         $ruangan->kapasitas_ruangan = $request->kapasitas_ruangan;
+        $ruangan->jumlah = $request->jumlah;
         $file = $request->file('image');
         
         if ($ruangan->image) {

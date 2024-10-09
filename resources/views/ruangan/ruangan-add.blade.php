@@ -73,7 +73,7 @@
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="form-group">
-                                        <label class="form-control-label" for="pic_id">pic_id<span
+                                        <label class="form-control-label" for="pic_id">PIC<span
                                                 class="small text-danger">*</span></label>
                                         <select id="pic_id" class="form-control" name="pic_id">
                                             <option value="">Pilih PIC </option>
@@ -81,6 +81,16 @@
                                                 <option value="{{ $pic->id }}">{{ $pic->nama_pic }}</option>
                                             @endforeach
                                         </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="jumlah">Jumlah<span
+                                                class="small text-danger">*</span></label>
+                                        <input type="number" id="jumlah" name="jumlah" class="form-control">
                                     </div>
                                 </div>
                             </div>
