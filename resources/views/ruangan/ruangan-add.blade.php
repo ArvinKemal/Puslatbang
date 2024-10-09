@@ -23,7 +23,7 @@
         </div>
     @endif
 
-    <div class="row">   
+    <div class="row">
 
         <div class="col-lg order-lg-1">
 
@@ -31,7 +31,8 @@
 
                 <div class="card-body">
 
-                    <form method="POST" action="{{ route('ruangan.store') }}" autocomplete="off" enctype="multipart/form-data">
+                    <form method="POST" action="{{ route('ruangan.store') }}" autocomplete="off"
+                        enctype="multipart/form-data">
                         @csrf
                         <h6 class="heading-small text-muted mb-4">Informasi RUANGAN</h6>
 
@@ -39,8 +40,10 @@
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="form-group focused">
-                                        <label class="form-control-label" for="nama_ruangan">Nama Ruangan<span class="small text-danger">*</span></label>
-                                        <input type="text" id="nama_ruangan" class="form-control" name="nama_ruangan" placeholder="" value="">
+                                        <label class="form-control-label" for="nama_ruangan">Nama Ruangan<span
+                                                class="small text-danger">*</span></label>
+                                        <input type="text" id="nama_ruangan" class="form-control" name="nama_ruangan"
+                                            placeholder="" value="">
                                     </div>
                                 </div>
                             </div>
@@ -48,8 +51,10 @@
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="form-group">
-                                        <label class="form-control-label" for="lantai">Lantai<span class="small text-danger">*</span></label>
-                                        <input type="text" id="lantai" class="form-control" name="lantai" placeholder="" value="">
+                                        <label class="form-control-label" for="lantai">Lantai<span
+                                                class="small text-danger">*</span></label>
+                                        <input type="text" id="lantai" class="form-control" name="lantai"
+                                            placeholder="" value="">
                                     </div>
                                 </div>
                             </div>
@@ -57,8 +62,10 @@
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="form-group">
-                                        <label class="form-control-label" for="kapasitas_ruangan">Kapasitas Ruangan<span class="small text-danger">*</span></label>
-                                        <input type="text" id="kapasitas_ruangan" class="form-control" name="kapasitas_ruangan" placeholder="" value="">
+                                        <label class="form-control-label" for="kapasitas_ruangan">Kapasitas Ruangan<span
+                                                class="small text-danger">*</span></label>
+                                        <input type="text" id="kapasitas_ruangan" class="form-control"
+                                            name="kapasitas_ruangan" placeholder="" value="">
                                     </div>
                                 </div>
                             </div>
@@ -66,10 +73,11 @@
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="form-group">
-                                        <label class="form-control-label" for="pic_id">pic_id<span class="small text-danger">*</span></label>
+                                        <label class="form-control-label" for="pic_id">pic_id<span
+                                                class="small text-danger">*</span></label>
                                         <select id="pic_id" class="form-control" name="pic_id">
-                                            <option value="">Pilih PIC  </option>
-                                            @foreach($pics as $pic)
+                                            <option value="">Pilih PIC </option>
+                                            @foreach ($pics as $pic)
                                                 <option value="{{ $pic->id }}">{{ $pic->nama_pic }}</option>
                                             @endforeach
                                         </select>
@@ -80,8 +88,9 @@
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="form-group">
-                                        <label class="form-control-label" for="image">image<span class="small text-danger">*</span></label>
-                                        <input type="file" id="image" name="image" >
+                                        <label class="form-control-label" for="image">image<span
+                                                class="small text-danger">*</span></label>
+                                        <input type="file" id="image" name="image">
                                     </div>
                                 </div>
                             </div>

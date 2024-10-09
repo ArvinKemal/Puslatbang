@@ -60,7 +60,7 @@ class BookingUserController extends Controller
         // Simpan ke database
         $booking->save();
 
-        $pic = $booking->ruangan->pic; 
+        $pic = $booking->ruangan->pic;
         $picName = $pic->nama_pic; // Ambil nama PIC
         $picContact = $pic->no_telepon;
 
@@ -93,6 +93,24 @@ class BookingUserController extends Controller
     public function update(Request $request, string $id)
     {
         //
+    }
+
+    public function checkBooking(Request $request)
+    {
+        $ruanganId = $request->input('ruangan_id');
+        $tanggal = $request->input('tanggal');
+
+        $existingBookings = Booking::where('ruangan_id', $ruanganId)
+            ->where('tanggal', $tanggal)
+            ->whereIn('status', ['booked', 'pending'])
+            ->get();
+
+        $usedTimes = [];
+        foreach ($existingBookings as $booking) {
+            $usedTimes[] = $booking->waktu_pemakaian_awal . '-' . $booking->waktu_pemakaian_akhir;
+        }
+
+        return response()->json(['usedTimes' => $usedTimes]);
     }
 
     /**

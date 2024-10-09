@@ -14,21 +14,13 @@ class PemakaianHarianChart
         $this->chart = $chart;
     }
 
-    public function build(): \ArielMejiaDev\LarapexCharts\LineChart
+    public function build(): \ArielMejiaDev\LarapexCharts\BarChart
     {
         $tahun = date('Y');
         $bulan = date('m');
-        $dataHarian = []; // Label untuk X-axis (harian)
         $chartData = [];
-
-        // Menghitung 7 hari terakhir
-        for ($i = 6; $i >= 0; $i--) {
-            $dataHarian[] = date('d-M', strtotime("-$i days")); // Format tanggal (misalnya: 25-Sep)
-        }
-
-        $tanggalMulai = date('d-M-Y', strtotime('-6 days'));
-        $tanggalAkhir = date('d-M-Y'); // Tanggal hari ini
-
+        $tanggalMulai = now()->subDays(6)->format('d-M-Y'); // Tanggal mulai
+        $tanggalAkhir = now()->format('d-M-Y'); // Tanggal akhir
 
         // Ambil daftar ruangan unik dari tabel booking
         $ruanganList = Booking::select('ruangan_id') // Ambil ruangan_id dari tabel booking
@@ -42,38 +34,28 @@ class PemakaianHarianChart
         // Loop untuk setiap ruangan
         foreach ($ruanganList as $booking) {
             $ruanganNama = $booking->ruangan->nama_ruangan; // Ambil nama ruangan melalui relasi
-            $dataTotalPemakaianPerRuangan = [];
 
-            // Loop untuk menghitung pemakaian per hari (7 hari)
-            for ($hari = 6; $hari >= 0; $hari--) {
-                $tanggal = date('Y-m-d', strtotime("-$hari days"));
+            // Hitung total pemakaian untuk ruangan tertentu dalam 7 hari terakhir
+            $totalPemakaian = Booking::where('ruangan_id', $booking->ruangan_id)
+                ->where('status', 'booked')
+                ->whereDate('tanggal', '>=', now()->subDays(6)) // Filter untuk 7 hari terakhir
+                ->count();
 
-                // Hitung total pemakaian untuk ruangan tertentu pada tanggal tersebut
-                $totalPemakaian = Booking::where('ruangan_id', $booking->ruangan_id)
-                    ->whereDate('tanggal', $tanggal) // Filter berdasarkan tanggal
-                    ->count();
-
-                // Simpan total pemakaian per ruangan per hari
-                $dataTotalPemakaianPerRuangan[] = $totalPemakaian;
-            }
-
-            // Tambahkan data pemakaian per ruangan ke dalam chart
+            // Tambahkan data total pemakaian per ruangan ke dalam chart
             $chartData[] = [
                 'name' => $ruanganNama, // Nama ruangan untuk label
-                'data' => $dataTotalPemakaianPerRuangan // Data pemakaian per hari untuk ruangan tersebut
+                'total' => $totalPemakaian // Total pemakaian selama 7 hari terakhir
             ];
         }
 
-        // Membuat grafik dengan banyak garis (multiple lines)
-        $chart = $this->chart->lineChart()
-            ->setTitle("$tanggalMulai hingga $tanggalAkhir")
+        // Membuat diagram batang (BarChart)
+        $chart = $this->chart->barChart()
+            ->setTitle("Pemakaian Ruangan $tanggalMulai - $tanggalAkhir")
             ->setHeight(320)
-            ->setXAxis($dataHarian); // Label X-axis (hari)
+            ->setXAxis(array_column($chartData, 'name')) // Mengambil nama ruangan untuk X-axis
 
-        // Tambahkan data untuk setiap ruangan ke chart
-        foreach ($chartData as $data) {
-            $chart->addData($data['name'], $data['data']); // Setiap ruangan punya satu garis
-        }
+            // Menambahkan data total pemakaian per ruangan ke chart
+            ->addData('Total Pemakaian', array_column($chartData, 'total')); // Menambahkan total pemakaian untuk semua ruangan
 
         return $chart;
     }

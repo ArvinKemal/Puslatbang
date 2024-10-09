@@ -17,7 +17,9 @@
 
     <!-- Fonts -->
     <link href="{{ asset('vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
 
     <!-- Styles -->
     <link href="{{ asset('css/sb-admin-2.min.css') }}" rel="stylesheet">
@@ -108,20 +110,19 @@
             </div>
 
             @if (session('success'))
-            <div class="alert alert-success border-left-success alert-dismissible fade show" role="alert">
-                {{ session('success') }}
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            @endif
+        <div class="alert alert-success border-left-success alert-dismissible fade show" role="alert">
+            {{ session('success') }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    @endif
 
-            @if (session('status'))
-            <div class="alert alert-success border-left-success" role="alert">
-                {{ session('status') }}
-            </div>
-            @endif
-
+    @if (session('status'))
+        <div class="alert alert-success border-left-success" role="alert">
+            {{ session('status') }}
+        </div>
+    @endif
             <div class="text-center mb-3">
                 <h1 class="h4 font-weight-bold">Reservasi Ruangan Gedung - B</h1>
             </div>
@@ -149,9 +150,9 @@
                                 <select id="nama_ruangan" class="form-control" name="ruangan_id" style="height: 50px;" onchange="updateFields(this)">
                                     <option value="">Pilih Ruangan</option>
                                     @foreach ($ruangans as $ruangan)
-                                    <option value="{{ $ruangan->id }}" data-lantai="{{ $ruangan->lantai }}" data-nama="{{ $ruangan->nama_ruangan }}">
-                                        {{ $ruangan->nama_ruangan }}
-                                    </option>
+                                        <option value="{{ $ruangan->id }}" data-lantai="{{ $ruangan->lantai }}">
+                                            {{ $ruangan->nama_ruangan }} ( {{ $ruangan->kapasitas_ruangan }} orang )
+                                        </option>
                                     @endforeach
                                 </select>
                             </div>
@@ -174,8 +175,7 @@
 
                                         foreach ($existingBookings as $booking) {
                                             $usedTimes[] =
-                                                $booking->waktu_pemakaian_awal . '-' .
-                                                $booking->waktu_pemakaian_akhir;
+                                                $booking->waktu_pemakaian_awal . '-' . $booking->waktu_pemakaian_akhir;
                                         }
                                     @endphp
                                     <option value="09:00-12:00" {{ in_array('09:00-12:00', $usedTimes) ? 'disabled style=color:red;' : '' }}>09:00-12:00</option>
@@ -185,21 +185,96 @@
                             </div>
                         </div>
                         <div class="col-lg-6">
-                            <div class="form-group focused">
-                                <label class="form-control-label" for="nama_pengunjung" style="font-size: 16px; font-weight:700;">Nama Pengunjung</label>
-                                <input type="text" id="nama_pengunjung" class="form-control" name="nama_pengunjung" style="height: 50px;" placeholder="Masukkan nama pengunjung">
+                            <div class="form-group focused ">
+                                <label class="form-control-label" for="nama_pengunjung"
+                                    style="font-size: 16px; font-weight:700;">Nama Pengunjung</label>
+                                <input type="text" id="nama_pengunjung" class="form-control"
+                                    name="nama_pengunjung" style="height: 50px;" placeholder="Masukkan pengunjung">
                             </div>
                         </div>
                         <div class="col-lg-6">
-                            <div class="form-group focused">
-                                <label class="form-control-label" for="kontak_pengunjung" style="font-size: 16px; font-weight:700;">Kontak Pengunjung</label>
-                                <input type="text" id="kontak_pengunjung" class="form-control" name="kontak_pengunjung" style="height: 50px;" placeholder="Masukkan kontak pengunjung">
+                            <div class="form-group focused ">
+                                <label class="form-control-label" for="kontak_pengunjung"
+                                    style="font-size: 16px; font-weight:700;">Kontak Pengunjung</label>
+                                <input type="text" id="kontak_pengunjung" class="form-control"
+                                    name="kontak_pengunjung" style="height: 50px;" placeholder="Masukkan Kontak">
                             </div>
                         </div>
                         <div class="col-lg-12 text-center mt-4">
                             <button type="submit" class="btn btn-primary btn-lg btn-block">Pesan Sekarang</button>
                         </div>
                     </div>
+                </div>
+
+                <script>
+                    document.getElementById('lantai').addEventListener('change', function() {
+                        var selectedLantai = this.value;
+                        var ruanganOptions = document.getElementById('nama_ruangan').options;
+
+                        // Loop through ruangan options and display only those that match the selected lantai
+                        for (var i = 0; i < ruanganOptions.length; i++) {
+                            var option = ruanganOptions[i];
+                            var ruanganLantai = option.getAttribute('data-lantai');
+
+                            if (ruanganLantai === selectedLantai || selectedLantai === "") {
+                                option.style.display = ''; // Show option
+                            } else {
+                                option.style.display = 'none'; // Hide option
+                            }
+                        }
+                    });
+
+
+                    document.getElementById('tanggal').addEventListener('change', updateWaktuPemakaian);
+                    document.getElementById('nama_ruangan').addEventListener('change', updateWaktuPemakaian);
+
+
+                    function updateWaktuPemakaian() {
+                        var tanggal = document.getElementById('tanggal').value;
+                        var ruanganId = document.getElementById('nama_ruangan').value;
+
+                        // Hanya fetch data jika tanggal dan ruangan dipilih
+                        if (tanggal && ruanganId) {
+                            fetch(`/check-booking?ruangan_id=${ruanganId}&tanggal=${tanggal}`)
+                                .then(response => response.json())
+                                .then(data => {
+                                    var waktuPemakaianSelect = document.getElementById('waktu_pemakaian');
+                                    waktuPemakaianSelect.innerHTML = ''; // Kosongkan pilihan yang ada
+
+                                    var timeSlot = '09:00:00-16:00:00'; // Misal hanya ada satu slot waktu
+
+                                    // Cek apakah waktu tersebut sudah digunakan
+                                    if (data.usedTimes.includes(timeSlot)) {
+                                        // Jika slot sudah penuh, tampilkan teks "Hari ini sudah dibooking"
+                                        var messageOption = document.createElement('option');
+                                        messageOption.text = 'Hari ini sudah dibooking';
+                                        messageOption.disabled = true; // Tidak bisa dipilih
+                                        messageOption.style.color = 'red'; // Beri warna merah pada teks
+                                        waktuPemakaianSelect.appendChild(messageOption);
+
+                                        // Disable select dan tombol submit
+                                        // waktuPemakaianSelect.disabled = true;
+                                        // submitButton.disabled = true;
+                                    } else {
+                                        // Jika slot masih tersedia, tambahkan opsi waktu ke select
+                                        var option = document.createElement('option');
+                                        option.value = timeSlot;
+                                        option.text = timeSlot;
+                                        waktuPemakaianSelect.appendChild(option);
+
+                                        // Enable select dan tombol submit
+                                        waktuPemakaianSelect.disabled = false;
+                                        submitButton.disabled = false;
+                                    }
+                                })
+                                .catch(error => console.error('Error fetching booking data:', error));
+                        }
+                    }
+                </script>
+
+
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary">Submit</button>
                 </div>
             </form>
             <!-- End form reservasi -->
@@ -236,4 +311,4 @@
     
 </body>
 
-</html>
+</html
