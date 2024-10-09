@@ -39,15 +39,13 @@
                                 <table class="table align-items-center table-flush">
                                     <thead class="thead-light">
                                         <tr>
-
                                             <th>Nama Ruangan</th>
                                             <th>Lantai</th>
                                             <th>Kapasitas Ruangan</th>
                                             <th>Gambar</th>
                                             <th>PIC</th>
+                                            <th>Jumlah</th>
                                             <th>Aksi</th>
-
-
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -65,7 +63,7 @@
                                                     @endif
                                                 </td>
                                                 <td>{{ $ruangan->pic ? $ruangan->pic->nama_pic : 'Tidak ada PIC' }}</td>
-
+                                                <td>{{ $ruangan->jumlah }}</td>
                                                 <td>
                                                     <a href="{{ route('ruangan.edit', $ruangan->id) }}"
                                                         class="btn btn-sm btn-primary">Edit</a>

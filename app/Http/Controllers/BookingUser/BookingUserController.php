@@ -45,7 +45,7 @@ class BookingUserController extends Controller
         $waktuPemakaian = explode('-', $request->input('waktu_pemakaian'));
         $waktuPemakaianAwal = $waktuPemakaian[0];
         $waktuPemakaianAkhir = $waktuPemakaian[1];
-
+        
         // Simpan data ke dalam database
         $booking = new Booking();
         $booking->ruangan_id = $request->input('ruangan_id');
@@ -98,18 +98,21 @@ class BookingUserController extends Controller
         $ruanganId = $request->input('ruangan_id');
         $tanggal = $request->input('tanggal');
 
-        $existingBookings = Booking::where('ruangan_id', $ruanganId)
+        // Hitung berapa kali ruangan tersebut telah dibooking pada hari itu
+        $jumlahBookingHariIni = Booking::where('ruangan_id', $ruanganId)
             ->where('tanggal', $tanggal)
             ->whereIn('status', ['booked', 'pending'])
-            ->get();
+            ->count();
 
-        $usedTimes = [];
-        foreach ($existingBookings as $booking) {
-            $usedTimes[] = $booking->waktu_pemakaian_awal . '-' . $booking->waktu_pemakaian_akhir;
-        }
+        $jumlahTersedia = Ruangan::where('id', $ruanganId)->value('jumlah');
 
-        return response()->json(['usedTimes' => $usedTimes]);
+
+        return response()->json([
+            'jumlahBookingHariIni' => $jumlahBookingHariIni,
+            'jumlahTersedia' => $jumlahTersedia
+        ]);
     }
+
 
     /**
      * Remove the specified resource from storage.

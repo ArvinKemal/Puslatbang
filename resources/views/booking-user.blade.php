@@ -179,13 +179,7 @@
                                     @endphp
                                     <option value="09:00-12:00"
                                         {{ in_array('09:00-12:00', $usedTimes) ? 'disabled style=color:red;' : '' }}>
-                                        09:00-12:00</option>
-                                    <option value="14:00-16:00"
-                                        {{ in_array('14:00-16:00', $usedTimes) ? 'disabled style=color:red;' : '' }}>
-                                        14:00-16:00</option>
-                                    <option value="09:00-16:00"
-                                        {{ in_array('09:00-16:00', $usedTimes) ? 'disabled style=color:red;' : '' }}>
-                                        Full Day</option>
+                                        09:00:00-12:00:00</option>
                                 </select>
                             </div>
                         </div>
@@ -230,7 +224,6 @@
                     document.getElementById('tanggal').addEventListener('change', updateWaktuPemakaian);
                     document.getElementById('nama_ruangan').addEventListener('change', updateWaktuPemakaian);
 
-
                     function updateWaktuPemakaian() {
                         var tanggal = document.getElementById('tanggal').value;
                         var ruanganId = document.getElementById('nama_ruangan').value;
@@ -243,30 +236,26 @@
                                     var waktuPemakaianSelect = document.getElementById('waktu_pemakaian');
                                     waktuPemakaianSelect.innerHTML = ''; // Kosongkan pilihan yang ada
 
-                                    var timeSlot = '09:00:00-16:00:00'; // Misal hanya ada satu slot waktu
+                                    // Cek apakah jumlah ruangan tersedia lebih besar dari booking hari ini
+                                    if (data.jumlahTersedia > data.jumlahBookingHariIni) {
+                    
+                                        // Tampilkan semua opsi waktu
+                                        var availableTimes = ['09:00-16:00'];
+                                        availableTimes.forEach(function(timeSlot) {
+                                            var option = document.createElement('option');
+                                            option.value = timeSlot;
+                                            option.text = timeSlot;
+                                            // Disable jika waktu sudah dipakai
+                                            waktuPemakaianSelect.appendChild(option);
 
-                                    // Cek apakah waktu tersebut sudah digunakan
-                                    if (data.usedTimes.includes(timeSlot)) {
-                                        // Jika slot sudah penuh, tampilkan teks "Hari ini sudah dibooking"
+                                        });
+                                    } else {
+                                        // Jika ruangan sudah penuh, tampilkan pesan
                                         var messageOption = document.createElement('option');
-                                        messageOption.text = 'Hari ini sudah dibooking';
+                                        messageOption.text = 'Hari ini sudah dibooking penuh';
                                         messageOption.disabled = true; // Tidak bisa dipilih
                                         messageOption.style.color = 'red'; // Beri warna merah pada teks
                                         waktuPemakaianSelect.appendChild(messageOption);
-
-                                        // Disable select dan tombol submit
-                                        // waktuPemakaianSelect.disabled = true;
-                                        // submitButton.disabled = true;
-                                    } else {
-                                        // Jika slot masih tersedia, tambahkan opsi waktu ke select
-                                        var option = document.createElement('option');
-                                        option.value = timeSlot;
-                                        option.text = timeSlot;
-                                        waktuPemakaianSelect.appendChild(option);
-
-                                        // Enable select dan tombol submit
-                                        waktuPemakaianSelect.disabled = false;
-                                        submitButton.disabled = false;
                                     }
                                 })
                                 .catch(error => console.error('Error fetching booking data:', error));
