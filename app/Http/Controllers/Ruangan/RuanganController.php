@@ -74,7 +74,7 @@ class RuanganController extends Controller
         $ruangan->kapasitas_ruangan = $request->kapasitas_ruangan;
         $file = $request->file('image');
         
-        dd($request->hasFile('image'));
+    
         // Storage::putFileAs('photos', new File('public/ruangan'), $file->getClientOriginalName());
         $path = Storage::putFile('public/ruangan', $file);
         $ruangan->image = basename($path);

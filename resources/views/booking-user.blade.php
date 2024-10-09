@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -14,7 +15,9 @@
 
     <!-- Fonts -->
     <link href="{{ asset('vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
 
     <!-- Styles -->
     <link href="{{ asset('css/sb-admin-2.min.css') }}" rel="stylesheet">
@@ -93,19 +96,19 @@
             </div>
 
             @if (session('success'))
-        <div class="alert alert-success border-left-success alert-dismissible fade show" role="alert">
-            {{ session('success') }}
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-    @endif
+                <div class="alert alert-success border-left-success alert-dismissible fade show" role="alert">
+                    {{ session('success') }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            @endif
 
-    @if (session('status'))
-        <div class="alert alert-success border-left-success" role="alert">
-            {{ session('status') }}
-        </div>
-    @endif
+            @if (session('status'))
+                <div class="alert alert-success border-left-success" role="alert">
+                    {{ session('status') }}
+                </div>
+            @endif
             <div class="text-center mb-3">
                 <h1 class="h4 font-weight-bold">Reservasi Ruangan Gedung - B</h1>
             </div>
@@ -128,8 +131,7 @@
                             <div class="form-group focused ">
                                 <label class="form-control-label" for="lantai"
                                     style="font-size: 16px; font-weight:700;">Lantai</label>
-                                <select id="lantai" class="form-control" name="lantai"
-                                    style="height: 50px;">
+                                <select id="lantai" class="form-control" name="lantai" style="height: 50px;">
                                     <option value="">Pilih lantai</option>
                                     <option value="1">Lantai 1</option>
                                     <option value="2">Lantai 2</option>
@@ -142,13 +144,11 @@
                             <div class="form-group focused ">
                                 <label class="form-control-label" for="ruangan_id"
                                     style="font-size: 16px; font-weight:700;">Ruangan</label>
-                                <select id="nama_ruangan" class="form-control" name="ruangan_id"
-                                    style="height: 50px;">
+                                <select id="nama_ruangan" class="form-control" name="ruangan_id" style="height: 50px;">
                                     <option value="">Pilih Ruangan</option>
                                     @foreach ($ruangans as $ruangan)
-                                        <option value="{{ $ruangan->id }}"
-                                            data-lantai="{{ $ruangan->lantai }}">
-                                            {{ $ruangan->nama_ruangan }}
+                                        <option value="{{ $ruangan->id }}" data-lantai="{{ $ruangan->lantai }}">
+                                            {{ $ruangan->nama_ruangan }} ( {{ $ruangan->kapasitas_ruangan }} orang )
                                         </option>
                                     @endforeach
                                 </select>
@@ -174,9 +174,7 @@
 
                                         foreach ($existingBookings as $booking) {
                                             $usedTimes[] =
-                                                $booking->waktu_pemakaian_awal .
-                                                '-' .
-                                                $booking->waktu_pemakaian_akhir;
+                                                $booking->waktu_pemakaian_awal . '-' . $booking->waktu_pemakaian_akhir;
                                         }
                                     @endphp
                                     <option value="09:00-12:00"
@@ -196,8 +194,7 @@
                                 <label class="form-control-label" for="nama_pengunjung"
                                     style="font-size: 16px; font-weight:700;">Nama Pengunjung</label>
                                 <input type="text" id="nama_pengunjung" class="form-control"
-                                    name="nama_pengunjung" style="height: 50px;"
-                                    placeholder="Masukkan pengunjung">
+                                    name="nama_pengunjung" style="height: 50px;" placeholder="Masukkan pengunjung">
                             </div>
                         </div>
                         <div class="col-lg-6">
@@ -205,8 +202,7 @@
                                 <label class="form-control-label" for="kontak_pengunjung"
                                     style="font-size: 16px; font-weight:700;">Kontak Pengunjung</label>
                                 <input type="text" id="kontak_pengunjung" class="form-control"
-                                    name="kontak_pengunjung" style="height: 50px;"
-                                    placeholder="Masukkan Kontak">
+                                    name="kontak_pengunjung" style="height: 50px;" placeholder="Masukkan Kontak">
                             </div>
                         </div>
                     </div>
@@ -234,84 +230,51 @@
                     document.getElementById('tanggal').addEventListener('change', updateWaktuPemakaian);
                     document.getElementById('nama_ruangan').addEventListener('change', updateWaktuPemakaian);
 
+
                     function updateWaktuPemakaian() {
                         var tanggal = document.getElementById('tanggal').value;
                         var ruanganId = document.getElementById('nama_ruangan').value;
 
-
-                        // Only fetch if both tanggal and ruangan are selected
+                        // Hanya fetch data jika tanggal dan ruangan dipilih
                         if (tanggal && ruanganId) {
                             fetch(`/check-booking?ruangan_id=${ruanganId}&tanggal=${tanggal}`)
                                 .then(response => response.json())
                                 .then(data => {
-                                    console.log(data, 'ini dia')
                                     var waktuPemakaianSelect = document.getElementById('waktu_pemakaian');
-                                    waktuPemakaianSelect.innerHTML = ''; // Kosongkan pilihan
-                                    console.log('Waktu yang sudah digunakan:', data.usedTimes);
+                                    waktuPemakaianSelect.innerHTML = ''; // Kosongkan pilihan yang ada
 
-                                    var timeSlots = ['09:00:00-12:00:00', '14:00:00-16:00:00', '09:00:00-16:00:00'];
-                                    let allDisabled = true; // Variabel untuk mengecek apakah semua opsi dinonaktifkan
+                                    var timeSlot = '09:00:00-16:00:00'; // Misal hanya ada satu slot waktu
 
-                                    timeSlots.forEach(function(slot) {
+                                    // Cek apakah waktu tersebut sudah digunakan
+                                    if (data.usedTimes.includes(timeSlot)) {
+                                        // Jika slot sudah penuh, tampilkan teks "Hari ini sudah dibooking"
+                                        var messageOption = document.createElement('option');
+                                        messageOption.text = 'Hari ini sudah dibooking';
+                                        messageOption.disabled = true; // Tidak bisa dipilih
+                                        messageOption.style.color = 'red'; // Beri warna merah pada teks
+                                        waktuPemakaianSelect.appendChild(messageOption);
+
+                                        // Disable select dan tombol submit
+                                        // waktuPemakaianSelect.disabled = true;
+                                        // submitButton.disabled = true;
+                                    } else {
+                                        // Jika slot masih tersedia, tambahkan opsi waktu ke select
                                         var option = document.createElement('option');
-                                        option.value = slot;
-                                        option.text = slot;
-
-                                        // Disable jika slot sudah digunakan
-                                        if (data.usedTimes.includes(slot)) {
-                                            option.disabled = true;
-                                            option.style.color = 'red';
-                                            console.log(`Menonaktifkan slot: ${slot}`);
-                                        }
-
-                                        // Tambahkan logika untuk menonaktifkan slot yang tumpang tindih
-                                        if (data.usedTimes.includes('09:00:00-12:00:00')) {
-                                            if (slot === '09:00:00-12:00:00' || slot === '09:00:00-16:00:00') {
-                                                option.disabled = true;
-                                                option.style.color = 'red';
-                                                console.log(`Menonaktifkan slot karena slot 1 sudah dipilih: ${slot}`);
-                                            }
-                                        }
-
-                                        if (data.usedTimes.includes('14:00:00-16:00:00')) {
-                                            if (slot === '14:00:00-16:00:00' || slot === '09:00:00-16:00:00') {
-                                                option.disabled = true;
-                                                option.style.color = 'red';
-                                                console.log(`Menonaktifkan slot karena slot 2 sudah dipilih: ${slot}`);
-                                            }
-                                        }
-
-                                        if (data.usedTimes.includes('09:00:00-16:00:00')) {
-                                            option.disabled = true;
-                                            option.style.color = 'red';
-                                            console.log(`Menonaktifkan semua slot karena slot 3 sudah dipilih: ${slot}`);
-                                        }
-
-                                        // Tambahkan opsi ke select
+                                        option.value = timeSlot;
+                                        option.text = timeSlot;
                                         waktuPemakaianSelect.appendChild(option);
 
-                                        // Cek apakah opsi dinonaktifkan
-                                        if (!option.disabled) {
-                                            allDisabled = false; // Set ke false jika ada opsi yang tidak dinonaktifkan
-                                        }
-                                    });
-
-                                    // Menampilkan pesan jika semua pilihan dinonaktifkan
-                                    if (allDisabled) {
-                                        var messageOption = document.createElement('option');
-                                        messageOption.text = 'Hari ini sudah di booking full';
-                                        messageOption.disabled = true; // Disable option message
-                                        messageOption.style.color = 'black'; // Set color
-                                        waktuPemakaianSelect.appendChild(messageOption);
+                                        // Enable select dan tombol submit
+                                        waktuPemakaianSelect.disabled = false;
+                                        submitButton.disabled = false;
                                     }
-
                                 })
                                 .catch(error => console.error('Error fetching booking data:', error));
                         }
                     }
                 </script>
 
-                
+
                 <div class="text-center">
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </div>
