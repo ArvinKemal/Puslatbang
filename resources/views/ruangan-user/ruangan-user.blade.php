@@ -11,7 +11,6 @@
     <style>
         body {
             background-color: #f0f2f5;
-            /* Warna latar belakang yang lebih lembut */
             font-family: 'Roboto', sans-serif;
             color: #333;
         }
@@ -19,11 +18,8 @@
         .container {
             max-width: 1200px;
             padding: 20px;
-            /* Memberikan padding pada kontainer */
             background-color: rgba(255, 255, 255, 0.8);
-            /* Menambahkan latar belakang putih semi-transparan */
             border-radius: 10px;
-            /* Menambahkan border radius pada kontainer */
         }
 
         .margin {
@@ -33,20 +29,15 @@
         .card {
             margin-bottom: 1rem;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
-            /* Transisi untuk efek hover */
             height: 100%;
             border: none;
-            /* Menghapus border */
             border-radius: 10px;
-            /* Menambahkan border radius */
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            /* Bayangan yang lebih halus */
         }
 
         .card:hover {
             transform: translateY(-5px);
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-            /* Bayangan saat hover */
         }
 
         .room-image {
@@ -54,9 +45,7 @@
             height: 150px;
             object-fit: cover;
             border-top-left-radius: 10px;
-            /* Menggunakan border radius pada gambar */
             border-top-right-radius: 10px;
-            /* Menggunakan border radius pada gambar */
         }
 
         .room-body {
@@ -71,24 +60,18 @@
             margin-top: 20px;
             padding: 10px;
             background-color: #007bff;
-            /* Warna latar belakang yang lebih cerah */
             color: white;
             border-radius: 8px;
-            /* Menambahkan border radius pada header */
         }
 
         .btn-primary {
             background-color: #007bff;
-            /* Warna tombol */
             border: none;
-            /* Menghapus border */
             border-radius: 5px;
-            /* Menambahkan border radius pada tombol */
         }
 
         .btn-primary:hover {
             background-color: #0056b3;
-            /* Warna tombol saat hover */
         }
 
         h1 {
@@ -104,8 +87,7 @@
     </style>
 </head>
 
-<body class="bg-light text-dark py-5"
-    style="background-image: url('/img/assets/lan2.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat; background-attachment: fixed;">
+<body class="bg-light text-dark py-5" style="background-image: url('/img/assets/lan2.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat; background-attachment: fixed;">
     <div class="container">
         <h1 class="mb-4 text-center">Daftar Ruangan</h1>
 
@@ -128,21 +110,19 @@
             <!-- Daftar ruangan dalam grid per lantai -->
             <div class="col-lg-4 col-md-6 col-sm-12 margin">
                 <div class="card shadow-sm">
-                    <img src="{{ asset('storage/ruangan/' . $ruangan->image) }}" class="room-image"
-                        alt="{{ $ruangan->nama_ruangan }}">
+                    <img src="{{ asset('storage/ruangan/' . $ruangan->image) }}" class="room-image" alt="{{ $ruangan->nama_ruangan }}">
                     <div class="room-body">
                         <h5 class="card-title">{{ $ruangan->nama_ruangan }}</h5>
                         <p class="card-text text-muted">Kapasitas: {{ $ruangan->kapasitas_ruangan }} orang</p>
-                        <a href="{{ route('booking-user.store') }}"
-                            class="btn btn-primary">Booking</a>
+                        <a href="{{ route('booking-user.store', ['ruangan_id' => $ruangan->id, 'nama_ruangan' => $ruangan->nama_ruangan, 'kapasitas' => $ruangan->kapasitas_ruangan]) }}" class="btn btn-primary">Booking</a>
                     </div>
                 </div>
             </div>
 
             @if ($loop->last || $ruangans[$loop->index + 1]->lantai !== $ruangan->lantai)
-    </div> <!-- Akhiri .row jika lantai berbeda atau terakhir -->
-    @endif
-    @endforeach
+                </div> <!-- Akhiri .row jika lantai berbeda atau terakhir -->
+            @endif
+        @endforeach
     </div>
 
     <!-- JS Files -->

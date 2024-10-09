@@ -1,5 +1,8 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<input type="hidden" id="ruangan_hidden" name="ruangan" value="">
+<input type="hidden" id="lantai_hidden" name="lantai" value="">
+
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -31,14 +34,15 @@
             margin-bottom: 20px;
         }
 
-        .logo {
-            max-width: 110px;
+        .logo-lanri img {
+            width: 130px;
+            height: auto;
         }
 
-        .logo-right {
-            max-width: 70px;
+        .logo-usk-himatekom img {
+            width: 80px;
+            height: auto;
         }
-
 
         .bg-white-transparent {
             background-color: rgba(255, 255, 255, 0.5);
@@ -78,6 +82,14 @@
                 max-width: 100%;
                 padding: 20px;
             }
+
+            .logo-lanri img {
+                width: 120px;
+            }
+
+            .logo-usk-himatekom img {
+                width: 60px;
+            }
         }
     </style>
 </head>
@@ -85,27 +97,31 @@
 <body style="background-image: url('/img/assets/lan2.jpg'); background-size: cover; background-position: center;">
     <div class="min-vh-100 d-flex align-items-center justify-content-center">
         <div class="w-100 bg-white-transparent rounded-custom no-shadow">
-            <!-- Wrapper untuk logo kiri, tengah, dan kanan -->
-            <div class="logo-container">
-                <img src="/img/Picture1.png" class="logo logo-left">
-                <img src="/img/lanrinobg.png" class="logo logo-center">
-                <img src="/img/HIMATEKKOM 2.png" class="logo logo-right">
+            <div class="d-flex justify-content-between align-items-center logo-container">
+                <div class="logo-lanri">
+                    <img src="/img/lanrinobg.png" alt="LAN RI Logo">
+                </div>
+                <div class="d-flex gap-3 logo-usk-himatekom">
+                    <img src="/img/Picture1.png" alt="USK Logo">
+                    <img src="/img/HIMATEKKOM 2.png" alt="Himatekom Logo">
+                </div>
             </div>
 
             @if (session('success'))
-        <div class="alert alert-success border-left-success alert-dismissible fade show" role="alert">
-            {{ session('success') }}
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-    @endif
+            <div class="alert alert-success border-left-success alert-dismissible fade show" role="alert">
+                {{ session('success') }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            @endif
 
-    @if (session('status'))
-        <div class="alert alert-success border-left-success" role="alert">
-            {{ session('status') }}
-        </div>
-    @endif
+            @if (session('status'))
+            <div class="alert alert-success border-left-success" role="alert">
+                {{ session('status') }}
+            </div>
+            @endif
+
             <div class="text-center mb-3">
                 <h1 class="h4 font-weight-bold">Reservasi Ruangan Gedung - B</h1>
             </div>
@@ -116,50 +132,34 @@
                 <div class="col-lg order-lg-1">
                     <div class="row" style="margin-bottom: 50px;">
                         <div class="col-lg-6">
-                            <div class="row"></div>
-                            <div class="form-group focused ">
-                                <label class="form-control-label" for="tanggal"
-                                    style="font-size: 16px; font-weight:700;">Tanggal</label>
-                                <input type="date" id="tanggal" class="form-control" name="tanggal"
-                                    style="height: 50px;" placeholder="Select tanggal">
+                            <div class="form-group focused">
+                                <label class="form-control-label" for="tanggal" style="font-size: 16px; font-weight:700;">Tanggal</label>
+                                <input type="date" id="tanggal" class="form-control" name="tanggal" style="height: 50px;" placeholder="Select tanggal">
                             </div>
                         </div>
                         <div class="col-lg-6">
-                            <div class="form-group focused ">
-                                <label class="form-control-label" for="lantai"
-                                    style="font-size: 16px; font-weight:700;">Lantai</label>
-                                <select id="lantai" class="form-control" name="lantai"
-                                    style="height: 50px;">
-                                    <option value="">Pilih lantai</option>
-                                    <option value="1">Lantai 1</option>
-                                    <option value="2">Lantai 2</option>
-                                    <option value="3">Lantai 3</option>
-                                    <option value="4">Lantai 4</option>
-                                </select>
+                            <div class="form-group focused">
+                                <label class="form-control-label" for="lantai" style="font-size: 16px; font-weight:700;">Lantai</label>
+                                <input type="text" id="lantai_input" class="form-control" name="lantai" readonly style="height: 50px;">
                             </div>
                         </div>
                         <div class="col-lg-6">
-                            <div class="form-group focused ">
-                                <label class="form-control-label" for="ruangan_id"
-                                    style="font-size: 16px; font-weight:700;">Ruangan</label>
-                                <select id="nama_ruangan" class="form-control" name="ruangan_id"
-                                    style="height: 50px;">
+                            <div class="form-group focused">
+                                <label class="form-control-label" for="ruangan_id" style="font-size: 16px; font-weight:700;">Ruangan</label>
+                                <select id="nama_ruangan" class="form-control" name="ruangan_id" style="height: 50px;" onchange="updateFields(this)">
                                     <option value="">Pilih Ruangan</option>
                                     @foreach ($ruangans as $ruangan)
-                                        <option value="{{ $ruangan->id }}"
-                                            data-lantai="{{ $ruangan->lantai }}">
-                                            {{ $ruangan->nama_ruangan }}
-                                        </option>
+                                    <option value="{{ $ruangan->id }}" data-lantai="{{ $ruangan->lantai }}" data-nama="{{ $ruangan->nama_ruangan }}">
+                                        {{ $ruangan->nama_ruangan }}
+                                    </option>
                                     @endforeach
                                 </select>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="form-group focused">
-                                <label class="form-control-label" for="waktu_pemakaian"
-                                    style="font-size: 16px; font-weight:700;">Waktu</label>
-                                <select id="waktu_pemakaian" class="form-control" name="waktu_pemakaian"
-                                    style="height: 50px;">
+                                <label class="form-control-label" for="waktu_pemakaian" style="font-size: 16px; font-weight:700;">Waktu</label>
+                                <select id="waktu_pemakaian" class="form-control" name="waktu_pemakaian" style="height: 50px;">
                                     <option value="">Pilih waktu</option>
                                     @php
                                         use App\Models\Booking; // Impor namespace lengkap model Booking
@@ -174,156 +174,66 @@
 
                                         foreach ($existingBookings as $booking) {
                                             $usedTimes[] =
-                                                $booking->waktu_pemakaian_awal .
-                                                '-' .
+                                                $booking->waktu_pemakaian_awal . '-' .
                                                 $booking->waktu_pemakaian_akhir;
                                         }
                                     @endphp
-                                    <option value="09:00-12:00"
-                                        {{ in_array('09:00-12:00', $usedTimes) ? 'disabled style=color:red;' : '' }}>
-                                        09:00-12:00</option>
-                                    <option value="14:00-16:00"
-                                        {{ in_array('14:00-16:00', $usedTimes) ? 'disabled style=color:red;' : '' }}>
-                                        14:00-16:00</option>
-                                    <option value="09:00-16:00"
-                                        {{ in_array('09:00-16:00', $usedTimes) ? 'disabled style=color:red;' : '' }}>
-                                        Full Day</option>
+                                    <option value="09:00-12:00" {{ in_array('09:00-12:00', $usedTimes) ? 'disabled style=color:red;' : '' }}>09:00-12:00</option>
+                                    <option value="14:00-16:00" {{ in_array('14:00-16:00', $usedTimes) ? 'disabled style=color:red;' : '' }}>14:00-16:00</option>
+                                    <option value="09:00-16:00" {{ in_array('09:00-16:00', $usedTimes) ? 'disabled style=color:red;' : '' }}>Full Day</option>
                                 </select>
                             </div>
                         </div>
                         <div class="col-lg-6">
-                            <div class="form-group focused ">
-                                <label class="form-control-label" for="nama_pengunjung"
-                                    style="font-size: 16px; font-weight:700;">Nama Pengunjung</label>
-                                <input type="text" id="nama_pengunjung" class="form-control"
-                                    name="nama_pengunjung" style="height: 50px;"
-                                    placeholder="Masukkan pengunjung">
+                            <div class="form-group focused">
+                                <label class="form-control-label" for="nama_pengunjung" style="font-size: 16px; font-weight:700;">Nama Pengunjung</label>
+                                <input type="text" id="nama_pengunjung" class="form-control" name="nama_pengunjung" style="height: 50px;" placeholder="Masukkan nama pengunjung">
                             </div>
                         </div>
                         <div class="col-lg-6">
-                            <div class="form-group focused ">
-                                <label class="form-control-label" for="kontak_pengunjung"
-                                    style="font-size: 16px; font-weight:700;">Kontak Pengunjung</label>
-                                <input type="text" id="kontak_pengunjung" class="form-control"
-                                    name="kontak_pengunjung" style="height: 50px;"
-                                    placeholder="Masukkan Kontak">
+                            <div class="form-group focused">
+                                <label class="form-control-label" for="kontak_pengunjung" style="font-size: 16px; font-weight:700;">Kontak Pengunjung</label>
+                                <input type="text" id="kontak_pengunjung" class="form-control" name="kontak_pengunjung" style="height: 50px;" placeholder="Masukkan kontak pengunjung">
                             </div>
+                        </div>
+                        <div class="col-lg-12 text-center mt-4">
+                            <button type="submit" class="btn btn-primary btn-lg btn-block">Pesan Sekarang</button>
                         </div>
                     </div>
                 </div>
-
-                <script>
-                    document.getElementById('lantai').addEventListener('change', function() {
-                        var selectedLantai = this.value;
-                        var ruanganOptions = document.getElementById('nama_ruangan').options;
-
-                        // Loop through ruangan options and display only those that match the selected lantai
-                        for (var i = 0; i < ruanganOptions.length; i++) {
-                            var option = ruanganOptions[i];
-                            var ruanganLantai = option.getAttribute('data-lantai');
-
-                            if (ruanganLantai === selectedLantai || selectedLantai === "") {
-                                option.style.display = ''; // Show option
-                            } else {
-                                option.style.display = 'none'; // Hide option
-                            }
-                        }
-                    });
-
-
-                    document.getElementById('tanggal').addEventListener('change', updateWaktuPemakaian);
-                    document.getElementById('nama_ruangan').addEventListener('change', updateWaktuPemakaian);
-
-                    function updateWaktuPemakaian() {
-                        var tanggal = document.getElementById('tanggal').value;
-                        var ruanganId = document.getElementById('nama_ruangan').value;
-
-
-                        // Only fetch if both tanggal and ruangan are selected
-                        if (tanggal && ruanganId) {
-                            fetch(`/check-booking?ruangan_id=${ruanganId}&tanggal=${tanggal}`)
-                                .then(response => response.json())
-                                .then(data => {
-                                    console.log(data, 'ini dia')
-                                    var waktuPemakaianSelect = document.getElementById('waktu_pemakaian');
-                                    waktuPemakaianSelect.innerHTML = ''; // Kosongkan pilihan
-                                    console.log('Waktu yang sudah digunakan:', data.usedTimes);
-
-                                    var timeSlots = ['09:00:00-12:00:00', '14:00:00-16:00:00', '09:00:00-16:00:00'];
-                                    let allDisabled = true; // Variabel untuk mengecek apakah semua opsi dinonaktifkan
-
-                                    timeSlots.forEach(function(slot) {
-                                        var option = document.createElement('option');
-                                        option.value = slot;
-                                        option.text = slot;
-
-                                        // Disable jika slot sudah digunakan
-                                        if (data.usedTimes.includes(slot)) {
-                                            option.disabled = true;
-                                            option.style.color = 'red';
-                                            console.log(`Menonaktifkan slot: ${slot}`);
-                                        }
-
-                                        // Tambahkan logika untuk menonaktifkan slot yang tumpang tindih
-                                        if (data.usedTimes.includes('09:00:00-12:00:00')) {
-                                            if (slot === '09:00:00-12:00:00' || slot === '09:00:00-16:00:00') {
-                                                option.disabled = true;
-                                                option.style.color = 'red';
-                                                console.log(`Menonaktifkan slot karena slot 1 sudah dipilih: ${slot}`);
-                                            }
-                                        }
-
-                                        if (data.usedTimes.includes('14:00:00-16:00:00')) {
-                                            if (slot === '14:00:00-16:00:00' || slot === '09:00:00-16:00:00') {
-                                                option.disabled = true;
-                                                option.style.color = 'red';
-                                                console.log(`Menonaktifkan slot karena slot 2 sudah dipilih: ${slot}`);
-                                            }
-                                        }
-
-                                        if (data.usedTimes.includes('09:00:00-16:00:00')) {
-                                            option.disabled = true;
-                                            option.style.color = 'red';
-                                            console.log(`Menonaktifkan semua slot karena slot 3 sudah dipilih: ${slot}`);
-                                        }
-
-                                        // Tambahkan opsi ke select
-                                        waktuPemakaianSelect.appendChild(option);
-
-                                        // Cek apakah opsi dinonaktifkan
-                                        if (!option.disabled) {
-                                            allDisabled = false; // Set ke false jika ada opsi yang tidak dinonaktifkan
-                                        }
-                                    });
-
-                                    // Menampilkan pesan jika semua pilihan dinonaktifkan
-                                    if (allDisabled) {
-                                        var messageOption = document.createElement('option');
-                                        messageOption.text = 'Hari ini sudah di booking full';
-                                        messageOption.disabled = true; // Disable option message
-                                        messageOption.style.color = 'black'; // Set color
-                                        waktuPemakaianSelect.appendChild(messageOption);
-                                    }
-
-                                })
-                                .catch(error => console.error('Error fetching booking data:', error));
-                        }
-                    }
-                </script>
-
-                
-                <div class="text-center">
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </div>
             </form>
+            <!-- End form reservasi -->
         </div>
     </div>
 
-    <!-- Bootstrap JS and Popper -->
+    <!-- Scripts -->
     <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
-    <script src="{{ asset('vendor/bootstrap/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('vendor/jquery-easing/jquery.easing.min.js') }}"></script>
     <script src="{{ asset('js/sb-admin-2.min.js') }}"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const ruanganSelect = document.getElementById('nama_ruangan');
+            const lantaiHidden = document.getElementById('lantai_hidden');
+            const ruanganHidden = document.getElementById('ruangan_hidden');
+    
+            ruanganSelect.addEventListener('change', function() {
+                const selectedOption = this.options[this.selectedIndex];
+                const lantai = selectedOption.getAttribute('data-lantai');
+                const ruangan = selectedOption.text;
+    
+                // Mengisi nilai ke input tersembunyi
+                lantaiHidden.value = lantai;
+                ruanganHidden.value = ruangan;
+    
+                // Tampilkan nilai di console (untuk debug, bisa dihapus nanti)
+                console.log('Lantai: ' + lantai);
+                console.log('Ruangan: ' + ruangan);
+            });
+        });
+    </script>
+    
 </body>
 
-</html
+</html>
