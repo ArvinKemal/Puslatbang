@@ -106,9 +106,8 @@
     <script src="{{ asset('js/sb-admin-2.min.js') }}"></script>
 
     <script>
-        // Hitung jumlah baris di tbody
-        const rows = document.querySelectorAll('.scroll-content tr').length;
 
+        const rows = document.querySelectorAll('.scroll-content tr').length;
         // Atur durasi animasi berdasarkan jumlah baris
         const scrollContent = document.querySelector('.scroll-content');
         let animationDuration = rows * 2; // Sesuaikan durasi (misal: 3 detik per baris)
