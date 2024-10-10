@@ -135,7 +135,7 @@
                             </div>
                         </div>
                         <div class="col-lg-6">
-                            <div class="form-group focused ">
+                            <div class="form-group focused">
                                 <label class="form-control-label" for="lantai"
                                     style="font-size: 16px; font-weight:700;">Lantai</label>
                                 <select id="lantai" class="form-control" name="lantai" style="height: 50px;">
@@ -148,13 +148,14 @@
                             </div>
                         </div>
                         <div class="col-lg-6">
-                            <div class="form-group focused ">
+                            <div class="form-group focused">
                                 <label class="form-control-label" for="ruangan_id"
                                     style="font-size: 16px; font-weight:700;">Ruangan</label>
                                 <select id="nama_ruangan" class="form-control" name="ruangan_id" style="height: 50px;">
                                     <option value="">Pilih Ruangan</option>
                                     @foreach ($ruangans as $ruangan)
-                                        <option value="{{ $ruangan->id }}" data-lantai="{{ $ruangan->lantai }}">
+                                        <option value="{{ $ruangan->id }}" data-lantai="{{ $ruangan->lantai }}"
+                                            {{ $ruanganDipilih && $ruanganDipilih->id == $ruangan->id ? 'selected' : '' }}>
                                             {{ $ruangan->nama_ruangan }} ( {{ $ruangan->kapasitas_ruangan }} orang )
                                         </option>
                                     @endforeach
@@ -227,9 +228,31 @@
                         }
                     });
 
+                    var ruanganDipilih = @json($ruanganDipilih);
+                    var ruangans = @json($ruangans);
 
                     document.getElementById('tanggal').addEventListener('change', updateWaktuPemakaian);
                     document.getElementById('nama_ruangan').addEventListener('change', updateWaktuPemakaian);
+
+                    function cekIdRuangan() {
+                        if (ruanganDipilih) {
+                            // Cari ruangan yang cocok berdasarkan id
+                            var selectedRuangan = ruangans.find(function(ruangan) {
+                                return ruangan.id === ruanganDipilih.id;
+                            });
+
+                            // Jika ruangan ditemukan, ubah nilai input
+                            if (selectedRuangan) {
+                                // Mengisi input tanggal dan nama ruangan
+                                document.getElementById('tanggal').value = ''; // Sesuaikan dengan nilai yang diinginkan
+                                document.getElementById('nama_ruangan').value = selectedRuangan.id; // Set ID ruangan
+
+                                // Jika ingin juga mengisi lantai
+                                var lantaiSelect = document.getElementById('lantai');
+                                lantaiSelect.value = selectedRuangan.lantai; // Set lantai yang sesuai
+                            }
+                        }
+                    }
 
                     function updateWaktuPemakaian() {
                         var tanggal = document.getElementById('tanggal').value;
@@ -245,7 +268,7 @@
 
                                     // Cek apakah jumlah ruangan tersedia lebih besar dari booking hari ini
                                     if (data.jumlahTersedia > data.jumlahBookingHariIni) {
-                    
+
                                         // Tampilkan semua opsi waktu
                                         var availableTimes = ['09:00:00-16:00:00'];
                                         availableTimes.forEach(function(timeSlot) {
@@ -268,6 +291,8 @@
                                 .catch(error => console.error('Error fetching booking data:', error));
                         }
                     }
+
+                    window.onload = cekIdRuangan();
                 </script>
 
 

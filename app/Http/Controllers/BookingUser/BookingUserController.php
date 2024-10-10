@@ -22,10 +22,17 @@ class BookingUserController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
-    {
+    public function create($id = null)
+    {   
+        // Jika ada ID yang diberikan, ambil data ruangan untuk ditampilkan di form
+        $ruanganDipilih = null;
+
+        if ($id) {
+            $ruanganDipilih = Ruangan::findOrFail($id);
+        }
+
         $ruangans = Ruangan::all();
-        return view("booking-user", compact('ruangans'));
+        return view("booking-user", compact('ruangans', 'ruanganDipilih'));
     }
 
     /**
@@ -39,7 +46,6 @@ class BookingUserController extends Controller
             'waktu_pemakaian' => 'required',
             'nama_pengunjung' => 'required|string|max:255',
             'kontak_pengunjung' => 'required|string|max:255',
-            'nama_ruangan' => 'required|string|max:255', // Validasi nama ruangan
         ]);
 
         // Pisahkan waktu awal dan akhir
@@ -56,7 +62,6 @@ class BookingUserController extends Controller
         $booking->waktu_pemakaian_awal = $waktuPemakaianAwal;
         $booking->waktu_pemakaian_akhir = $waktuPemakaianAkhir;
         $booking->tanggal = $request->input('tanggal');
-        $booking->nama_ruangan = $request->input('nama_ruangan'); // Simpan nama ruangan
         // Simpan ke database
         $booking->save();
 
