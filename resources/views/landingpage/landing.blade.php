@@ -201,21 +201,21 @@
                             <a class="nav-link" href="booking-user">Booking</a>
                         </li>
 
-                        <!-- Tambahkan Tombol Login di dalam Navbar Collapse -->
-                        @guest
-                            <li class="nav-item">
-                                <a href="{{ route('login') }}" class="btn btn-primary ml-3">Login</a>
-                            </li>
-                        @endguest
 
-                        <!-- Jika user sudah login, tambahkan item menu logout atau dashboard -->
-                        @auth
-                            <li class="nav-item">
-                                <a href="{{ route('logout') }}" class="btn btn-danger ml-3">Logout</a>
-                            </li>
-                        @endauth
-                    </ul>
-                </div>
+                <!-- Tombol Login/Logout -->
+                @guest
+                    <a href="{{ route('login') }}" class="btn btn-primary ml-3">Admin Login</a>
+                @endguest
+
+                @auth
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        @csrf
+                    </form>
+                    <a href="{{ route('logout') }}" class="btn btn-primary ml-3" 
+                       onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                        Logout
+                    </a>
+                @endauth
             </div>
         </nav>
 
