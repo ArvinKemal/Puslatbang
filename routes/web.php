@@ -87,7 +87,7 @@ Route::delete('/booking/{id}', [BookingController::class, 'destroy'])->name('boo
 
 
 
-Route::get('booking-user', [BookingUserController::class, 'create'])->name('booking-user.create');
+Route::get('booking-user/{id?}', [BookingUserController::class, 'create'])->name('booking-user.create');
 Route::post('booking-user', [BookingUserController::class, 'store'])->name('booking-user.store');
 // routing Tv Screen
 Route::get('/tv', [TvController::class, 'index'])->name('tv');

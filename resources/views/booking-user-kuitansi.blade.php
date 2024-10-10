@@ -108,7 +108,7 @@
             </div>
 
             <div class="btn-container">
-                <a href="{{ route('booking-user.add') }}" class="btn-custom">Kembali</a>
+                <a href="{{ route('booking-user.create') }}" class="btn-custom">Kembali</a>
             </div>
 
             <div class="screenshot-info">
