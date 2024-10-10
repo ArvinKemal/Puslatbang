@@ -142,7 +142,7 @@
 
                 <!-- Tombol Login/Logout -->
                 @guest
-                    <a href="{{ route('login') }}" class="btn btn-primary ml-3">Login</a>
+                    <a href="{{ route('login') }}" class="btn btn-primary ml-3">Admin Login</a>
                 @endguest
 
                 @auth
