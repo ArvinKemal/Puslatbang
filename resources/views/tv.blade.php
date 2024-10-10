@@ -93,8 +93,9 @@
                     </table>
                 </div>
 
-                <div class="d-flex justify-content-between small text-muted">
-                    <span>&copy; Teknik Komputer USK 21</span>
+                <div class="d-flex justify-content-between small text-muted mt-3">
+                    <span>&copy;Teknik Komputer USK 21</span>
+                    <span>Periode magang 2024 </span>
                 </div>
             </div>
         </div>

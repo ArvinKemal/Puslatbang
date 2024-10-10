@@ -101,7 +101,7 @@
                 <p>Waktu Penggunaan: <strong>{{ $booking->waktu_pemakaian_awal }} - {{ $booking->waktu_pemakaian_akhir }}</strong></p>
             </div>
 
-            <h5>Untuk mengonfirmasi pesanan Anda, dapat menghubungi:</h5>
+            <h5>Untuk mengkonfirmasi pesanan Anda, dapat menghubungi:</h5>
             <div class="contact-info">
                 <p><strong>Nama PIC:</strong> {{ $picName }}</p>
                 <p><strong>Kontak PIC:</strong> {{ $picContact }}</p>
