@@ -14,18 +14,14 @@ class PemakaianBulananChart
         $this->chart = $chart;
     }
 
-
-    public function build(): \ArielMejiaDev\LarapexCharts\LineChart
+    public function build(): \ArielMejiaDev\LarapexCharts\BarChart
     {
         $tahun = date('Y');
         $bulan = date('m');
-        $dataMingguan = ['Minggu 1', 'Minggu 2', 'Minggu 3', 'Minggu 4']; // Label untuk X-axis (mingguan)
         $chartData = [];
-
-        // Ambil nama bulan untuk subtitle
         $namaBulan = date('F', mktime(0, 0, 0, $bulan, 10)); // Mengambil nama bulan
 
-        // Ambil daftar ruangan unik dari tabel booking dan join dengan tabel ruangan untuk mendapatkan nama ruangan
+        // Ambil daftar ruangan unik dari tabel booking
         $ruanganList = Booking::select('ruangan_id') // Ambil ruangan_id dari tabel booking
             ->distinct()
             ->with('ruangan')
@@ -37,42 +33,29 @@ class PemakaianBulananChart
         // Loop untuk setiap ruangan
         foreach ($ruanganList as $booking) {
             $ruanganNama = $booking->ruangan->nama_ruangan; // Ambil nama ruangan melalui relasi
-            $dataTotalPemakaianPerRuangan = [];
 
-            // Loop untuk menghitung pemakaian per minggu (4 minggu)
-            for ($minggu = 1; $minggu <= 4; $minggu++) {
-                // Tentukan rentang tanggal untuk setiap minggu
-                $startDay = ($minggu - 1) * 7 + 1; // Hari awal minggu (1, 8, 15, 22)
-                $endDay = $minggu * 7; // Hari akhir minggu (7, 14, 21, 28)
+            // Hitung total pemakaian untuk ruangan tertentu dalam bulan ini
+            $totalPemakaian = Booking::where('ruangan_id', $booking->ruangan_id)
+                ->where('status', 'booked')
+                ->whereYear('tanggal', $tahun) // Filter untuk tahun yang sesuai
+                ->whereMonth('tanggal', $bulan) // Filter untuk bulan yang sesuai
+                ->count();
 
-                // Gunakan whereBetween untuk memastikan filter tanggal lebih tepat
-                $totalPemakaian = Booking::where('ruangan_id', $booking->ruangan_id)
-                    ->whereYear('tanggal', $tahun)
-                    ->whereMonth('tanggal', $bulan)
-                    ->whereBetween('tanggal', ["$tahun-$bulan-$startDay", "$tahun-$bulan-$endDay"]) // Filter rentang tanggal
-                    ->count();
-
-                // Simpan total pemakaian per ruangan per minggu
-                $dataTotalPemakaianPerRuangan[] = $totalPemakaian;
-            }
-
-            // Tambahkan data pemakaian per ruangan ke dalam chart
+            // Tambahkan data total pemakaian per ruangan ke dalam chart
             $chartData[] = [
                 'name' => $ruanganNama, // Nama ruangan untuk label
-                'data' => $dataTotalPemakaianPerRuangan // Data pemakaian per minggu untuk ruangan tersebut
+                'total' => $totalPemakaian // Total pemakaian selama sebulan
             ];
         }
 
-        // Membuat grafik dengan banyak garis (multiple lines)
-        $chart = $this->chart->lineChart()
-            ->setTitle('' . $namaBulan . ' ' . $tahun)
-            ->setHeight(320)
-            ->setXAxis($dataMingguan); // Label X-axis (minggu 1-4)
+        // Membuat diagram batang (BarChart)
+        $chart = $this->chart->barChart()
+        ->setTitle("Pemakaian Ruangan $namaBulan")
+        ->setHeight(320)
+        ->setXAxis(array_column($chartData, 'name')) // Mengambil nama ruangan untuk X-axis
 
-        // Tambahkan data untuk setiap ruangan ke chart
-        foreach ($chartData as $data) {
-            $chart->addData($data['name'], $data['data']); // Setiap ruangan punya satu garis
-        }
+        // Menambahkan data total pemakaian per ruangan ke chart
+        ->addData('Total Pemakaian', array_column($chartData, 'total'));
 
         return $chart;
     }

@@ -108,19 +108,9 @@
                                                         $booking->waktu_pemakaian_akhir;
                                                 }
                                             @endphp
-                                            <option value="09:00:00-12:00:00"
-                                                {{ old('waktu_pemakaian_awal') && old('waktu_pemakaian_akhir') ? (old('waktu_pemakaian_awal') . '-' . old('waktu_pemakaian_akhir') == '09:00:00-12:00:00' ? 'selected' : '') : ($booking->waktu_pemakaian_awal . '-' . $booking->waktu_pemakaian_akhir == '09:00:00-12:00:00' ? 'selected' : '') }}>
-                                                09:00:00-12:00:00
-                                            </option>
-
-                                            <option value="14:00:00-16:00:00"
-                                                {{ old('waktu_pemakaian_awal') && old('waktu_pemakaian_akhir') ? (old('waktu_pemakaian_awal') . '-' . old('waktu_pemakaian_akhir') == '14:00:00-16:00:00' ? 'selected' : '') : ($booking->waktu_pemakaian_awal . '-' . $booking->waktu_pemakaian_akhir == '14:00:00-16:00:00' ? 'selected' : '') }}>
-                                                14:00:00-16:00:00
-                                            </option>
-
                                             <option value="09:00:00-16:00:00"
                                                 {{ old('waktu_pemakaian_awal') && old('waktu_pemakaian_akhir') ? (old('waktu_pemakaian_awal') . '-' . old('waktu_pemakaian_akhir') == '09:00:00-16:00:00' ? 'selected' : '') : ($booking->waktu_pemakaian_awal . '-' . $booking->waktu_pemakaian_akhir == '09:00:00-16:00:00' ? 'selected' : '') }}>
-                                                Full Day
+                                                09:00:00-16:00:00
                                             </option>
 
 
@@ -148,27 +138,27 @@
                                 <div class="col-lg-6">
                                     <div class="form-group focused">
                                         <label class="form-control-label" for="status"
-                                        style="font-size: 24px; font-weight:400;">Status</label>
+                                            style="font-size: 24px; font-weight:400;">Status</label>
                                         <div class="custom-control custom-radio">
                                             <input type="radio" id="statusBooked" name="status"
-                                            class="custom-control-input" value="booked"
-                                            {{ $booking->status == 'booked' ? 'checked' : '' }}>
+                                                class="custom-control-input" value="booked"
+                                                {{ $booking->status == 'booked' ? 'checked' : '' }}>
                                             <label class="custom-control-label" for="statusBooked">
-                                                Booked <i class="fas fa-check-circle" style="color: green;"></i> 
+                                                Booked <i class="fas fa-check-circle" style="color: green;"></i>
                                             </label>
                                         </div>
                                         <div class="custom-control custom-radio">
                                             <input type="radio" id="statusCanceled" name="status"
-                                            class="custom-control-input" value="canceled"
-                                            {{ $booking->status == 'canceled' ? 'checked' : '' }}>
+                                                class="custom-control-input" value="canceled"
+                                                {{ $booking->status == 'canceled' ? 'checked' : '' }}>
                                             <label class="custom-control-label" for="statusCanceled">
-                                                Canceled <i class="fas fa-times-circle" style="color: red;"></i> 
+                                                Canceled <i class="fas fa-times-circle" style="color: red;"></i>
                                             </label>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                                
+
 
 
                             <!-- Button -->
@@ -205,73 +195,35 @@
                             var tanggal = document.getElementById('tanggal').value;
                             var ruanganId = document.getElementById('nama_ruangan').value;
 
-
-                            // Only fetch if both tanggal and ruangan are selected
+                            // Hanya fetch data jika tanggal dan ruangan dipilih
                             if (tanggal && ruanganId) {
                                 fetch(`/check-booking?ruangan_id=${ruanganId}&tanggal=${tanggal}`)
                                     .then(response => response.json())
                                     .then(data => {
-                                        console.log(data, 'ini dia')
                                         var waktuPemakaianSelect = document.getElementById('waktu_pemakaian');
-                                        waktuPemakaianSelect.innerHTML = ''; // Kosongkan pilihan
-                                        console.log('Waktu yang sudah digunakan:', data.usedTimes);
+                                        waktuPemakaianSelect.innerHTML = ''; // Kosongkan pilihan yang ada
 
-                                        var timeSlots = ['09:00:00-12:00:00', '14:00:00-16:00:00', '09:00:00-16:00:00'];
-                                        let allDisabled = true; // Variabel untuk mengecek apakah semua opsi dinonaktifkan
+                                        // Cek apakah jumlah ruangan tersedia lebih besar dari booking hari ini
+                                        if (data.jumlahTersedia > data.jumlahBookingHariIni) {
 
-                                        timeSlots.forEach(function(slot) {
-                                            var option = document.createElement('option');
-                                            option.value = slot;
-                                            option.text = slot;
+                                            // Tampilkan semua opsi waktu
+                                            var availableTimes = ['09:00:00-16:00:00'];
+                                            availableTimes.forEach(function(timeSlot) {
+                                                var option = document.createElement('option');
+                                                option.value = timeSlot;
+                                                option.text = timeSlot;
+                                                // Disable jika waktu sudah dipakai
+                                                waktuPemakaianSelect.appendChild(option);
 
-                                            // Disable jika slot sudah digunakan
-                                            if (data.usedTimes.includes(slot)) {
-                                                option.disabled = true;
-                                                option.style.color = 'red';
-                                                console.log(`Menonaktifkan slot: ${slot}`);
-                                            }
-
-                                            // Tambahkan logika untuk menonaktifkan slot yang tumpang tindih
-                                            if (data.usedTimes.includes('09:00:00-12:00:00')) {
-                                                if (slot === '09:00:00-12:00:00' || slot === '09:00:00-16:00:00') {
-                                                    option.disabled = true;
-                                                    option.style.color = 'red';
-                                                    console.log(`Menonaktifkan slot karena slot 1 sudah dipilih: ${slot}`);
-                                                }
-                                            }
-
-                                            if (data.usedTimes.includes('14:00:00-16:00:00')) {
-                                                if (slot === '14:00:00-16:00:00' || slot === '09:00:00-16:00:00') {
-                                                    option.disabled = true;
-                                                    option.style.color = 'red';
-                                                    console.log(`Menonaktifkan slot karena slot 2 sudah dipilih: ${slot}`);
-                                                }
-                                            }
-
-                                            if (data.usedTimes.includes('09:00:00-16:00:00')) {
-                                                option.disabled = true;
-                                                option.style.color = 'red';
-                                                console.log(`Menonaktifkan semua slot karena slot 3 sudah dipilih: ${slot}`);
-                                            }
-
-                                            // Tambahkan opsi ke select
-                                            waktuPemakaianSelect.appendChild(option);
-
-                                            // Cek apakah opsi dinonaktifkan
-                                            if (!option.disabled) {
-                                                allDisabled = false; // Set ke false jika ada opsi yang tidak dinonaktifkan
-                                            }
-                                        });
-
-                                        // Menampilkan pesan jika semua pilihan dinonaktifkan
-                                        if (allDisabled) {
+                                            });
+                                        } else {
+                                            // Jika ruangan sudah penuh, tampilkan pesan
                                             var messageOption = document.createElement('option');
-                                            messageOption.text = 'Hari ini sudah di booking full';
-                                            messageOption.disabled = true; // Disable option message
-                                            messageOption.style.color = 'black'; // Set color
+                                            messageOption.text = 'Hari ini sudah dibooking penuh';
+                                            messageOption.disabled = true; // Tidak bisa dipilih
+                                            messageOption.style.color = 'red'; // Beri warna merah pada teks
                                             waktuPemakaianSelect.appendChild(messageOption);
                                         }
-
                                     })
                                     .catch(error => console.error('Error fetching booking data:', error));
                             }

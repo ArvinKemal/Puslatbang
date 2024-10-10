@@ -31,7 +31,7 @@
 
                 <div class="card-body">
 
-                    <form method="POST" action="{{ route('ruangan.update', $ruangan->id) }}" autocomplete="off">
+                    <form method="POST" action="{{ route('ruangan.update', $ruangan->id) }}" autocomplete="off" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
 
@@ -75,14 +75,26 @@
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="form-group">
-                                        <label class="form-control-label" for="pic">PIC<span
+                                        <label class="form-control-label" for="pic_id">PIC<span
                                                 class="small text-danger">*</span></label>
-                                        <select id="pic" class="form-control" name="pic">
-                                            <option value="">Pilih PIC </option>
+                                        <select id="pic_id" class="form-control" name="pic_id">
+                                            <option value="">Pilih PIC </option>    
                                             @foreach ($pics as $pic)
-                                                <option value="{{ $pic->id }}">{{ $pic->nama_pic }}</option>
+                                                <option value="{{ $pic->id }}"  
+                                                    {{ $ruangan->pic_id == $pic->id ? 'selected' : '' }}>
+                                                    {{ $pic->nama_pic }}</option>
                                             @endforeach
                                         </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="jumlah">Jumlah<span
+                                                class="small text-danger">*</span></label>
+                                        <input type="number" id="jumlah" name="jumlah" class="form-control" value={{ $ruangan->jumlah }}>
                                     </div>
                                 </div>
                             </div>

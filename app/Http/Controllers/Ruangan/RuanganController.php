@@ -46,6 +46,7 @@ class RuanganController extends Controller
             'lantai' => 'required|integer',
             'kapasitas_ruangan' => 'required',
             'pic_id' => 'required',
+            'jumlah' => 'required',
             'image' => 'required|image|max:1000'
         ], [
             'nama_ruangan.required' => 'Nama wajib diisi',
@@ -58,6 +59,8 @@ class RuanganController extends Controller
             'kapasitas_ruangan.required' => 'kapasitas ruangan wajib diisi',
 
             'pic_id.required' => 'pic wajib diisi',
+
+            'jumlah.required' => 'Jumlah wajib diisi',
 
             'image.required' => 'image harus diisi',
             'image.image' => 'image harus berupa jpg/jpeg/png',
@@ -72,12 +75,15 @@ class RuanganController extends Controller
         $ruangan->lantai = $request->lantai;
         $ruangan->nama_ruangan = $request->nama_ruangan;
         $ruangan->kapasitas_ruangan = $request->kapasitas_ruangan;
+        $ruangan->jumlah = $request->jumlah;
         $file = $request->file('image');
-
+        
+    
         // Storage::putFileAs('photos', new File('public/ruangan'), $file->getClientOriginalName());
         $path = Storage::putFile('public/ruangan', $file);
         $ruangan->image = basename($path);
-
+        
+        
         if ($this->checkRuangan($request->nama_ruangan)) {
             return redirect()->back()->withErrors(['nama_ruangan' => 'Nama ruangan sudah ada.'])->withInput();
         }
@@ -125,6 +131,7 @@ class RuanganController extends Controller
             'lantai' => 'required|integer',
             'kapasitas_ruangan' => 'required',
             'pic_id' => 'required',
+            'jumlah' => 'required',
             'image' => 'required|image|max:1000'
         ], [
             'nama_ruangan.required' => 'Nama wajib diisi',
@@ -138,21 +145,30 @@ class RuanganController extends Controller
 
             'pic_id.required' => 'pic wajib diisi',
 
+            'jumlah.required' => 'Jumlah wajib diisi',
+
             'image.required' => 'image harus diisi',
             'image.image' => 'image harus berupa jpg/jpeg/png',
             'image.max:1000' => 'ukuran image maksimal 1000kb'
         ]);
 
-        // Simpan data ke database
 
+        // Simpan data ke database
         $ruangan = Ruangan::findOrFail($id);
         $ruangan->pic_id = $request->pic_id;
         $ruangan->lantai = $request->lantai;
         $ruangan->nama_ruangan = $request->nama_ruangan;
         $ruangan->kapasitas_ruangan = $request->kapasitas_ruangan;
+        $ruangan->jumlah = $request->jumlah;
         $file = $request->file('image');
+        
+        if ($ruangan->image) {
+            Storage::delete('public/ruangan/' . $ruangan->image);
+        }
+        
         $path = Storage::putFile('public/ruangan', $file);
         $ruangan->image = basename($path);
+
 
         $ruangan->save();
 

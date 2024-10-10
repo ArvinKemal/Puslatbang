@@ -41,6 +41,7 @@ Route::get('/ruangan-user', [RuanganUserController::class, 'index'])->name('ruan
 
 
 // routing booking user
+Route::get('/check-booking', [BookingUserController::class, 'checkBooking']);
 Route::post('/booking-user', [BookingUserController::class, 'store'])->name('booking-user.store');
 Route::get('/booking-user-success', function () {
     return view('booking-user-kuitansi');
@@ -49,7 +50,7 @@ Route::get('/booking-user-success', function () {
 Auth::routes();
 
 // Route::get('/', 'WelcomeController@index')->name('welcome');
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::get('/home/preview-pdf', [HomeController::class, 'preview_pdf'])->name('home.preview');
 Route::get('/home/download-pdf', [HomeController::class, 'download_pdf'])->name('home.download');
 
@@ -76,7 +77,6 @@ Route::get('/ruangan/{id}/edit', [RuanganController::class, 'edit'])->name('ruan
 Route::put('/ruangan/{id}', [RuanganController::class, 'update'])->name('ruangan.update');
 Route::delete('/ruangan/{id}', [RuanganController::class, 'destroy'])->name('ruangan.destroy');
 
-Route::get('/check-booking', [BookingController::class, 'checkBooking']);
 Route::get('booking', [BookingController::class, 'index'])->name('booking.index');
 Route::post('/booking/response/{id}', [BookingController::class, 'response'])->name('booking.response');
 Route::get('/booking-add', [BookingController::class, 'create'])->name('booking.add');
@@ -87,10 +87,8 @@ Route::delete('/booking/{id}', [BookingController::class, 'destroy'])->name('boo
 
 
 
-
-Route::get('/booking-user', [BookingUserController::class, 'create'])->name('booking-user.add');
-// routing booking user
-Route::get('/booking-user', [BookingUserController::class, 'create'])->name('booking-user.add');
+Route::get('booking-user', [BookingUserController::class, 'create'])->name('booking-user.create');
+Route::post('booking-user', [BookingUserController::class, 'store'])->name('booking-user.store');
 // routing Tv Screen
 Route::get('/tv', [TvController::class, 'index'])->name('tv');
 
