@@ -247,7 +247,7 @@
                                     if (data.jumlahTersedia > data.jumlahBookingHariIni) {
                     
                                         // Tampilkan semua opsi waktu
-                                        var availableTimes = ['09:00-16:00'];
+                                        var availableTimes = ['09:00:00-16:00:00'];
                                         availableTimes.forEach(function(timeSlot) {
                                             var option = document.createElement('option');
                                             option.value = timeSlot;
